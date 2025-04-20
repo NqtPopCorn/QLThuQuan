@@ -15,5 +15,6 @@ namespace QLThuQuan.Data.Services
         Task<Device> UpdateAsync(Device device);
         Task<bool> DeleteAsync(int id);
 
+        Task<List<Device>> FindByKeywordAsync(string keyword);
     }
 }

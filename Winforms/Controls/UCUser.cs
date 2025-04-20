@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.ApplicationServices;
 
-namespace QL_ThuQuan
+namespace QLThuQuan.Winforms.Controls
 {
     public partial class UCUser : Form
     {

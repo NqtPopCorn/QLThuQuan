@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace QL_ThuQuan
+namespace QLThuQuan.Winforms
 {
     public partial class DangNhap : Form
     {

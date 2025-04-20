@@ -1,4 +1,4 @@
-﻿namespace QL_ThuQuan
+﻿namespace QLThuQuan.Winforms
 {
     partial class DangNhap
     {

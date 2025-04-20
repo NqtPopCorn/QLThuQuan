@@ -10,6 +10,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\QLThuQuan.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +23,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Update="UCViPham.cs">
+    <Compile Update="Controls\UCViPham.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

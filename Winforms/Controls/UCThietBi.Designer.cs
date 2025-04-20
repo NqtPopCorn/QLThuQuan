@@ -1,4 +1,4 @@
-﻿namespace QL_ThuQuan.Controls
+﻿namespace QLThuQuan.Winforms.Controls
 {
     partial class UCThietBi
     {
@@ -29,47 +29,48 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            deviceItem4 = new QL_ThuQuan.GUI.ThietBi.DeviceItem();
-            deviceItem1 = new QL_ThuQuan.GUI.ThietBi.DeviceItem();
-            deviceItem2 = new QL_ThuQuan.GUI.ThietBi.DeviceItem();
-            deviceItem3 = new QL_ThuQuan.GUI.ThietBi.DeviceItem();
-            textBox1 = new TextBox();
-            button1 = new Button();
-            button2 = new Button();
+            tableDevice = new TableLayoutPanel();
+            deviceItem4 = new QLThuQuan.Winforms.Components.ThietBi.DeviceItem();
+            deviceItem1 = new QLThuQuan.Winforms.Components.ThietBi.DeviceItem();
+            deviceItem2 = new QLThuQuan.Winforms.Components.ThietBi.DeviceItem();
+            deviceItem3 = new QLThuQuan.Winforms.Components.ThietBi.DeviceItem();
+            txtSearch = new TextBox();
+            btnTim = new Button();
+            btnThem = new Button();
+            btnRefresh = new Button();
             panel1.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            tableDevice.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.AutoScroll = true;
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(tableLayoutPanel1);
+            panel1.Controls.Add(tableDevice);
             panel1.Location = new Point(23, 88);
             panel1.Name = "panel1";
             panel1.Size = new Size(1057, 687);
             panel1.TabIndex = 0;
             // 
-            // tableLayoutPanel1
+            // tableDevice
             // 
-            tableLayoutPanel1.AutoSize = true;
-            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Outset;
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(deviceItem4, 0, 3);
-            tableLayoutPanel1.Controls.Add(deviceItem1, 0, 0);
-            tableLayoutPanel1.Controls.Add(deviceItem2, 0, 1);
-            tableLayoutPanel1.Controls.Add(deviceItem3, 0, 2);
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(1004, 794);
-            tableLayoutPanel1.TabIndex = 0;
+            tableDevice.AutoSize = true;
+            tableDevice.CellBorderStyle = TableLayoutPanelCellBorderStyle.Outset;
+            tableDevice.ColumnCount = 1;
+            tableDevice.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableDevice.Controls.Add(deviceItem4, 0, 3);
+            tableDevice.Controls.Add(deviceItem1, 0, 0);
+            tableDevice.Controls.Add(deviceItem2, 0, 1);
+            tableDevice.Controls.Add(deviceItem3, 0, 2);
+            tableDevice.Location = new Point(0, 0);
+            tableDevice.Name = "tableDevice";
+            tableDevice.RowCount = 4;
+            tableDevice.RowStyles.Add(new RowStyle());
+            tableDevice.RowStyles.Add(new RowStyle());
+            tableDevice.RowStyles.Add(new RowStyle());
+            tableDevice.RowStyles.Add(new RowStyle());
+            tableDevice.Size = new Size(1004, 794);
+            tableDevice.TabIndex = 0;
             // 
             // deviceItem4
             // 
@@ -99,49 +100,63 @@
             deviceItem3.Size = new Size(994, 190);
             deviceItem3.TabIndex = 2;
             // 
-            // textBox1
+            // txtSearch
             // 
-            textBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textBox1.Location = new Point(27, 37);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(358, 30);
-            textBox1.TabIndex = 1;
+            txtSearch.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.Location = new Point(27, 37);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(358, 30);
+            txtSearch.TabIndex = 1;
             // 
-            // button1
+            // btnTim
             // 
-            button1.BackColor = Color.SpringGreen;
-            button1.Location = new Point(388, 33);
-            button1.Name = "button1";
-            button1.Size = new Size(91, 39);
-            button1.TabIndex = 2;
-            button1.Text = "Tìm";
-            button1.UseVisualStyleBackColor = false;
+            btnTim.BackColor = Color.SpringGreen;
+            btnTim.Location = new Point(388, 33);
+            btnTim.Name = "btnTim";
+            btnTim.Size = new Size(91, 39);
+            btnTim.TabIndex = 2;
+            btnTim.Text = "Tìm";
+            btnTim.UseVisualStyleBackColor = false;
+            btnTim.Click += btnTim_Click;
             // 
-            // button2
+            // btnThem
             // 
-            button2.BackColor = Color.DodgerBlue;
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = SystemColors.ButtonFace;
-            button2.Location = new Point(967, 33);
-            button2.Name = "button2";
-            button2.Size = new Size(113, 38);
-            button2.TabIndex = 3;
-            button2.Text = "Thêm";
-            button2.UseVisualStyleBackColor = false;
+            btnThem.BackColor = Color.DodgerBlue;
+            btnThem.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnThem.ForeColor = SystemColors.ButtonFace;
+            btnThem.Location = new Point(944, 23);
+            btnThem.Name = "btnThem";
+            btnThem.Size = new Size(136, 49);
+            btnThem.TabIndex = 3;
+            btnThem.Text = "Thêm";
+            btnThem.UseVisualStyleBackColor = false;
+            btnThem.Click += btnThem_Click;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.Location = new Point(485, 33);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(94, 39);
+            btnRefresh.TabIndex = 4;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // UCThietBi
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
+            Controls.Add(btnRefresh);
+            Controls.Add(btnThem);
+            Controls.Add(btnTim);
+            Controls.Add(txtSearch);
             Controls.Add(panel1);
             Name = "UCThietBi";
             Size = new Size(1100, 800);
+            Load += UCThietBi_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
+            tableDevice.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -149,13 +164,14 @@
         #endregion
 
         private Panel panel1;
-        private TableLayoutPanel tableLayoutPanel1;
-        private GUI.ThietBi.DeviceItem deviceItem1;
-        private GUI.ThietBi.DeviceItem deviceItem2;
-        private GUI.ThietBi.DeviceItem deviceItem3;
-        private GUI.ThietBi.DeviceItem deviceItem4;
-        private TextBox textBox1;
-        private Button button1;
-        private Button button2;
+        private TableLayoutPanel tableDevice;
+        private QLThuQuan.Winforms.Components.ThietBi.DeviceItem deviceItem1;
+        private QLThuQuan.Winforms.Components.ThietBi.DeviceItem deviceItem2;
+        private QLThuQuan.Winforms.Components.ThietBi.DeviceItem deviceItem3;
+        private QLThuQuan.Winforms.Components.ThietBi.DeviceItem deviceItem4;
+        private TextBox txtSearch;
+        private Button btnTim;
+        private Button btnThem;
+        private Button btnRefresh;
     }
 }

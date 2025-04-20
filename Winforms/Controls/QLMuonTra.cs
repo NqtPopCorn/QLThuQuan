@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace QL_ThuQuan.Controls
+namespace QLThuQuan.Winforms.Controls
 {
     public partial class QLMuonTra : UserControl
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace QL_ThuQuan.GUI.ThietBi
+namespace QLThuQuan.Winforms.Components.ThietBi
 {
     public partial class Test : Form
     {

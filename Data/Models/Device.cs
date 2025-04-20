@@ -27,7 +27,6 @@ namespace QLThuQuan.Data.Models
         public string Status { get; set; }
 
         [Column("image_path")]
-        [AllowNull]
         public string? ImagePath { get; set; }
     }
 }

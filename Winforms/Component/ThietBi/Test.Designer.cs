@@ -1,4 +1,4 @@
-﻿namespace QL_ThuQuan.GUI.ThietBi
+﻿namespace QLThuQuan.Winforms.Components.ThietBi
 {
     partial class Test
     {

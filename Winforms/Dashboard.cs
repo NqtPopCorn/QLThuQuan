@@ -1,34 +1,40 @@
 using System.Windows.Forms;
+using QLThuQuan.Winforms.Controls;
 
-namespace QL_ThuQuan
+namespace QLThuQuan.Winforms
 {
-    public partial class Form1 : Form
+    public partial class Dashboard : Form
     {
 
         private Dictionary<Button, UserControl> navMap;
         private Button currentSelectedButton;
+        private UCThietBi ucThietBi;
+        private QLDatMuon ucDatMuon;
 
-        public Form1()
+        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon)
         {
+            this.ucThietBi = uCThietBi;
+            this.ucDatMuon = ucDatMuon;
+
             InitializeComponent();
 
             SetUpNavigations();
-            
+            this.ucDatMuon = ucDatMuon;
         }
 
         private void ShowControl(UserControl control)
         {
             control.Dock = DockStyle.Fill;
-            cardPanel.Controls.Clear(); 
-            cardPanel.Controls.Add(control); 
+            cardPanel.Controls.Clear();
+            cardPanel.Controls.Add(control);
         }
 
         private void SetUpNavigations()
         {
             navMap = new Dictionary<Button, UserControl>() {
-                { button1, new UCQuyTac() },
-                { button2, new UCViPham() },
-                { button3, new UCThongKe() },
+                { btnThietBi, ucThietBi },
+                { btnQLDatMuon, ucDatMuon },
+                { btnQLMuonTra, new UCThongKe() },
             };
 
             foreach (var entry in navMap)
@@ -48,7 +54,7 @@ namespace QL_ThuQuan
         {
             foreach (var btn in navMap.Keys)
             {
-                btn.BackColor = SystemColors.Control; 
+                btn.BackColor = SystemColors.Control;
             }
 
             selectedBtn.BackColor = Color.LightBlue;
@@ -67,6 +73,11 @@ namespace QL_ThuQuan
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

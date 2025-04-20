@@ -53,5 +53,13 @@ namespace QLThuQuan.Data.Services
             return true;
         }
 
+        public async Task<List<Device>> FindByKeywordAsync(string keyword)
+        {
+            //use linq
+            return await _context.Devices
+                .Where(d => d.Name.Contains(keyword) || d.Description.Contains(keyword))
+                .ToListAsync();
+        }
+
     }
 }
