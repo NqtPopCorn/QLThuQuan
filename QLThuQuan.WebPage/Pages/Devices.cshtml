@@ -1,0 +1,81 @@
+﻿@page
+@model QLThuQuan.WebPage.Pages.DevicesModel
+@{
+	ViewData["Title"] = "Devices";
+}
+
+<div class="text-center">
+
+    <div class="container py-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary bg-gradient text-white">
+                <h5 class="mb-0">Add New Device</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" class="needs-validation" novalidate asp-page-handler="Add">
+                    <div class="row g-3">
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Device.Name" class="form-label fw-bold">
+                                <i class="bi bi-device-hdd me-1"></i> Device Name
+                            </label>
+                            <input asp-for="Device.Name" class="form-control form-control-lg" placeholder="Enter device name" />
+                            <span asp-validation-for="Device.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Device.Description" class="form-label fw-bold">
+                                <i class="bi bi-card-text me-1"></i> Description
+                            </label>
+                            <textarea asp-for="Device.Description" class="form-control" rows="4"
+                                      placeholder="Enter device description"></textarea>
+                            <span asp-validation-for="Device.Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <label asp-for="Device.Status" class="form-label fw-bold">
+                                <i class="bi bi-toggle-on me-1"></i> Status
+                            </label>
+                            <select asp-for="Device.Status" class="form-select form-select-lg">
+                                <option value="">-- Select status --</option>
+                                <option value="available">Available</option>
+                                <option value="in_use">In Use</option>
+                                <option value="maintenance">Maintenance</option>
+                            </select>
+                            <span asp-validation-for="Device.Status" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                        <button type="submit" class="btn btn-primary btn-lg px-4">
+                            <i class="bi bi-save"></i> Save Device
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<h3 class="display-4 mb-3">All devices</h3>
+	<table class="table mb-3">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Name</th>
+				<th scope="col">Description</th>
+				<th scope="col">Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var device in Model._devices)
+			{
+				<tr>
+					<td>@device.Id</td>
+					<td>@device.Name</td>
+					<td>@device.Description</td>
+					<td>@device.Status</td>
+				</tr>
+			}
+		</tbody>
+    </table>
+    
+</div>
