@@ -2,12 +2,12 @@
 {
     partial class UCUser
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,169 +20,193 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            bPrintPDFUser = new Button();
-            bAddNewUser = new Button();
-            bResetUser = new Button();
-            tbSearchUser = new TextBox();
-            label2 = new Label();
-            panel3 = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
             label1 = new Label();
-            label3 = new Label();
-            dgvUsers = new DataGridView();
-            label4 = new Label();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            Search = new Label();
+            txtSearch = new TextBox();
+            btnEnter = new Button();
+            flowLayoutPanel2 = new FlowLayoutPanel();
+            btnReset = new Button();
+            btnNew = new Button();
+            dtgView = new DataGridView();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
+            flowLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dtgView).BeginInit();
             SuspendLayout();
             // 
-            // panel1
+            // tableLayoutPanel1
             // 
-            panel1.Controls.Add(bPrintPDFUser);
-            panel1.Controls.Add(bAddNewUser);
-            panel1.Controls.Add(bResetUser);
-            panel1.Controls.Add(tbSearchUser);
-            panel1.Controls.Add(label2);
-            panel1.Location = new Point(12, 71);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1198, 61);
-            panel1.TabIndex = 0;
-            // 
-            // bPrintPDFUser
-            // 
-            bPrintPDFUser.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            bPrintPDFUser.Location = new Point(868, 13);
-            bPrintPDFUser.Name = "bPrintPDFUser";
-            bPrintPDFUser.Size = new Size(105, 35);
-            bPrintPDFUser.TabIndex = 4;
-            bPrintPDFUser.Text = "Print PDF";
-            bPrintPDFUser.UseVisualStyleBackColor = true;
-            // 
-            // bAddNewUser
-            // 
-            bAddNewUser.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            bAddNewUser.Location = new Point(979, 13);
-            bAddNewUser.Name = "bAddNewUser";
-            bAddNewUser.Size = new Size(105, 35);
-            bAddNewUser.TabIndex = 3;
-            bAddNewUser.Text = "New";
-            bAddNewUser.UseVisualStyleBackColor = true;
-            bAddNewUser.Click += button2_Click;
-            // 
-            // bResetUser
-            // 
-            bResetUser.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            bResetUser.Location = new Point(1090, 13);
-            bResetUser.Name = "bResetUser";
-            bResetUser.Size = new Size(105, 35);
-            bResetUser.TabIndex = 2;
-            bResetUser.Text = "Reset";
-            bResetUser.UseVisualStyleBackColor = true;
-            bResetUser.Click += button1_Click;
-            // 
-            // tbSearchUser
-            // 
-            tbSearchUser.Location = new Point(87, 13);
-            tbSearchUser.Name = "tbSearchUser";
-            tbSearchUser.Size = new Size(418, 29);
-            tbSearchUser.TabIndex = 1;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Arial", 15.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label2.Location = new Point(3, 14);
-            label2.Name = "label2";
-            label2.Size = new Size(78, 24);
-            label2.TabIndex = 0;
-            label2.Text = "Search";
-            // 
-            // panel3
-            // 
-            panel3.Location = new Point(387, 746);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(477, 37);
-            panel3.TabIndex = 2;
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
+            tableLayoutPanel1.Controls.Add(dtgView, 0, 2);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel1.Size = new Size(1238, 840);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial Narrow", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 19);
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(192, 37);
-            label1.TabIndex = 3;
+            label1.Size = new Size(216, 45);
+            label1.TabIndex = 0;
             label1.Text = "Quản Lý User";
             // 
-            // label3
+            // tableLayoutPanel2
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial Narrow", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(542, 154);
-            label3.Name = "label3";
-            label3.Size = new Size(0, 31);
-            label3.TabIndex = 4;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(flowLayoutPanel1, 0, 0);
+            tableLayoutPanel2.Controls.Add(flowLayoutPanel2, 1, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(3, 87);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(1232, 78);
+            tableLayoutPanel2.TabIndex = 1;
             // 
-            // dgvUsers
+            // flowLayoutPanel1
             // 
-            dgvUsers.BackgroundColor = SystemColors.ButtonHighlight;
-            dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUsers.Location = new Point(12, 209);
-            dgvUsers.Name = "dgvUsers";
-            dgvUsers.Size = new Size(1195, 521);
-            dgvUsers.TabIndex = 6;
+            flowLayoutPanel1.Controls.Add(Search);
+            flowLayoutPanel1.Controls.Add(txtSearch);
+            flowLayoutPanel1.Controls.Add(btnEnter);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(3, 3);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(610, 72);
+            flowLayoutPanel1.TabIndex = 0;
             // 
-            // label4
+            // Search
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Arial Narrow", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(542, 163);
-            label4.Name = "label4";
-            label4.Size = new Size(191, 31);
-            label4.TabIndex = 7;
-            label4.Text = "Thông Tin Users";
-            label4.TextAlign = ContentAlignment.TopCenter;
+            Search.AutoSize = true;
+            Search.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            Search.Location = new Point(3, 0);
+            Search.Name = "Search";
+            Search.Size = new Size(70, 25);
+            Search.TabIndex = 0;
+            Search.Text = "Search";
+            Search.Click += label2_Click;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(79, 3);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(429, 29);
+            txtSearch.TabIndex = 1;
+            // 
+            // btnEnter
+            // 
+            btnEnter.BackColor = Color.Red;
+            btnEnter.Font = new Font("Showcard Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnEnter.ForeColor = SystemColors.ButtonHighlight;
+            btnEnter.Location = new Point(514, 3);
+            btnEnter.Name = "btnEnter";
+            btnEnter.Size = new Size(85, 32);
+            btnEnter.TabIndex = 2;
+            btnEnter.Text = "Enter";
+            btnEnter.UseVisualStyleBackColor = false;
+            btnEnter.Click += btnEnter_Click;
+            // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.Controls.Add(btnReset);
+            flowLayoutPanel2.Controls.Add(btnNew);
+            flowLayoutPanel2.Dock = DockStyle.Fill;
+            flowLayoutPanel2.FlowDirection = FlowDirection.RightToLeft;
+            flowLayoutPanel2.Location = new Point(619, 3);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(610, 72);
+            flowLayoutPanel2.TabIndex = 1;
+            // 
+            // btnReset
+            // 
+            btnReset.BackColor = Color.FromArgb(192, 192, 0);
+            btnReset.Font = new Font("Showcard Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnReset.ForeColor = SystemColors.ButtonHighlight;
+            btnReset.Location = new Point(507, 3);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(100, 29);
+            btnReset.TabIndex = 0;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
+            // 
+            // btnNew
+            // 
+            btnNew.BackColor = Color.FromArgb(0, 192, 0);
+            btnNew.Font = new Font("Showcard Gothic", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnNew.ForeColor = SystemColors.ButtonHighlight;
+            btnNew.Location = new Point(392, 3);
+            btnNew.Name = "btnNew";
+            btnNew.Size = new Size(109, 29);
+            btnNew.TabIndex = 1;
+            btnNew.Text = "New";
+            btnNew.UseVisualStyleBackColor = false;
+            btnNew.Click += btnNew_Click;
+            // 
+            // dtgView
+            // 
+            dtgView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgView.Dock = DockStyle.Fill;
+            dtgView.Location = new Point(3, 171);
+            dtgView.Name = "dtgView";
+            dtgView.Size = new Size(1232, 666);
+            dtgView.TabIndex = 2;
             // 
             // UCUser
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1222, 800);
-            Controls.Add(label4);
-            Controls.Add(dgvUsers);
-            Controls.Add(label3);
-            Controls.Add(label1);
-            Controls.Add(panel3);
-            Controls.Add(panel1);
+            Controls.Add(tableLayoutPanel1);
             Name = "UCUser";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "UCUser";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
+            Size = new Size(1238, 840);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
+            flowLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dtgView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Panel panel1;
-        private Button bAddNewUser;
-        private Button bResetUser;
-        private TextBox tbSearchUser;
-        private Label label2;
-        private Panel panel3;
+        private TableLayoutPanel tableLayoutPanel1;
         private Label label1;
-        private Label label3;
-        private Button bPrintPDFUser;
-        private DataGridView dgvUsers;
-        private Label label4;
+        private TableLayoutPanel tableLayoutPanel2;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Label Search;
+        private TextBox txtSearch;
+        private Button btnEnter;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private Button btnReset;
+        private Button btnNew;
+        private DataGridView dtgView;
     }
 }
