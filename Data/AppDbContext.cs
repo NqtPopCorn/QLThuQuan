@@ -23,6 +23,10 @@ namespace QLThuQuan.Data
 
         public DbSet<CheckIns> CheckIns { get; set; }
 
+        public DbSet<Models.Rule> Rules { get; set; }
+
+        public DbSet<Models.Violation> Violations { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

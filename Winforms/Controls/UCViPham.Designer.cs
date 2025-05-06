@@ -2,12 +2,12 @@
 {
     partial class UCViPham
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -22,337 +22,233 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            button11 = new Button();
+            panelHeader = new Panel();
+            lblTitle = new Label();
+            panelSearch = new Panel();
+            btnSearch = new Button();
             txtSearch = new TextBox();
-            groupBox1 = new Panel();
-            label1 = new Label();
-            panel3 = new Panel();
-            button1 = new Button();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            label2 = new Label();
-            label5 = new Label();
-            label6 = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            label10 = new Label();
-            label11 = new Label();
-            label12 = new Label();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
-            label4 = new Label();
-            groupBox1.SuspendLayout();
-            panel3.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            lblSearch = new Label();
+            panelContent = new Panel();
+            btnAddViolation = new Button();
+            dgvViolations = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            colUser = new DataGridViewTextBoxColumn();
+            colRule = new DataGridViewTextBoxColumn();
+            colDescription = new DataGridViewTextBoxColumn();
+            colViolationDate = new DataGridViewTextBoxColumn();
+            colStatus = new DataGridViewTextBoxColumn();
+            colActions = new DataGridViewButtonColumn();
+            panelHeader.SuspendLayout();
+            panelSearch.SuspendLayout();
+            panelContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvViolations).BeginInit();
             SuspendLayout();
-            // 
-            // button11
-            // 
-            button11.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            button11.BackColor = Color.Silver;
-            button11.Location = new Point(905, 41);
-            button11.Margin = new Padding(3, 4, 3, 4);
-            button11.Name = "button11";
-            button11.Size = new Size(102, 27);
-            button11.TabIndex = 3;
-            button11.Text = "Tìm";
-            button11.UseVisualStyleBackColor = false;
-            // 
+            //
+            // panelHeader
+            //
+            panelHeader.BackColor = System.Drawing.Color.FromArgb(240, 240, 240); // Màu xám nhạt
+            panelHeader.Controls.Add(lblTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1100, 60);
+            panelHeader.TabIndex = 0;
+            //
+            // lblTitle
+            //
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.ForeColor = Color.Black; // Đổi màu chữ thành đen
+            lblTitle.Location = new Point(20, 12);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(242, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Quản lý Vi Phạm";
+            //
+            // panelSearch
+            //
+            panelSearch.BackColor = Color.White;
+            panelSearch.Controls.Add(btnSearch);
+            panelSearch.Controls.Add(txtSearch);
+            panelSearch.Controls.Add(lblSearch);
+            panelSearch.Dock = DockStyle.Top;
+            panelSearch.Location = new Point(0, 60);
+            panelSearch.Name = "panelSearch";
+            panelSearch.Size = new Size(1100, 70);
+            panelSearch.TabIndex = 1;
+            //
+            // btnSearch
+            //
+            btnSearch.BackColor = System.Drawing.Color.FromArgb(240, 240, 240); // Màu xám nhạt
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            btnSearch.ForeColor = Color.Black; // Đổi màu chữ thành đen
+            btnSearch.Location = new Point(500, 20);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(100, 30);
+            btnSearch.TabIndex = 2;
+            btnSearch.Text = "Tìm kiếm";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += button11_Click;
+            //
             // txtSearch
-            // 
-            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txtSearch.Location = new Point(240, 41);
-            txtSearch.Margin = new Padding(3, 4, 3, 4);
+            //
+            txtSearch.BorderStyle = BorderStyle.FixedSingle;
+            txtSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            txtSearch.Location = new Point(150, 20);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(633, 27);
+            txtSearch.Size = new Size(330, 30);
             txtSearch.TabIndex = 1;
-            txtSearch.Text = "Tìm Kiếm";
-            txtSearch.TextChanged += txtSearch_TextChanged;
-            // 
-            // groupBox1
-            // 
-            groupBox1.BackColor = SystemColors.ButtonShadow;
-            groupBox1.BackgroundImageLayout = ImageLayout.None;
-            groupBox1.Controls.Add(txtSearch);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Controls.Add(button11);
-            groupBox1.Dock = DockStyle.Top;
-            groupBox1.Location = new Point(0, 0);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1100, 118);
-            groupBox1.TabIndex = 4;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.FlatStyle = FlatStyle.Flat;
-            label1.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(8, 41);
-            label1.Name = "label1";
-            label1.Size = new Size(183, 18);
-            label1.TabIndex = 0;
-            label1.Text = "Quản lý quy tắc và vi phạm";
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(button1);
-            panel3.Controls.Add(tableLayoutPanel1);
-            panel3.Controls.Add(label4);
-            panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(0, 118);
-            panel3.Margin = new Padding(3, 4, 3, 4);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(1100, 682);
-            panel3.TabIndex = 12;
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            button1.BackColor = Color.LimeGreen;
-            button1.Location = new Point(946, 27);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(124, 38);
-            button1.TabIndex = 4;
-            button1.Text = "Thêm Vi Phạm";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Outset;
-            tableLayoutPanel1.ColumnCount = 5;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Controls.Add(label2, 0, 0);
-            tableLayoutPanel1.Controls.Add(label5, 1, 0);
-            tableLayoutPanel1.Controls.Add(label6, 2, 0);
-            tableLayoutPanel1.Controls.Add(label7, 0, 1);
-            tableLayoutPanel1.Controls.Add(label8, 0, 2);
-            tableLayoutPanel1.Controls.Add(label9, 0, 3);
-            tableLayoutPanel1.Controls.Add(label10, 0, 4);
-            tableLayoutPanel1.Controls.Add(label11, 3, 0);
-            tableLayoutPanel1.Controls.Add(label12, 4, 0);
-            tableLayoutPanel1.Controls.Add(button3, 4, 1);
-            tableLayoutPanel1.Controls.Add(button4, 4, 2);
-            tableLayoutPanel1.Controls.Add(button5, 4, 3);
-            tableLayoutPanel1.Controls.Add(button6, 4, 4);
-            tableLayoutPanel1.Location = new Point(33, 77);
-            tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 5;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Size = new Size(1037, 575);
-            tableLayoutPanel1.TabIndex = 3;
-            // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.None;
-            label2.AutoSize = true;
-            label2.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(60, 49);
-            label2.Name = "label2";
-            label2.Size = new Size(88, 18);
-            label2.TabIndex = 0;
-            label2.Text = "Mã Vi Phạm";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label5
-            // 
-            label5.Anchor = AnchorStyles.None;
-            label5.AutoSize = true;
-            label5.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(254, 49);
-            label5.Name = "label5";
-            label5.Size = new Size(115, 18);
-            label5.TabIndex = 1;
-            label5.Text = "Tên Người Dùng";
-            label5.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label6
-            // 
-            label6.Anchor = AnchorStyles.None;
-            label6.AutoSize = true;
-            label6.Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(465, 49);
-            label6.Name = "label6";
-            label6.Size = new Size(106, 18);
-            label6.TabIndex = 2;
-            label6.Text = "Lý Do Vi Phạm";
-            // 
-            // label7
-            // 
-            label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label7.AutoSize = true;
-            label7.Location = new Point(5, 116);
-            label7.Name = "label7";
-            label7.Size = new Size(199, 112);
-            label7.TabIndex = 3;
-            label7.Text = "VP01";
-            label7.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label8
-            // 
-            label8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label8.AutoSize = true;
-            label8.Location = new Point(5, 230);
-            label8.Name = "label8";
-            label8.Size = new Size(199, 112);
-            label8.TabIndex = 4;
-            label8.Text = "VP02";
-            label8.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label9
-            // 
-            label9.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label9.AutoSize = true;
-            label9.Location = new Point(5, 344);
-            label9.Name = "label9";
-            label9.Size = new Size(199, 112);
-            label9.TabIndex = 5;
-            label9.Text = "VP03";
-            label9.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label10
-            // 
-            label10.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label10.AutoSize = true;
-            label10.Location = new Point(5, 458);
-            label10.Name = "label10";
-            label10.Size = new Size(199, 115);
-            label10.TabIndex = 6;
-            label10.Text = "VP04";
-            label10.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label11
-            // 
-            label11.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label11.Location = new Point(626, 2);
-            label11.Name = "label11";
-            label11.Size = new Size(199, 112);
-            label11.TabIndex = 7;
-            label11.Text = "Ngày Vi Phạm";
-            label11.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label12
-            // 
-            label12.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label12.Location = new Point(833, 2);
-            label12.Name = "label12";
-            label12.Size = new Size(199, 112);
-            label12.TabIndex = 8;
-            label12.Text = "Trạng Thái";
-            label12.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // button3
-            // 
-            button3.BackColor = Color.LimeGreen;
-            button3.Location = new Point(833, 120);
-            button3.Margin = new Padding(3, 4, 3, 4);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 31);
-            button3.TabIndex = 9;
-            button3.Text = "Đã xử lý";
-            button3.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            button4.BackColor = Color.Red;
-            button4.Location = new Point(833, 234);
-            button4.Margin = new Padding(3, 4, 3, 4);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 31);
-            button4.TabIndex = 10;
-            button4.Text = "Chưa xử lý";
-            button4.UseVisualStyleBackColor = false;
-            // 
-            // button5
-            // 
-            button5.BackColor = Color.LimeGreen;
-            button5.Location = new Point(833, 348);
-            button5.Margin = new Padding(3, 4, 3, 4);
-            button5.Name = "button5";
-            button5.Size = new Size(75, 31);
-            button5.TabIndex = 11;
-            button5.Text = "Đã xử lý";
-            button5.UseVisualStyleBackColor = false;
-            // 
-            // button6
-            // 
-            button6.BackColor = Color.Red;
-            button6.Location = new Point(833, 462);
-            button6.Margin = new Padding(3, 4, 3, 4);
-            button6.Name = "button6";
-            button6.Size = new Size(75, 31);
-            button6.TabIndex = 12;
-            button6.Text = "Chưa xử lý";
-            button6.UseVisualStyleBackColor = false;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Microsoft Sans Serif", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(33, 29);
-            label4.Name = "label4";
-            label4.Size = new Size(158, 20);
-            label4.TabIndex = 0;
-            label4.Text = "Danh sách Vi Phạm";
-            // 
+            //
+            // lblSearch
+            //
+            lblSearch.AutoSize = true;
+            lblSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            lblSearch.Location = new Point(20, 22);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(80, 23);
+            lblSearch.TabIndex = 0;
+            lblSearch.Text = "Tìm kiếm:";
+            //
+            // panelContent
+            //
+            panelContent.Controls.Add(btnAddViolation);
+            panelContent.Controls.Add(dgvViolations);
+            panelContent.Dock = DockStyle.Fill;
+            panelContent.Location = new Point(0, 130);
+            panelContent.Name = "panelContent";
+            panelContent.Padding = new Padding(20);
+            panelContent.Size = new Size(1100, 670);
+            panelContent.TabIndex = 2;
+            //
+            // btnAddViolation
+            //
+            btnAddViolation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnAddViolation.BackColor = System.Drawing.Color.FromArgb(0, 122, 204); // Giữ màu xanh cho nút thêm
+            btnAddViolation.FlatAppearance.BorderSize = 0;
+            btnAddViolation.FlatStyle = FlatStyle.Flat;
+            btnAddViolation.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            btnAddViolation.ForeColor = Color.White;
+            btnAddViolation.Location = new Point(920, 20);
+            btnAddViolation.Name = "btnAddViolation";
+            btnAddViolation.Size = new Size(160, 35);
+            btnAddViolation.TabIndex = 1;
+            btnAddViolation.Text = "Thêm Vi Phạm";
+            btnAddViolation.UseVisualStyleBackColor = false;
+            btnAddViolation.Click += button1_Click;
+            //
+            // dgvViolations
+            //
+            dgvViolations.AllowUserToAddRows = false;
+            dgvViolations.AllowUserToDeleteRows = false;
+            dgvViolations.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvViolations.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvViolations.BackgroundColor = Color.White;
+            dgvViolations.BorderStyle = BorderStyle.None;
+            dgvViolations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvViolations.Columns.AddRange(new DataGridViewColumn[] { colId, colUser, colRule, colDescription, colViolationDate, colStatus, colActions });
+            dgvViolations.Location = new Point(20, 70);
+            dgvViolations.Name = "dgvViolations";
+            dgvViolations.ReadOnly = true;
+            dgvViolations.RowHeadersVisible = false; // Ẩn cột header dư thừa
+            dgvViolations.RowHeadersWidth = 51;
+            dgvViolations.RowTemplate.Height = 29;
+            dgvViolations.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Chọn cả dòng
+            dgvViolations.Size = new Size(1060, 580);
+            dgvViolations.TabIndex = 0;
+            //
+            // colId
+            //
+            colId.HeaderText = "ID";
+            colId.MinimumWidth = 6;
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            //
+            // colUser
+            //
+            colUser.HeaderText = "Người dùng";
+            colUser.MinimumWidth = 6;
+            colUser.Name = "colUser";
+            colUser.ReadOnly = true;
+            //
+            // colRule
+            //
+            colRule.HeaderText = "Quy tắc";
+            colRule.MinimumWidth = 6;
+            colRule.Name = "colRule";
+            colRule.ReadOnly = true;
+            //
+            // colDescription
+            //
+            colDescription.HeaderText = "Mô tả";
+            colDescription.MinimumWidth = 6;
+            colDescription.Name = "colDescription";
+            colDescription.ReadOnly = true;
+            //
+            // colViolationDate
+            //
+            colViolationDate.HeaderText = "Ngày vi phạm";
+            colViolationDate.MinimumWidth = 6;
+            colViolationDate.Name = "colViolationDate";
+            colViolationDate.ReadOnly = true;
+            //
+            // colStatus
+            //
+            colStatus.HeaderText = "Trạng thái";
+            colStatus.MinimumWidth = 6;
+            colStatus.Name = "colStatus";
+            colStatus.ReadOnly = true;
+            //
+            // colActions
+            //
+            colActions.HeaderText = "Thao tác";
+            colActions.MinimumWidth = 6;
+            colActions.Name = "colActions";
+            colActions.ReadOnly = true;
+            colActions.UseColumnTextForButtonValue = false;
+            //
             // UCViPham
-            // 
+            //
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(panel3);
-            Controls.Add(groupBox1);
+            Controls.Add(panelContent);
+            Controls.Add(panelSearch);
+            Controls.Add(panelHeader);
             Name = "UCViPham";
             Size = new Size(1100, 800);
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSearch.ResumeLayout(false);
+            panelSearch.PerformLayout();
+            panelContent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvViolations).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button button11;
+        private Panel panelHeader;
+        private Label lblTitle;
+        private Panel panelSearch;
+        private Button btnSearch;
         private TextBox txtSearch;
-        private Panel groupBox1;
-        private Panel panel3;
-        private Button button1;
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label label2;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Label label8;
-        private Label label9;
-        private Label label10;
-        private Label label11;
-        private Label label12;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private Label label4;
-        private Label label1;
+        private Label lblSearch;
+        private Panel panelContent;
+        private DataGridView dgvViolations;
+        private Button btnAddViolation;
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colUser;
+        private DataGridViewTextBoxColumn colRule;
+        private DataGridViewTextBoxColumn colDescription;
+        private DataGridViewTextBoxColumn colViolationDate;
+        private DataGridViewTextBoxColumn colStatus;
+        private DataGridViewButtonColumn colActions;
     }
 }

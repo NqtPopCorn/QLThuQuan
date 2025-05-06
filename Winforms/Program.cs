@@ -14,7 +14,7 @@ namespace QLThuQuan.Winforms
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        /// 
+        ///
         internal readonly static string connectionString = AppDbContext.connectionString;
 
         [STAThread]
@@ -40,6 +40,10 @@ namespace QLThuQuan.Winforms
                     services.AddScoped<IUserService, UserServiceImpl>();
                     //check ins service
                     services.AddScoped<ICheckInsService, CheckInsServiceImpl>();
+                    //rule service
+                    services.AddScoped<IRuleService, RuleService>();
+                    //violation service
+                    services.AddScoped<IViolationService, ViolationService>();
 
                     services.AddScoped<Dashboard>();
                     services.AddScoped<UCThietBi>();
