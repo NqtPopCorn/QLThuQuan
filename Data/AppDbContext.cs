@@ -26,7 +26,18 @@ namespace QLThuQuan.Data
         public DbSet<Models.Rule> Rules { get; set; }
 
         public DbSet<Models.Violation> Violations { get; set; }
+       
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<User>()
+                .HasKey(u => u.Id); // Xác định UserId là khóa chính
 
+            // Cấu hình auto-increment
+            modelBuilder.Entity<User>()
+                .Property(u => u.Id)
+                .ValueGeneratedOnAdd();
+        }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

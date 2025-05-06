@@ -1,4 +1,4 @@
-﻿﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +18,6 @@ namespace QLThuQuan.Data.Services
         Task<List<Violation>> GetByRuleIdAsync(int ruleId);
         Task<List<Violation>> GetByStatusAsync(string status);
         Task<List<Violation>> FindByKeywordAsync(string keyword);
+        Task<List<Violation>> GetUserViolationsAsync(int userId);
     }
 }

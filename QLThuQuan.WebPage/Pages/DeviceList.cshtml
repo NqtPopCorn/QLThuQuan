@@ -1,0 +1,61 @@
+﻿@* @page *@
+@* @model QLThuQuan.WebPage.Pages.DeviceListModel *@
+@* @using QLThuQuan.Data.Models *@
+@* @{ *@
+@*     ViewData["Title"] = "Danh sách thiết bị"; *@
+@* } *@
+
+@* <div class="container py-4"> *@
+@*     <h2 class="mb-4">Danh sách thiết bị</h2> *@
+
+@*     <!-- Bộ lọc theo tình trạng --> *@
+@*     <form method="get" class="mb-4 d-flex align-items-center" id="filterForm"> *@
+@*         <label for="status" class="form-label me-2 fw-bold">Tình trạng</label> *@
+@*         <select id="status" name="status" class="form-select me-3" style="width: 200px; background-color: #f5dccd;"> *@
+@*             <option value="">-- Tất cả --</option> *@
+@*             <option value="available" selected="@(Model.SelectedStatus == "available")">Có sẵn</option> *@
+@*             <option value="maintenance" selected="@(Model.SelectedStatus == "maintenance")">Đang bảo trì</option> *@
+@*             <option value="in_use" selected="@(Model.SelectedStatus == "in_use")">Đang mượn</option> *@
+@*         </select> *@
+@*     </form> *@
+@*     @section Scripts { *@
+@*         <script> *@
+@*             document.getElementById("status").addEventListener("change", function () { *@
+@*                 // Reset page về 1 khi lọc mới *@
+@*                 const form = document.getElementById("filterForm"); *@
+@*                 const url = new URL(window.location.href); *@
+@*                 url.searchParams.set("status", this.value); *@
+@*                 url.searchParams.set("PageNumber", 1); // reset về trang đầu *@
+
+@*                 window.location.href = url.toString(); *@
+@*             }); *@
+@*         </script> *@
+@*     } *@
+@*     <!-- Hiển thị thiết bị --> *@
+@*     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3"> *@
+@*         @foreach (var device in Model.PaginatedDevices) *@
+@*         { *@
+@*             <div class="col"> *@
+@*                 <div class="card h-100 text-center"> *@
+@*                     <img src="@device.ImagePath" class="card-img-top img-fluid" alt="@device.Name"> *@
+@*                     <div class="card-body"> *@
+@*                         <p class="card-text fw-semibold">@device.Name</p> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         } *@
+@*     </div> *@
+
+@*     <!-- Phân trang --> *@
+@*     <nav class="mt-4"> *@
+@*         <ul class="pagination justify-content-center"> *@
+@*             @for (int i = 1; i <= Model.TotalPages; i++) *@
+@*             { *@
+@*                 <li class="page-item @(i == Model.CurrentPage ? "active" : "")"> *@
+@*                     <a class="page-link" href="?PageNumber=@i&status=@Model.SelectedStatus">@i</a> *@
+
+@*                 </li> *@
+@*             } *@
+@*         </ul> *@
+@*     </nav> *@
+@* </div> *@
