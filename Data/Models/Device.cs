@@ -24,6 +24,7 @@ namespace QLThuQuan.Data.Models
         public string Description { get; set; }
 
         [Column("status")]
+        [Required]
         public string Status { get; set; }
 
         [Column("image_path")]

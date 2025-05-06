@@ -1,39 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace QLThuQuan.Data.Models
 {
-    public enum PenaltyType
-    {
-        ban_account,
-        compensation,
-        warning,
-        other
-    }
-
+    [Serializable]
+    [Table("rules")]
     public class Rule
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int rule_id { get; set; }
+        [Column("rule_id")]
+        public int Id { get; set; }
 
+        [Column("rule_name")]
         [Required]
-        [MaxLength(255)]
-        public string rule_name { get; set; }
+        public string Name { get; set; }
 
-        public string? description { get; set; }
+        [Column("description")]
+        public string? Description { get; set; }
 
-        [Required]
-        [Column(TypeName = "ENUM('ban_account','compensation','warning','other')")]
-        public PenaltyType penalty_type { get; set; }
+        [Column("created_at")]
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
-        public int? ban_days { get; set; }
-
-        [Required]
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal compensation_amount { get; set; }
-
-        public virtual ICollection<Violation> Violations { get; set; } = new List<Violation>();
+        [Column("updated_at")]
+        public DateTime? UpdatedAt { get; set; } = DateTime.Now;
     }
 }

@@ -18,22 +18,38 @@ namespace QLThuQuan.Data
         public DbSet<Models.BorrowRecord> BorrowRecords { get; set; }
 
         public DbSet<Models.Reservation> Reservations { get; set; }
+
         public DbSet<Models.User> Users { get; set; }
-        public DbSet<Models.Violation> Violations { get; set; }
+
+        public DbSet<CheckIns> CheckIns { get; set; }
+
         public DbSet<Models.Rule> Rules { get; set; }
+
+        public DbSet<Models.Violation> Violations { get; set; }
+       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(u => u.email).IsUnique();
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<User>()
-                .HasKey(u => u.user_id); // Xác định UserId là khóa chính
+                .HasKey(u => u.Id); // Xác định UserId là khóa chính
 
             // Cấu hình auto-increment
             modelBuilder.Entity<User>()
-                .Property(u => u.user_id)
+                .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
         }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+        }
+
+        // Đây là construct để tạo AppDbContext độc lập
+        public AppDbContext() : base(CreateOptions()) { }
+
+        private static DbContextOptions<AppDbContext> CreateOptions()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            return optionsBuilder.Options;
         }
     }
 }

@@ -43,19 +43,19 @@ namespace QLThuQuan.WebPage.Pages
                 return Page();
             }
 
-            if (!new EmailAddressAttribute().IsValid(User.email))
+            if (!new EmailAddressAttribute().IsValid(User.Email))
             {
                 ModelState.AddModelError("User.email", "Email không hợp lệ");
                 return Page();
             }
 
-            if (User.password != ConfirmPassword)
+            if (User.Password != ConfirmPassword)
             {
                 ModelState.AddModelError("ConfirmPassword", "Mật khẩu không khớp");
                 return Page();
             }
 
-            if (await _accountService.IsEmailExistAsync(User.email))
+            if (await _accountService.IsEmailExistAsync(User.Email))
             {
                 ErrorMessage = "Email đã được sử dụng";
                 return Page();
@@ -63,8 +63,8 @@ namespace QLThuQuan.WebPage.Pages
 
             try
             {
-                User.password = BCrypt.Net.BCrypt.HashPassword(User.password);
-                User.isAdmin = 0;
+                User.Password = BCrypt.Net.BCrypt.HashPassword(User.Password);
+                User.IsAdmin = false;
 
                 await _accountService.AddAsync(User);
 

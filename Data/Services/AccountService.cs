@@ -28,20 +28,20 @@ namespace QLThuQuan.Data.Services
                     throw new KeyNotFoundException("User not found.");
                 }
 
-                Console.WriteLine($"Trước khi cập nhật: {user.firstName} {user.lastName} {user.email}"); // Log trạng thái trước
+                Console.WriteLine($"Trước khi cập nhật: {user.FirstName} {user.LastName} {user.Email}"); // Log trạng thái trước
 
-                if (email != user.email && await _context.Users.AnyAsync(u => u.email == email))
+                if (email != user.Email && await _context.Users.AnyAsync(u => u.Email == email))
                 {
                     Console.WriteLine("Email đã tồn tại");
                     throw new InvalidOperationException("Email đã được sử dụng bởi tài khoản khác");
                 }
 
-                user.firstName = firstName;
-                user.lastName = lastName;
-                user.email = email;
+                user.FirstName = firstName;
+                user.LastName = lastName;
+                user.Email = email;
 
                 _context.Entry(user).State = EntityState.Modified;
-                Console.WriteLine($"Sau khi cập nhật: {user.firstName} {user.lastName} {user.email}"); // Log trạng thái sau
+                Console.WriteLine($"Sau khi cập nhật: {user.FirstName} {user.LastName} {user.Email}"); // Log trạng thái sau
 
                 var result = await _context.SaveChangesAsync();
                 Console.WriteLine($"SaveChanges trả về: {result}"); // Log kết quả SaveChanges
@@ -66,12 +66,12 @@ namespace QLThuQuan.Data.Services
             var user = await _context.Users.FindAsync(userId);
             if (user == null) return false;
 
-            if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.password))
+            if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.Password))
             {
                 return false;
             }
 
-            user.password = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(newPassword);
             _context.Entry(user).State = EntityState.Modified; // Đánh dấu entity đã thay đổi
             return await _context.SaveChangesAsync() > 0;
         }
@@ -84,24 +84,15 @@ namespace QLThuQuan.Data.Services
         {
             return await _context.Users.ToListAsync();
         }
-        // To debug why the information is not being saved to the database, you can follow these steps:
-
-        // 1. Ensure that the `AppDbContext` is properly configured and injected into the `AccountService`.
-        // 2. Check if the `SaveChangesAsync` method is being called after adding the entity.
-        // 3. Verify if there are any validation errors or exceptions being thrown silently.
-        // 4. Add logging or debug statements to trace the flow of execution.
-
+        
         public async Task<User> AddAsync(User user)
         {
             try
-            {
-                // Add the user to the database context
+            {              
                 await _context.Users.AddAsync(user);
-
-                // Save changes to the database
                 var result = await _context.SaveChangesAsync();
 
-                // Check if the save operation was successful
+             
                 if (result > 0)
                 {
                     return user;
@@ -113,26 +104,25 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Log the exception for debugging
                 Console.WriteLine($"Error adding user: {ex.Message}");
                 throw;
             }
         }
         public async Task<bool> IsEmailExistAsync(string email)
         {
-            return await _context.Users.AnyAsync(u => u.email == email);
+            return await _context.Users.AnyAsync(u => u.Email == email);
         }
         public async Task<List<User>> GetByUserIdAsync(int userId)
         {
             return await _context.Users
-                .Where(u => u.user_id == userId)
+                .Where(u => u.Id == userId)
                 .ToListAsync();
         }
         public async Task<User> AuthenticateAsync(string email, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
                 return null;
             
             return user;

@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="CheckInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Component\ThietBi\AddDeviceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -11,6 +14,12 @@
     <Compile Update="Component\ThietBi\Test.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Component\User\CreateUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Component\User\UpdateUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Controls\QLDatMuon.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -18,6 +27,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\UCThietBi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\UCUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\UCViPhamV2.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="DangNhap.cs">
@@ -32,7 +47,10 @@
     <Compile Update="Controls\UCThongKe.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Controls\UCUser.cs">
+    <Compile Update="DieuHuongGiaoDien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Helpers\ImageScanDialog.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

@@ -50,7 +50,7 @@
                                     var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
                                     var userService = Context.RequestServices.GetRequiredService<IAccountService>();
                                     var currentUser = await userService.GetByIdAsync(userId);
-                                    @($"{currentUser.firstName} {currentUser.lastName}")
+                                    @($"{currentUser.FirstName} {currentUser.LastName}")
                                 }
                             </a>
                         </li>

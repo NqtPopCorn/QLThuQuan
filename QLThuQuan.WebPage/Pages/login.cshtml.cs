@@ -57,10 +57,10 @@ namespace QLThuQuan.WebPage.Pages
             // Tạo claims identity
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()),
-                new Claim(ClaimTypes.Email, user.email),
-                new Claim(ClaimTypes.Name, $"{user.firstName} {user.lastName}"),
-                new Claim("IsAdmin", user.isAdmin.ToString())
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+                new Claim("IsAdmin", user.IsAdmin.ToString())
             };
 
             var claimsIdentity = new ClaimsIdentity(

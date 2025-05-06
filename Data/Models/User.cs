@@ -1,25 +1,46 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLThuQuan.Data.Models
 {
     public class User
     {
-        public int user_id { get; set; }
+        // ID người dùng (khóa chính)
+        [Key]
+        [Column("user_id")]
+        public int Id { get; set; }
 
-        [Required(ErrorMessage = "Họ là bắt buộc")]
-        public string lastName { get; set; }
+        // Tên người dùng
+        [Required]
+        [StringLength(50)]
+        [Column("firstName")]
+        public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Tên là bắt buộc")]
-        public string firstName { get; set; }
+        // Họ người dùng
+        [Required]
+        [StringLength(50)]
+        [Column("lastName")]
+        public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Email là bắt buộc")]
-        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
-        public string email { get; set; }
+        // Email của người dùng
+        [Required]
+        [EmailAddress]
+        [StringLength(100)]
+        [Column("email")]
+        public string Email { get; set; }
 
-        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
-        [StringLength(255, MinimumLength = 6, ErrorMessage = "Mật khẩu phải từ 6-255 ký tự")]
-        public string password { get; set; }
+        // Mật khẩu người dùng
+        [Required]
+        [StringLength(100)]
+        [Column("password")]
+        public string Password { get; set; }
 
-        public int isAdmin { get; set; } = 0;
+        // Quyền admin (true nếu là admin, false nếu không phải)
+        [Column("isAdmin")]
+        public bool IsAdmin { get; set; }
+
+        // Thời gian tạo tài khoản
+        [Column("createdAt")]
+        public DateTime CreateAt { get; set; } = DateTime.UtcNow;
     }
 }

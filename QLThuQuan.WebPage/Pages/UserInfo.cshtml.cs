@@ -50,20 +50,21 @@ namespace QLThuQuan.WebPage.Pages
             switch (section)
             {
                 case "borrow-history":
-                    BorrowHistory = await _borrowService.GetUserBorrowRecordsAsync(CurrentUser.user_id);
+                    BorrowHistory = await _borrowService.GetUserBorrowRecordsAsync(CurrentUser.Id);
                     break;
                 case "reservation-history":
-                    ReservationHistory = await _reservationService.GetUserReservationsAsync(CurrentUser.user_id);
+                    ReservationHistory = await _reservationService.GetUserReservationsAsync(CurrentUser.Id);
                     break;
-                
+
                 case "violations":
-                    Violations = await _violationService.GetUserViolationsAsync(CurrentUser.user_id);
+                    Violations = await _violationService.GetUserViolationsAsync(CurrentUser.Id);
+                    Console.WriteLine($"Found {Violations?.Count ?? 0} violations for user {CurrentUser.Id}");
                     break;
                 default:
                     break;
             }
 
-            return Page(); 
+            return Page();
         }
 
 
@@ -75,12 +76,12 @@ namespace QLThuQuan.WebPage.Pages
 
             if (CurrentUser != null)
             {
-          
+
                 Input = new InputModel
                 {
-                    FirstName = CurrentUser.firstName,
-                    LastName = CurrentUser.lastName,
-                    Email = CurrentUser.email
+                    FirstName = CurrentUser.FirstName,
+                    LastName = CurrentUser.LastName,
+                    Email = CurrentUser.Email
                 };
             }
         }
@@ -119,15 +120,15 @@ namespace QLThuQuan.WebPage.Pages
             }
 
             await LoadCurrentUser();
-            return Page(); 
+            return Page();
         }
         private async Task UpdateAuthenticationState(User user)
         {
             var claims = new List<Claim>
     {
-        new Claim(ClaimTypes.NameIdentifier, user.user_id.ToString()),
-        new Claim(ClaimTypes.Name, $"{user.firstName} {user.lastName}"),
-   
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+
     };
 
             var identity = new ClaimsIdentity(claims, "Custom");

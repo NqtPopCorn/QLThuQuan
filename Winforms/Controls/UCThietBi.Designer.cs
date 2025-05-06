@@ -38,6 +38,7 @@
             btnTim = new Button();
             btnThem = new Button();
             btnRefresh = new Button();
+            btnImportExcel = new Button();
             panel1.SuspendLayout();
             tableDevice.SuspendLayout();
             SuspendLayout();
@@ -124,9 +125,9 @@
             btnThem.BackColor = Color.DodgerBlue;
             btnThem.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnThem.ForeColor = SystemColors.ButtonFace;
-            btnThem.Location = new Point(944, 23);
+            btnThem.Location = new Point(944, 33);
             btnThem.Name = "btnThem";
-            btnThem.Size = new Size(136, 49);
+            btnThem.Size = new Size(136, 39);
             btnThem.TabIndex = 3;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = false;
@@ -142,10 +143,24 @@
             btnRefresh.UseVisualStyleBackColor = true;
             btnRefresh.Click += btnRefresh_Click;
             // 
+            // btnImportExcel
+            // 
+            btnImportExcel.BackColor = Color.Fuchsia;
+            btnImportExcel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnImportExcel.ForeColor = SystemColors.ButtonFace;
+            btnImportExcel.Location = new Point(791, 33);
+            btnImportExcel.Name = "btnImportExcel";
+            btnImportExcel.Size = new Size(136, 39);
+            btnImportExcel.TabIndex = 5;
+            btnImportExcel.Text = "Import";
+            btnImportExcel.UseVisualStyleBackColor = false;
+            btnImportExcel.Click += btnImportExcel_Click;
+            // 
             // UCThietBi
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnImportExcel);
             Controls.Add(btnRefresh);
             Controls.Add(btnThem);
             Controls.Add(btnTim);
@@ -173,5 +188,6 @@
         private Button btnTim;
         private Button btnThem;
         private Button btnRefresh;
+        private Button btnImportExcel;
     }
 }

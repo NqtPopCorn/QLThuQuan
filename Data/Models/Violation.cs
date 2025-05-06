@@ -1,38 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace QLThuQuan.Data.Models
 {
+    [Serializable]
+    [Table("violations")]
     public class Violation
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int violation_id { get; set; }
+        [Column("violation_id")]
+        public int Id { get; set; }
 
-        [Required]
-        [ForeignKey("User")]
-        public int user_id { get; set; }
-        public virtual User User { get; set; }
+        [Column("user_id")]
+        public int UserId { get; set; }
 
-        [Required]
-        [ForeignKey("Rule")]
-        public int rule_id { get; set; }
-        public virtual Rule Rule { get; set; }
+        [Column("rule_id")]
+        public int RuleId { get; set; }
 
-        [Required]
-        public DateTime violated_at { get; set; } = DateTime.UtcNow;
+        [Column("notes")]
+        public string? Description { get; set; }
 
-        public DateTime? unban_at { get; set; }
+        [Column("violation_date")]
+        public DateTime ViolationDate { get; set; } = DateTime.Now;
 
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal? compensation_paid { get; set; }
+        [Column("unban_at")]
+        public DateTime? UnbanAt { get; set; } = null;
 
-        [Required]
-        [MaxLength(20)]
-        public string? status { get; set; } // 'active' or 'resolved'
+        [Column("status")]
+        public string Status { get; set; } = "pending"; // 'active','resolved','pending'
 
-        public string? notes { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+
+        [ForeignKey("RuleId")]
+        public Rule Rule { get; set; }
     }
 }

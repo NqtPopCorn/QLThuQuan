@@ -28,249 +28,242 @@
         /// </summary>
         private void InitializeComponent()
         {
+            tableLayoutPanel1 = new TableLayoutPanel();
             label1 = new Label();
-            panel1 = new Panel();
-            panel5 = new Panel();
-            label5 = new Label();
-            panel4 = new Panel();
-            label4 = new Label();
-            panel3 = new Panel();
-            label3 = new Label();
-            panel2 = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            tableLayoutPanel3 = new TableLayoutPanel();
             label2 = new Label();
-            panel6 = new Panel();
-            panel7 = new Panel();
-            label6 = new Label();
-            comboBox1 = new ComboBox();
-            label7 = new Label();
-            label8 = new Label();
-            comboBox2 = new ComboBox();
-            comboBox3 = new ComboBox();
-            panel1.SuspendLayout();
-            panel5.SuspendLayout();
-            panel4.SuspendLayout();
-            panel3.SuspendLayout();
-            panel2.SuspendLayout();
-            panel7.SuspendLayout();
+            cbLuaChon = new ComboBox();
+            btnTaoThongKe = new Button();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            label3 = new Label();
+            mcStartDate = new MonthCalendar();
+            tableLayoutPanel5 = new TableLayoutPanel();
+            label4 = new Label();
+            mcEndDate = new MonthCalendar();
+            tbLayoutChartTK = new TableLayoutPanel();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel5.SuspendLayout();
             SuspendLayout();
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(label1, 0, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
+            tableLayoutPanel1.Controls.Add(tbLayoutChartTK, 0, 2);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 300F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(1100, 800);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Arial", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(16, 17);
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(4, 1);
             label1.Name = "label1";
-            label1.Size = new Size(163, 37);
+            label1.Size = new Size(202, 54);
             label1.TabIndex = 0;
             label1.Text = "Thống Kê";
             // 
-            // panel1
+            // tableLayoutPanel2
             // 
-            panel1.Controls.Add(panel5);
-            panel1.Controls.Add(panel4);
-            panel1.Controls.Add(panel3);
-            panel1.Controls.Add(panel2);
-            panel1.Location = new Point(16, 67);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1201, 187);
-            panel1.TabIndex = 1;
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel2.Controls.Add(tableLayoutPanel3, 0, 0);
+            tableLayoutPanel2.Controls.Add(tableLayoutPanel4, 1, 0);
+            tableLayoutPanel2.Controls.Add(tableLayoutPanel5, 2, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(4, 65);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 232F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 232F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 232F));
+            tableLayoutPanel2.Size = new Size(1092, 294);
+            tableLayoutPanel2.TabIndex = 1;
             // 
-            // panel5
+            // tableLayoutPanel3
             // 
-            panel5.BorderStyle = BorderStyle.FixedSingle;
-            panel5.Controls.Add(label5);
-            panel5.Location = new Point(929, 3);
-            panel5.Name = "panel5";
-            panel5.Size = new Size(272, 181);
-            panel5.TabIndex = 3;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Arial", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label5.Location = new Point(3, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(201, 24);
-            label5.TabIndex = 3;
-            label5.Text = "Số Lượng Vi Phạm";
-            // 
-            // panel4
-            // 
-            panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(label4);
-            panel4.Location = new Point(626, 3);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(272, 181);
-            panel4.TabIndex = 2;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Arial", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label4.Location = new Point(3, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(144, 24);
-            label4.TabIndex = 2;
-            label4.Text = "Số Lượng Ra";
-            // 
-            // panel3
-            // 
-            panel3.BorderStyle = BorderStyle.FixedSingle;
-            panel3.Controls.Add(label3);
-            panel3.Location = new Point(318, 3);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(272, 181);
-            panel3.TabIndex = 1;
-            panel3.Paint += panel3_Paint;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label3.Location = new Point(3, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(156, 24);
-            label3.TabIndex = 1;
-            label3.Text = "Số Lượng Vào";
-            // 
-            // panel2
-            // 
-            panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label2);
-            panel2.Location = new Point(3, 3);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(272, 181);
-            panel2.TabIndex = 0;
+            tableLayoutPanel3.ColumnCount = 1;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Controls.Add(label2, 0, 0);
+            tableLayoutPanel3.Controls.Add(cbLuaChon, 0, 1);
+            tableLayoutPanel3.Controls.Add(btnTaoThongKe, 0, 2);
+            tableLayoutPanel3.Dock = DockStyle.Fill;
+            tableLayoutPanel3.Location = new Point(3, 3);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 3;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel3.Size = new Size(212, 288);
+            tableLayoutPanel3.TabIndex = 0;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Arial", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(3, 0);
             label2.Name = "label2";
-            label2.Size = new Size(176, 24);
+            label2.Size = new Size(174, 57);
             label2.TabIndex = 0;
-            label2.Text = "Số Lượng Users";
+            label2.Text = " Chọn dữ liệu thống kê";
             // 
-            // panel6
+            // cbLuaChon
             // 
-            panel6.BorderStyle = BorderStyle.FixedSingle;
-            panel6.Location = new Point(16, 387);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(1201, 438);
-            panel6.TabIndex = 2;
+            cbLuaChon.Dock = DockStyle.Top;
+            cbLuaChon.FormattingEnabled = true;
+            cbLuaChon.Location = new Point(3, 60);
+            cbLuaChon.Name = "cbLuaChon";
+            cbLuaChon.Size = new Size(206, 28);
+            cbLuaChon.TabIndex = 1;
+            cbLuaChon.SelectedIndexChanged += cbLuaChon_SelectedIndexChanged;
             // 
-            // panel7
+            // btnTaoThongKe
             // 
-            panel7.Controls.Add(comboBox3);
-            panel7.Controls.Add(comboBox2);
-            panel7.Controls.Add(label8);
-            panel7.Controls.Add(label7);
-            panel7.Controls.Add(comboBox1);
-            panel7.Controls.Add(label6);
-            panel7.Location = new Point(16, 281);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(1201, 82);
-            panel7.TabIndex = 3;
+            btnTaoThongKe.BackColor = Color.CornflowerBlue;
+            btnTaoThongKe.Dock = DockStyle.Fill;
+            btnTaoThongKe.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnTaoThongKe.ForeColor = SystemColors.ButtonHighlight;
+            btnTaoThongKe.Location = new Point(3, 232);
+            btnTaoThongKe.Name = "btnTaoThongKe";
+            btnTaoThongKe.Size = new Size(206, 53);
+            btnTaoThongKe.TabIndex = 2;
+            btnTaoThongKe.Text = "Tạo Thống Kê";
+            btnTaoThongKe.UseVisualStyleBackColor = false;
+            btnTaoThongKe.Click += btnTaoThongKe_Click;
             // 
-            // label6
+            // tableLayoutPanel4
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Arial", 15.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(3, 11);
-            label6.Name = "label6";
-            label6.Size = new Size(161, 24);
-            label6.TabIndex = 1;
-            label6.Text = "Chọn danh mục";
+            tableLayoutPanel4.ColumnCount = 1;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
+            tableLayoutPanel4.Controls.Add(label3, 0, 0);
+            tableLayoutPanel4.Controls.Add(mcStartDate, 0, 1);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(221, 3);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 2;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel4.Size = new Size(430, 288);
+            tableLayoutPanel4.TabIndex = 1;
             // 
-            // comboBox1
+            // label3
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(170, 10);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(237, 29);
-            comboBox1.TabIndex = 2;
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(3, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(168, 32);
+            label3.TabIndex = 2;
+            label3.Text = "Ngày bắt đầu";
             // 
-            // label7
+            // mcStartDate
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Arial", 15.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label7.Location = new Point(504, 15);
-            label7.Name = "label7";
-            label7.Size = new Size(129, 24);
-            label7.TabIndex = 3;
-            label7.Text = "Từ thời điểm";
+            mcStartDate.Dock = DockStyle.Fill;
+            mcStartDate.Location = new Point(8, 66);
+            mcStartDate.Margin = new Padding(8, 9, 8, 9);
+            mcStartDate.Name = "mcStartDate";
+            mcStartDate.TabIndex = 3;
             // 
-            // label8
+            // tableLayoutPanel5
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Arial", 15.75F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label8.Location = new Point(884, 15);
-            label8.Name = "label8";
-            label8.Size = new Size(49, 24);
-            label8.TabIndex = 5;
-            label8.Text = "Đến";
+            tableLayoutPanel5.ColumnCount = 1;
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel5.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
+            tableLayoutPanel5.Controls.Add(label4, 0, 0);
+            tableLayoutPanel5.Controls.Add(mcEndDate, 0, 1);
+            tableLayoutPanel5.Dock = DockStyle.Fill;
+            tableLayoutPanel5.Location = new Point(657, 3);
+            tableLayoutPanel5.Name = "tableLayoutPanel5";
+            tableLayoutPanel5.RowCount = 2;
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
+            tableLayoutPanel5.Size = new Size(432, 288);
+            tableLayoutPanel5.TabIndex = 2;
             // 
-            // comboBox2
+            // label4
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(639, 11);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(237, 29);
-            comboBox2.TabIndex = 6;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(3, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(173, 32);
+            label4.TabIndex = 3;
+            label4.Text = "Ngày kết thúc";
             // 
-            // comboBox3
+            // mcEndDate
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(933, 11);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(237, 29);
-            comboBox3.TabIndex = 7;
+            mcEndDate.Dock = DockStyle.Fill;
+            mcEndDate.Location = new Point(8, 66);
+            mcEndDate.Margin = new Padding(8, 9, 8, 9);
+            mcEndDate.Name = "mcEndDate";
+            mcEndDate.TabIndex = 4;
+            // 
+            // tbLayoutChartTK
+            // 
+            tbLayoutChartTK.ColumnCount = 1;
+            tbLayoutChartTK.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tbLayoutChartTK.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 18F));
+            tbLayoutChartTK.Dock = DockStyle.Fill;
+            tbLayoutChartTK.Location = new Point(4, 366);
+            tbLayoutChartTK.Name = "tbLayoutChartTK";
+            tbLayoutChartTK.RowCount = 1;
+            tbLayoutChartTK.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tbLayoutChartTK.RowStyles.Add(new RowStyle(SizeType.Absolute, 513F));
+            tbLayoutChartTK.Size = new Size(1092, 430);
+            tbLayoutChartTK.TabIndex = 2;
             // 
             // UCThongKe
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(panel7);
-            Controls.Add(panel6);
-            Controls.Add(panel1);
-            Controls.Add(label1);
+            Controls.Add(tableLayoutPanel1);
             Name = "UCThongKe";
-            Size = new Size(1238, 840);
-            panel1.ResumeLayout(false);
-            panel5.ResumeLayout(false);
-            panel5.PerformLayout();
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel7.ResumeLayout(false);
-            panel7.PerformLayout();
+            Size = new Size(1100, 800);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            tableLayoutPanel5.ResumeLayout(false);
+            tableLayoutPanel5.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
+        private TableLayoutPanel tableLayoutPanel1;
         private Label label1;
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
-        private Panel panel5;
-        private Panel panel4;
-        private Panel panel6;
-        private Panel panel7;
+        private TableLayoutPanel tableLayoutPanel2;
+        private TableLayoutPanel tableLayoutPanel3;
         private Label label2;
-        private Label label5;
-        private Label label4;
+        private TableLayoutPanel tableLayoutPanel4;
+        private TableLayoutPanel tableLayoutPanel5;
         private Label label3;
-        private Label label6;
-        private Label label8;
-        private Label label7;
-        private ComboBox comboBox1;
-        private ComboBox comboBox3;
-        private ComboBox comboBox2;
+        private MonthCalendar mcStartDate;
+        private Label label4;
+        private MonthCalendar mcEndDate;
+        private ComboBox cbLuaChon;
+        private TableLayoutPanel tbLayoutChartTK;
+        private Button btnTaoThongKe;
     }
 }

@@ -1,158 +1,228 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic.ApplicationServices;
+using QLThuQuan.Data.Models;
+using QLThuQuan.Data.Services;
+using QLThuQuan.Winforms.Component.User;
+using QLThuQuan.Winforms.Helpers;
 
 namespace QLThuQuan.Winforms.Controls
 {
-    public partial class UCUser : Form
+    public partial class UCUser : UserControl
     {
-        public UCUser()
+        private readonly IUserService _userService;
+
+        private readonly CreateUser _createUserForm;
+
+        private readonly UpdateUser _updateUserForm;
+
+        public UCUser(IUserService userService, CreateUser createUserFrom, UpdateUser updateUserForm)
         {
             InitializeComponent();
-            InitializeDataGridView();
-            LoadData();
-            dgvUsers.CellClick += dgvUsers_CellClick;
+            _userService = userService;
+            _createUserForm = createUserFrom;
+            _updateUserForm = updateUserForm;
+            this.Load += UCUser_Load;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void UCUser_Load(object sender, EventArgs e)
         {
+            await FetchAndShowUsersAsync();
+        }
+
+        private async Task FetchAndShowUsersAsync()
+        {
+            var users = (await _userService.GetAllUsersAsync()).ToList();
+            ShowUsers(users);
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ShowUsers(List<User> users)
         {
+            dtgView.AutoGenerateColumns = true;
+            dtgView.DataSource = null;
+            dtgView.Columns.Clear(); // Xóa toàn bộ cột cũ trước khi gán lại source
+            dtgView.DataSource = users;
+            dtgView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-        }
+            // Đặt lại headerText và ẩn cột không cần
+            if (dtgView.Columns.Contains("Id"))
+                dtgView.Columns["Id"].HeaderText = "Mã người dùng";
 
-        private void label4_Click(object sender, EventArgs e)
-        {
+            if (dtgView.Columns.Contains("FirstName"))
+                dtgView.Columns["FirstName"].HeaderText = "Tên";
 
-        }
+            if (dtgView.Columns.Contains("LastName"))
+                dtgView.Columns["LastName"].HeaderText = "Họ";
 
-        private void InitializeDataGridView()
-        {
-            dgvUsers.Columns.Clear();
+            if (dtgView.Columns.Contains("Email"))
+                dtgView.Columns["Email"].HeaderText = "Email";
 
-            // Cấu hình các cột
-            dgvUsers.Columns.Add("ID", "ID");
-            dgvUsers.Columns.Add("Email", "Email");
-            dgvUsers.Columns.Add("FirstName", "First Name");
-            dgvUsers.Columns.Add("LastName", "Last Name");
-            dgvUsers.Columns.Add("Password", "Password");
-            dgvUsers.Columns.Add("IsAdmin", "Is Admin");
-            dgvUsers.Columns.Add("Status", "Status");
+            if (dtgView.Columns.Contains("Password"))
+                dtgView.Columns["Password"].Visible = false;
 
-            // Thêm cột Action với nút Khóa và Sửa
-            DataGridViewButtonColumn btnLock = new DataGridViewButtonColumn();
-            btnLock.Name = "btnLock";
-            btnLock.HeaderText = "Khóa";
-            btnLock.Text = "Khóa";
-            btnLock.UseColumnTextForButtonValue = true;
-
-            DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn();
-            btnEdit.Name = "btnEdit";
-            btnEdit.HeaderText = "Sửa";
-            btnEdit.Text = "Sửa";
-            btnEdit.UseColumnTextForButtonValue = true;
-
-            dgvUsers.Columns.Add(btnLock);
-            dgvUsers.Columns.Add(btnEdit);
-
-            dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
-
-
-        private void LoadData()
-        {
-            var users = new List<User>
+            if (dtgView.Columns.Contains("IsAdmin"))
             {
-                new User { ID = 1, Email = "user1@gmail.com", FirstName = "John", LastName = "Doe", Password = "1234", IsAdmin = true, Status = "Active" },
-                new User { ID = 2, Email = "user2@gmail.com", FirstName = "Jane", LastName = "Smith", Password = "abcd", IsAdmin = false, Status = "Blocked" }
+                dtgView.Columns["IsAdmin"].HeaderText = "Admin";
+                dtgView.Columns["IsAdmin"].ReadOnly = true; // Ngăn người dùng chỉnh sửa
+            }
+
+            if (dtgView.Columns.Contains("CreateAt"))
+                dtgView.Columns["CreateAt"].HeaderText = "Ngày tạo";
+
+            // Thêm cột thao tác
+            var actionCol = new DataGridViewButtonColumn
+            {
+                Name = "Actions",
+                HeaderText = "Thao tác",
+                Text = "Sửa | Xóa",
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
+            dtgView.Columns.Add(actionCol);
 
-            dgvUsers.Rows.Clear();
-
-            foreach (var user in users)
-            {
-                int rowIndex = dgvUsers.Rows.Add(
-                    user.ID,
-                    user.Email,
-                    user.FirstName,
-                    user.LastName,
-                    user.Password,
-                    user.IsAdmin ? "Yes" : "No",
-                    user.Status
-                );
-
-                // Thêm nút Khóa và Sửa vào từng hàng
-                dgvUsers.Rows[rowIndex].Cells["btnLock"].Value = "Khóa";
-                dgvUsers.Rows[rowIndex].Cells["btnEdit"].Value = "Sửa";
-            }
+            // Tránh đăng ký nhiều lần
+            dtgView.CellClick -= DtgView_CellClick;
+            dtgView.CellClick += DtgView_CellClick;
         }
 
-        private void dgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void DtgView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return; // 👉 Bỏ qua nếu click vào tiêu đề cột hoặc hàng trống.
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            try
+            var clickedColumn = dtgView.Columns[e.ColumnIndex];
+            if (clickedColumn.Name == "Actions")
             {
-                string columnName = dgvUsers.Columns[e.ColumnIndex].HeaderText; // Sửa lại cách lấy tên cột
+                var selectedUser = dtgView.Rows[e.RowIndex].DataBoundItem as User;
+                if (selectedUser == null) return;
 
-                // 👉 Kiểm tra xem cột "ID" có tồn tại trong bảng không
-                if (!dgvUsers.Columns.Contains("ID"))
+                // Xác định nửa trái/phải trong ô button
+                var cellRect = dtgView.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                var clickPoint = dtgView.PointToClient(Cursor.Position);
+                int clickX = clickPoint.X - cellRect.X;
+
+                if (clickX < cellRect.Width / 2)
                 {
-                    MessageBox.Show("Cột 'ID' không tồn tại trong DataGridView.");
-                    return;
+                    // Nửa trái: cập nhật
+                    await UpdateUserAsync(selectedUser);
                 }
-
-                // 👉 Lấy giá trị của ô "ID" và chuyển thành số nguyên
-                var cellValue = dgvUsers.Rows[e.RowIndex].Cells["ID"].Value;
-
-                if (cellValue == null || string.IsNullOrEmpty(cellValue.ToString()))
+                else
                 {
-                    MessageBox.Show("Ô 'ID' không có giá trị hợp lệ.");
-                    return;
+                    // Nửa phải: xóa
+                    await DeleteUserAsync(selectedUser);
                 }
-
-                int userId = int.Parse(cellValue.ToString());
-
-                if (columnName == "Khóa") // Tên cột được hiển thị trên giao diện là "Khóa"
-                {
-                    MessageBox.Show($"Bạn vừa nhấn nút Khóa cho User có ID: {userId}");
-                    // Thêm code xử lý khóa người dùng ở đây
-                }
-                else if (columnName == "Sửa") // Tên cột được hiển thị trên giao diện là "Sửa"
-                {
-                    MessageBox.Show($"Bạn vừa nhấn nút Sửa cho User có ID: {userId}");
-                    // Thêm code xử lý sửa người dùng ở đây
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}");
             }
         }
 
-
-
-
-        public class User
+        private async Task UpdateUserAsync(User user)
         {
-            public int ID { get; set; }
-            public string Email { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Password { get; set; }
-            public bool IsAdmin { get; set; }
-            public string Status { get; set; }
+            _updateUserForm.SetUser(user); // Truyền dữ liệu người dùng vào form
+
+            var result = _updateUserForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                var updatedUser = _updateUserForm.UpdatedUser;
+
+                await _userService.UpdateUserAsync(updatedUser);
+                MessageBox.Show("Cập nhật người dùng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await FetchAndShowUsersAsync();
+            }
         }
 
+        private async Task DeleteUserAsync(User user)
+        {
+            var confirm = MessageBox.Show($"Xác nhận xóa người dùng {user.FirstName} {user.LastName}?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
+            {
+                await _userService.DeleteUserAsync(user.Id);
+                await FetchAndShowUsersAsync();
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            // Có thể bỏ qua hoặc xử lý nếu cần
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            this._createUserForm.ShowDialog();
+        }
+
+        private async void btnReset_Click(object sender, EventArgs e)
+        {
+            await FetchAndShowUsersAsync();
+        }
+
+        private async void btnEnter_Click(object sender, EventArgs e)
+        {
+            string searchText = txtSearch.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                await FetchAndShowUsersAsync();
+                return;
+            }
+
+            var allUsers = await _userService.GetAllUsersAsync();
+            var filteredUsers = allUsers.Where(u =>
+                (u.FirstName != null && u.FirstName.ToLower().Contains(searchText)) ||
+                (u.LastName != null && u.LastName.ToLower().Contains(searchText)) ||
+                (u.Email != null && u.Email.ToLower().Contains(searchText)) ||
+                (u.Id.ToString().Contains(searchText))
+            ).ToList();
+
+            if (filteredUsers.Any())
+            {
+                ShowUsers(filteredUsers);
+                MessageBox.Show("Tìm kiếm thành công!", "Thông báo",
+                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                // Truyền danh sách rỗng
+                ShowUsers(new List<User>());
+                // Hoặc có thể hiển thị thông báo cho người dùng
+                MessageBox.Show("Không tìm thấy người dùng phù hợp.", "Thông báo",
+                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                openFileDialog.DefaultExt = "xlsx";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var users = ExcelService.ImportUsersFromExcel(openFileDialog.FileName);
+                    if (users.Count > 0)
+                    {
+                        foreach (var user in users)
+                        {
+                            // Kiểm tra email trùng trước khi thêm
+                            var existingUserByEmail = await _userService.GetUserByEmailAsync(user.Email);
+                            var extstingUserById = await _userService.GetUserByIdAsync(user.Id);
+                            if (existingUserByEmail == null && extstingUserById == null)
+                            {
+                                await _userService.AddUserAsync(user);
+                            }
+                        }
+                        // Cập nhật giao diện (giả sử có DataGridView tên gridViewUsers)
+                        FetchAndShowUsersAsync();
+                        MessageBox.Show("Nhập file Excel thành công!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không có dữ liệu hoặc lỗi khi đọc file Excel!");
+                    }
+                }
+            }
+        }
     }
 }

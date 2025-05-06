@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using QLThuQuan.Winforms.Controls;
 
 namespace QLThuQuan.Winforms
@@ -10,20 +10,35 @@ namespace QLThuQuan.Winforms
         private Button currentSelectedButton;
         private UCThietBi ucThietBi;
         private QLDatMuon ucDatMuon;
+        private UCQuyTac ucQuyTac;
+        private UCThongKe ucThongKe;
+        private QLMuonTra ucMuonTra;
+        private UCUser ucUser;
+        private UCViPham ucViPham;
 
-        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon)
+        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, UCQuyTac uCQuyTac, UCThongKe ucThongKe, QLMuonTra ucMuonTra, UCUser ucUser, UCViPham uCViPham)
         {
             this.ucThietBi = uCThietBi;
             this.ucDatMuon = ucDatMuon;
+            this.ucQuyTac = uCQuyTac;
+            this.ucThongKe = ucThongKe;
+            this.ucMuonTra = ucMuonTra;
+            this.ucUser = ucUser;
+            this.ucViPham = uCViPham;
 
             InitializeComponent();
 
             SetUpNavigations();
-            this.ucDatMuon = ucDatMuon;
         }
 
         private void ShowControl(UserControl control)
         {
+            if (control == null)
+            {
+                MessageBox.Show("Control is null");
+                return; // Không làm gì nếu control là null
+            }
+
             control.Dock = DockStyle.Fill;
             cardPanel.Controls.Clear();
             cardPanel.Controls.Add(control);
@@ -34,7 +49,11 @@ namespace QLThuQuan.Winforms
             navMap = new Dictionary<Button, UserControl>() {
                 { btnThietBi, ucThietBi },
                 { btnQLDatMuon, ucDatMuon },
-                { btnQLMuonTra, new UCThongKe() },
+                { btnQLMuonTra, ucMuonTra },
+                { btnTK, ucThongKe },
+                { btnUser, ucUser },
+                { btnQuyTac, ucQuyTac },
+                { btnViPham, ucViPham }
             };
 
             foreach (var entry in navMap)
@@ -80,6 +99,21 @@ namespace QLThuQuan.Winforms
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
+
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTK_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
