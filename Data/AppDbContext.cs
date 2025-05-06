@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using QLThuQuan.Data.Models;
 
 namespace QLThuQuan.Data
 {
@@ -18,8 +19,22 @@ namespace QLThuQuan.Data
 
         public DbSet<Models.Reservation> Reservations { get; set; }
 
+        public DbSet<Models.User> Users { get; set; }
+
+        public DbSet<CheckIns> CheckIns { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+        }
+
+        // Đây là construct để tạo AppDbContext độc lập
+        public AppDbContext() : base(CreateOptions()) { }
+
+        private static DbContextOptions<AppDbContext> CreateOptions()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            return optionsBuilder.Options;
         }
     }
 }

@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using QLThuQuan.Winforms.Controls;
 
 namespace QLThuQuan.Winforms
@@ -10,23 +10,31 @@ namespace QLThuQuan.Winforms
         private Button currentSelectedButton;
         private UCThietBi ucThietBi;
         private QLDatMuon ucDatMuon;
+        private UCQuyTac ucQuyTac;
+        private UCThongKe ucThongKe;
         private QLMuonTra ucMuonTra;
+        private UCUser ucUser;
 
-        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, QLMuonTra ucMuonTra)
+        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, UCUser ucUser, UCThongKe ucThongKe, QLMuonTra ucMuonTra)
         {
             this.ucThietBi = uCThietBi;
             this.ucDatMuon = ucDatMuon;
-            this.ucMuonTra = ucMuonTra;
+            this.ucUser = ucUser;
+            this.ucThongKe = ucThongKe;
 
             InitializeComponent();
 
             SetUpNavigations();
-            this.ucDatMuon = ucDatMuon;
-            this.ucMuonTra = ucMuonTra;
         }
 
         private void ShowControl(UserControl control)
         {
+            if (control == null)
+            {
+                MessageBox.Show("Control is null");
+                return; // Không làm gì nếu control là null
+            }
+
             control.Dock = DockStyle.Fill;
             cardPanel.Controls.Clear();
             cardPanel.Controls.Add(control);
@@ -38,6 +46,9 @@ namespace QLThuQuan.Winforms
                 { btnThietBi, ucThietBi },
                 { btnQLDatMuon, ucDatMuon },
                 { btnQLMuonTra, ucMuonTra },
+                { btnQLMuonTra, ucMuonTra },
+                { btnTK, ucThongKe },
+                { btnUser, ucUser },
             };
 
             foreach (var entry in navMap)
@@ -83,6 +94,21 @@ namespace QLThuQuan.Winforms
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
+
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTK_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

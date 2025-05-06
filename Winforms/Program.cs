@@ -5,6 +5,7 @@ using QLThuQuan.Data;
 using QLThuQuan.Data.Services;
 using QLThuQuan.Winforms.Controls;
 using QLThuQuan.Winforms.Helpers;
+using QLThuQuan.Winforms.Component.User;
 
 namespace QLThuQuan.Winforms
 {
@@ -32,22 +33,32 @@ namespace QLThuQuan.Winforms
                     //borrow service
                     services.AddScoped<IBorrowService, BorrowService>();
                     //reservation service
-                    services.AddScoped<IReservationService, ReservationService> ();
+                    services.AddScoped<IReservationService, ReservationService>();
                     //borrow record service
                     services.AddScoped<IBorrowService, BorrowService>();
+                    //user service
+                    services.AddScoped<IUserService, UserServiceImpl>();
+                    //check ins service
+                    services.AddScoped<ICheckInsService, CheckInsServiceImpl>();
 
                     services.AddScoped<Dashboard>();
                     services.AddScoped<UCThietBi>();
                     services.AddScoped<QLDatMuon>();
                     services.AddScoped<QLMuonTra>();
+                    services.AddScoped<UCThongKe>();
+                    services.AddScoped<UCUser>();
+                    services.AddScoped<CreateUser>();
+                    services.AddScoped<UpdateUser>();
+                    services.AddScoped<CheckInForm>();
+                    services.AddScoped<DieuHuongGiaoDien>();
                 })
                 .Build();
 
             // Lấy dashboard từ container → các dependency trong dashboard sẽ được inject
-            var form = host.Services.GetRequiredService<Dashboard>();
-            //var form = new ImageScanDialog();
-            Application.Run(form);
-            //MessageBox.Show($"Mã đã quét: {form.GetDecodedValue()}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //var form = host.Services.GetRequiredService<Dashboard>();
+            //var formCheckIns = host.Services.GetRequiredService<CheckInForm>();
+            var formDieuHuong = host.Services.GetRequiredService<DieuHuongGiaoDien>();
+            Application.Run(formDieuHuong);
         }
 
     }
