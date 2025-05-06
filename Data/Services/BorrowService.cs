@@ -68,5 +68,21 @@ namespace QLThuQuan.Data.Services
                 .Where(br => br.Status.Equals(status))
                 .ToListAsync();
         }
+
+        public async Task<Dictionary<string, double>> GetDeviceBorrowStatsByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            var result = await (from br in _context.BorrowRecords
+                                join d in _context.Devices on br.DeviceId equals d.Id
+                                where br.BorrowedAt >= startDate && br.BorrowedAt <= endDate
+                                group d by d.Name into g
+                                select new
+                                {
+                                    DeviceName = g.Key,
+                                    BorrowCount = g.Count()
+                                })
+                                .ToDictionaryAsync(x => x.DeviceName, x => (double)x.BorrowCount);
+            return result;
+        }
+
     }
 }

@@ -67,5 +67,39 @@ namespace QLThuQuan.Data.Services
                 .ToDictionaryAsync(g => g.Month, g => (double)g.Count);
         }
 
+        public async Task<Dictionary<string, double>> GetViPhamStats(DateTime startDate, DateTime endDate)
+        {
+            await using var context = new AppDbContext();
+
+            var violations = await context.Violations
+                .Where(v => v.ViolationDate >= startDate && v.ViolationDate <= endDate)
+                .ToListAsync();
+
+            int unresolvedCount = violations.Count(v => v.Status == "active");
+            int resolvedCount = violations.Count(v => v.Status == "resolved");
+
+            // Lấy danh sách các RuleId duy nhất
+            var ruleIds = violations.Select(v => v.RuleId).Distinct().ToList();
+
+            // Lấy thông tin các Rule liên quan
+            var rulesDict = await context.Rules
+                .Where(r => ruleIds.Contains(r.Id))
+                .ToDictionaryAsync(r => r.Id, r => r.CompensationAmount);
+
+            // Tính tổng tiền vi phạm
+            double totalCompensation = violations
+                .Sum(v => rulesDict.TryGetValue(v.RuleId, out var amount) ? (double)amount : 0);
+
+            double totalPaid = violations.Sum(v => (double)v.CompensationPaid);
+
+            return new Dictionary<string, double>
+            {
+                { "Tổng vi phạm chưa xử lý", unresolvedCount },
+                { "Tổng vi phạm đã xử lý", resolvedCount },
+                { "Tổng tiền vi phạm", totalCompensation },
+                { "Tổng tiền đã trả", totalPaid }
+            };
+        }
+
     }
 }

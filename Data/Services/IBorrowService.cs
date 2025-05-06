@@ -20,5 +20,7 @@ namespace QLThuQuan.Data.Services
 
         Task<List<BorrowRecord>> GetByStatusAsync(string status);
 
+        Task<Dictionary<string, double>> GetDeviceBorrowStatsByDateRangeAsync(DateTime startDate, DateTime endDate);
+
     }
 }
