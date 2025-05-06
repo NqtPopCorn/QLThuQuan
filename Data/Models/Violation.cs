@@ -22,14 +22,17 @@ namespace QLThuQuan.Data.Models
         [Column("rule_id")]
         public int RuleId { get; set; }
 
-        [Column("description")]
-        public string Description { get; set; }
+        [Column("notes")]
+        public string? Description { get; set; }
 
         [Column("violation_date")]
         public DateTime ViolationDate { get; set; } = DateTime.Now;
 
+        [Column("unban_at")]
+        public DateTime? UnbanAt { get; set; } = null;
+
         [Column("status")]
-        public string Status { get; set; } = "pending"; // pending, resolved
+        public string Status { get; set; } = "pending"; // 'active','resolved','pending'
 
         [ForeignKey("UserId")]
         public User User { get; set; }

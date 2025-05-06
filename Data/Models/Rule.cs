@@ -21,7 +21,7 @@ namespace QLThuQuan.Data.Models
         public string Name { get; set; }
 
         [Column("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;

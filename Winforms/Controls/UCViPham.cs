@@ -246,11 +246,22 @@ namespace QLThuQuan.Winforms.Controls
             var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
             cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
             cboStatus.SelectedItem = violation.Status;
+            //moi them 
+            var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
+            var dtpUnban = new DateTimePicker
+            {
+                Location = new Point(120, 260),
+                Width = 250,
+                Format = DateTimePickerFormat.Custom,
+                CustomFormat = "dd/MM/yyyy HH:mm",
+                ShowUpDown = true // Để dễ chọn giờ phút
+            };
+
 
             var btnSave = new Button { Text = "Lưu", Location = new Point(200, 300), DialogResult = DialogResult.OK };
             var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 300), DialogResult = DialogResult.Cancel };
 
-            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblStatus, cboStatus, btnSave, btnCancel });
+            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblStatus, cboStatus, lblUnban, dtpUnban, btnSave, btnCancel });
             form.AcceptButton = btnSave;
             form.CancelButton = btnCancel;
 
@@ -267,11 +278,12 @@ namespace QLThuQuan.Winforms.Controls
                 {
                     var updatedViolation = new Violation
                     {
-                        Id = violation.Id,
                         UserId = Convert.ToInt32(cboUser.SelectedValue),
                         RuleId = Convert.ToInt32(cboRule.SelectedValue),
                         Description = txtDesc.Text,
                         Status = cboStatus.SelectedItem?.ToString() ?? "pending",
+                        ViolationDate = DateTime.Now,
+                        UnbanAt = dtpUnban.Value
                     };
                     await _violationService.UpdateAsync(updatedViolation);
                     await LoadViolationsAsync();
@@ -380,11 +392,21 @@ namespace QLThuQuan.Winforms.Controls
             var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
             cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
             cboStatus.SelectedIndex = 0;
+            //moi them 
+            var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
+            var dtpUnban = new DateTimePicker
+            {
+                Location = new Point(120, 260),
+                Width = 250,
+                Format = DateTimePickerFormat.Custom,
+                CustomFormat = "dd/MM/yyyy HH:mm",
+                ShowUpDown = true // Để dễ chọn giờ phút
+            };
 
             var btnSave = new Button { Text = "Lưu", Location = new Point(200, 300), DialogResult = DialogResult.OK };
             var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 300), DialogResult = DialogResult.Cancel };
 
-            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblStatus, cboStatus, btnSave, btnCancel });
+            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblStatus, cboStatus, lblUnban, dtpUnban, btnSave, btnCancel });
             form.AcceptButton = btnSave;
             form.CancelButton = btnCancel;
 

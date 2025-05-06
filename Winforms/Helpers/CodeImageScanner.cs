@@ -153,4 +153,5 @@ namespace QLThuQuan.Winforms.Helpers
             }
             return string.Empty;
         }
+    }
 }
