@@ -35,7 +35,11 @@ namespace QLThuQuan.Winforms.Controls
             tableDevice.Controls.Clear();
             devices.ForEach(device =>
             {
-                DeviceItem deviceItem = new DeviceItem(device);
+                DeviceItem deviceItem = new DeviceItem(device, _deviceService);
+                deviceItem.OnSave += (updatedDevice) =>
+                {
+                    loadTableDevice();
+                };
                 tableDevice.Controls.Add(deviceItem);
             });
         }

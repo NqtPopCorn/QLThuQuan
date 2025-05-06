@@ -61,5 +61,12 @@ namespace QLThuQuan.Data.Services
                 .ToListAsync();
         }
 
+        public async Task<List<Device>> GetAllByStatusAsync(string status)
+        {
+            return await _context.Devices
+                .Where(d => d.Status == status)
+                .ToListAsync();
+        }
+
     }
 }

@@ -18,5 +18,7 @@ namespace QLThuQuan.Data.Services
         Task<List<Reservation>> GetByUserIdAsync(int userId);
         Task<List<Reservation>> GetByDeviceIdAsync(int deviceId);
         Task<List<Reservation>> FindByKeywordAsync(string keyword);
+
+        Task<List<Reservation>> GetByStatusAsync(string status);
     }
 }

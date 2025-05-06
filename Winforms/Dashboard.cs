@@ -10,16 +10,19 @@ namespace QLThuQuan.Winforms
         private Button currentSelectedButton;
         private UCThietBi ucThietBi;
         private QLDatMuon ucDatMuon;
+        private QLMuonTra ucMuonTra;
 
-        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon)
+        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, QLMuonTra ucMuonTra)
         {
             this.ucThietBi = uCThietBi;
             this.ucDatMuon = ucDatMuon;
+            this.ucMuonTra = ucMuonTra;
 
             InitializeComponent();
 
             SetUpNavigations();
             this.ucDatMuon = ucDatMuon;
+            this.ucMuonTra = ucMuonTra;
         }
 
         private void ShowControl(UserControl control)
@@ -34,7 +37,7 @@ namespace QLThuQuan.Winforms
             navMap = new Dictionary<Button, UserControl>() {
                 { btnThietBi, ucThietBi },
                 { btnQLDatMuon, ucDatMuon },
-                { btnQLMuonTra, new UCThongKe() },
+                { btnQLMuonTra, ucMuonTra },
             };
 
             foreach (var entry in navMap)

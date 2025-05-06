@@ -61,5 +61,12 @@ namespace QLThuQuan.Data.Services
                 .Where(br => br.DeviceId == deviceId)
                 .ToListAsync();
         }
+
+        public async Task<List<BorrowRecord>> GetByStatusAsync(string status)
+        {
+            return await _context.BorrowRecords
+                .Where(br => br.Status.Equals(status))
+                .ToListAsync();
+        }
     }
 }

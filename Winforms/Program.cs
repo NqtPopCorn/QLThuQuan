@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using QLThuQuan.Data;
 using QLThuQuan.Data.Services;
 using QLThuQuan.Winforms.Controls;
+using QLThuQuan.Winforms.Helpers;
 
 namespace QLThuQuan.Winforms
 {
@@ -32,16 +33,21 @@ namespace QLThuQuan.Winforms
                     services.AddScoped<IBorrowService, BorrowService>();
                     //reservation service
                     services.AddScoped<IReservationService, ReservationService> ();
+                    //borrow record service
+                    services.AddScoped<IBorrowService, BorrowService>();
 
                     services.AddScoped<Dashboard>();
                     services.AddScoped<UCThietBi>();
                     services.AddScoped<QLDatMuon>();
+                    services.AddScoped<QLMuonTra>();
                 })
                 .Build();
 
             // Lấy dashboard từ container → các dependency trong dashboard sẽ được inject
             var form = host.Services.GetRequiredService<Dashboard>();
+            //var form = new ImageScanDialog();
             Application.Run(form);
+            //MessageBox.Show($"Mã đã quét: {form.GetDecodedValue()}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
     }

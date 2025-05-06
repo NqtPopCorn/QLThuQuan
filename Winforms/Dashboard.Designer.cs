@@ -35,11 +35,11 @@ namespace QLThuQuan.Winforms
             tableLayoutPanel1 = new TableLayoutPanel();
             btnThietBi = new Button();
             btnQLDatMuon = new Button();
-            btnQLMuonTra = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            cardPanel = new Panel();
             btnUser = new Button();
+            btnQLMuonTra = new Button();
+            btnInfo = new Button();
+            cardPanel = new Panel();
+            btnThongKe = new Button();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,21 +47,22 @@ namespace QLThuQuan.Winforms
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(btnThongKe, 0, 4);
             tableLayoutPanel1.Controls.Add(btnThietBi, 0, 1);
             tableLayoutPanel1.Controls.Add(btnQLDatMuon, 0, 3);
             tableLayoutPanel1.Controls.Add(btnUser, 0, 2);
-            tableLayoutPanel1.Controls.Add(btnQLMuonTra, 0, 4);
-            tableLayoutPanel1.Controls.Add(button4, 0, 5);
-            tableLayoutPanel1.Controls.Add(button5, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnQLMuonTra, 0, 5);
+            tableLayoutPanel1.Controls.Add(btnInfo, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Left;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 6;
+            tableLayoutPanel1.RowCount = 7;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 200F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
             tableLayoutPanel1.Size = new Size(250, 800);
             tableLayoutPanel1.TabIndex = 0;
@@ -72,7 +73,7 @@ namespace QLThuQuan.Winforms
             btnThietBi.Dock = DockStyle.Fill;
             btnThietBi.Location = new Point(3, 203);
             btnThietBi.Name = "btnThietBi";
-            btnThietBi.Size = new Size(244, 124);
+            btnThietBi.Size = new Size(244, 98);
             btnThietBi.TabIndex = 0;
             btnThietBi.Text = "Thiết bị";
             btnThietBi.UseVisualStyleBackColor = true;
@@ -80,43 +81,44 @@ namespace QLThuQuan.Winforms
             // btnQLDatMuon
             // 
             btnQLDatMuon.Dock = DockStyle.Fill;
-            btnQLDatMuon.Location = new Point(3, 463);
+            btnQLDatMuon.Location = new Point(3, 411);
             btnQLDatMuon.Name = "btnQLDatMuon";
-            btnQLDatMuon.Size = new Size(244, 124);
+            btnQLDatMuon.Size = new Size(244, 98);
             btnQLDatMuon.TabIndex = 1;
             btnQLDatMuon.Text = "Đặt mượn";
             btnQLDatMuon.UseVisualStyleBackColor = true;
             // 
+            // btnUser
+            // 
+            btnUser.Dock = DockStyle.Fill;
+            btnUser.Location = new Point(3, 307);
+            btnUser.Name = "btnUser";
+            btnUser.Size = new Size(244, 98);
+            btnUser.TabIndex = 0;
+            btnUser.Text = "User";
+            btnUser.UseVisualStyleBackColor = true;
+            btnUser.Click += button1_Click;
+            // 
             // btnQLMuonTra
             // 
             btnQLMuonTra.Dock = DockStyle.Fill;
-            btnQLMuonTra.Location = new Point(3, 593);
+            btnQLMuonTra.Location = new Point(3, 619);
             btnQLMuonTra.Name = "btnQLMuonTra";
-            btnQLMuonTra.Size = new Size(244, 124);
+            btnQLMuonTra.Size = new Size(244, 98);
             btnQLMuonTra.TabIndex = 2;
             btnQLMuonTra.Text = "Mượn trả";
             btnQLMuonTra.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnInfo
             // 
-            button4.Dock = DockStyle.Fill;
-            button4.Location = new Point(3, 723);
-            button4.Name = "button4";
-            button4.Size = new Size(244, 74);
-            button4.TabIndex = 3;
-            button4.Text = "btnDangXuat";
-            button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            button5.Dock = DockStyle.Fill;
-            button5.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button5.Location = new Point(3, 3);
-            button5.Name = "button5";
-            button5.Size = new Size(244, 194);
-            button5.TabIndex = 4;
-            button5.Text = "Info";
-            button5.UseVisualStyleBackColor = true;
+            btnInfo.Dock = DockStyle.Fill;
+            btnInfo.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnInfo.Location = new Point(3, 3);
+            btnInfo.Name = "btnInfo";
+            btnInfo.Size = new Size(244, 194);
+            btnInfo.TabIndex = 4;
+            btnInfo.Text = "Info";
+            btnInfo.UseVisualStyleBackColor = true;
             // 
             // cardPanel
             // 
@@ -126,16 +128,15 @@ namespace QLThuQuan.Winforms
             cardPanel.Size = new Size(1100, 800);
             cardPanel.TabIndex = 1;
             // 
-            // btnUser
+            // btnThongKe
             // 
-            btnUser.Dock = DockStyle.Fill;
-            btnUser.Location = new Point(3, 333);
-            btnUser.Name = "btnUser";
-            btnUser.Size = new Size(244, 124);
-            btnUser.TabIndex = 0;
-            btnUser.Text = "User";
-            btnUser.UseVisualStyleBackColor = true;
-            btnUser.Click += button1_Click;
+            btnThongKe.Dock = DockStyle.Fill;
+            btnThongKe.Location = new Point(3, 515);
+            btnThongKe.Name = "btnThongKe";
+            btnThongKe.Size = new Size(244, 98);
+            btnThongKe.TabIndex = 5;
+            btnThongKe.Text = "Thống kê";
+            btnThongKe.UseVisualStyleBackColor = true;
             // 
             // Dashboard
             // 
@@ -156,9 +157,9 @@ namespace QLThuQuan.Winforms
         private Button btnThietBi;
         private Button btnQLDatMuon;
         private Button btnQLMuonTra;
-        private Button button4;
         private Panel cardPanel;
-        private Button button5;
+        private Button btnInfo;
         private Button btnUser;
+        private Button btnThongKe;
     }
 }

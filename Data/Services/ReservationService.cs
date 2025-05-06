@@ -61,5 +61,12 @@ namespace QLThuQuan.Data.Services
                 .Where(r => r.Status.Contains(keyword))
                 .ToListAsync();
         }
+
+        public async Task<List<Reservation>> GetByStatusAsync(string status)
+        {
+            return await _context.Reservations
+                .Where(r => r.Status == status)
+                .ToListAsync();
+        }
     }
 }
