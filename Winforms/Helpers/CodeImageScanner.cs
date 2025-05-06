@@ -133,7 +133,7 @@ namespace QLThuQuan.Winforms.Helpers
             }
         }
 
-        public static string getDeviceId(string code)
+        public static string parseDeviceId(string code)
         {
             string[] parts = code.Split("-");
             if (parts.Length == 2 && parts[0].Equals("device"))
@@ -143,5 +143,14 @@ namespace QLThuQuan.Winforms.Helpers
 
             return string.Empty;
         }
-    }
+
+        public static string parseUserEmail(string code)
+        {
+            string[] parts = code.Split("-");
+            if (parts.Length == 2 && parts[0].Equals("user"))
+            {
+                return parts[1];
+            }
+            return string.Empty;
+        }
 }

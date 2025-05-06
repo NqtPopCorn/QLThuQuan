@@ -32,6 +32,9 @@
     <Compile Update="Controls\UCUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Controls\UCViPhamV2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -60,34 +60,22 @@ namespace QLThuQuan.Winforms
 
         private void btnStartCamera_Click(object sender, EventArgs e)
         {
-            try
+           StartCamera();
+        }
+
+        private void StartCamera()
+        {
+            if (_videoDevices.Count == 0)
             {
-                if (_videoSource != null && _videoSource.IsRunning)
-                    return;
-
-                if (_videoDevices == null || _videoDevices.Count == 0)
-                {
-                    MessageBox.Show("Không tìm thấy thiết bị camera!");
-                    return;
-                }
-
-                _videoSource = new VideoCaptureDevice(_videoDevices[0].MonikerString)
-                {
-                    DesiredFrameSize = new Size(640, 480),
-                    DesiredFrameRate = 15
-                };
-
-                _videoSource.NewFrame += VideoSource_NewFrame;
-                _videoSource.Start();
-                _isScanning = true;
-                btnStartCamera.Enabled = false;
-                btnStopCamera.Enabled = true;
+                MessageBox.Show("Không tìm thấy camera nào!");
+                return;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khởi động camera: {ex.Message}");
-                StopCamera();
-            }
+            _videoSource = new VideoCaptureDevice(_videoDevices[0].MonikerString);
+            _videoSource.NewFrame += new NewFrameEventHandler(VideoSource_NewFrame);
+            _videoSource.Start();
+            _isScanning = true;
+            btnStartCamera.Enabled = false;
+            btnStopCamera.Enabled = true;
         }
 
         private void VideoSource_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -95,26 +83,20 @@ namespace QLThuQuan.Winforms
             if (!_isScanning || pbCamera.IsDisposed)
                 return;
 
-            // Kiểm tra tần suất quét (1 giây/lần)
-            if ((DateTime.Now - _lastScanTime).TotalMilliseconds < 1000)
-                return;
+            //// Kiểm tra tần suất quét (1 giây/lần)
+            //if ((DateTime.Now - _lastScanTime).TotalMilliseconds < 1000)
+            //    return;
 
-            // Cập nhật thời gian quét cuối
-            _lastScanTime = DateTime.Now;
+            //// Cập nhật thời gian quét cuối
+            //_lastScanTime = DateTime.Now;
 
             try
             {
                 using (var frame = (Bitmap)eventArgs.Frame.Clone())
                 {
-                    // Hiển thị hình ảnh lên PictureBox
-                    pbCamera.Invoke(new Action(() =>
-                    {
-                        if (pbCamera.Image != null)
-                        {
-                            pbCamera.Image.Dispose();
-                        }
-                        pbCamera.Image = (Bitmap)frame.Clone();
-                    }));
+                    Bitmap bitmap = (Bitmap)eventArgs.Frame.Clone();
+                    pbCamera.Image = (Bitmap)bitmap.Clone(); // Hiển thị lên PictureBox
+                    pbCamera.SizeMode = PictureBoxSizeMode.StretchImage;
 
                     // Quét QR code
                     var result = DecodeQrCode(frame);
@@ -215,22 +197,27 @@ namespace QLThuQuan.Winforms
 
         private void StopCamera()
         {
-            _isScanning = false;
+            //_isScanning = false;
 
-            if (_videoSource != null)
+            //if (_videoSource != null)
+            //{
+            //    if (_videoSource.IsRunning)
+            //    {
+            //        _videoSource.SignalToStop();
+            //        _videoSource.WaitForStop();
+            //    }
+            //    _videoSource.NewFrame -= VideoSource_NewFrame;
+            //    _videoSource = null;
+            //}
+
+            //pbCamera.Image = null;
+            //btnStartCamera.Enabled = true;
+            //btnStopCamera.Enabled = false;
+            if (_videoSource != null && _videoSource.IsRunning)
             {
-                if (_videoSource.IsRunning)
-                {
-                    _videoSource.SignalToStop();
-                    _videoSource.WaitForStop();
-                }
-                _videoSource.NewFrame -= VideoSource_NewFrame;
-                _videoSource = null;
+                _videoSource.SignalToStop();
+                _videoSource.WaitForStop();
             }
-
-            pbCamera.Image = null;
-            btnStartCamera.Enabled = true;
-            btnStopCamera.Enabled = false;
         }
 
         private async void btnEnter_Click(object sender, EventArgs e)
