@@ -1,0 +1,502 @@
+﻿@page
+@model QLThuQuan.WebPage.Pages.UserInfoModel
+@{
+    ViewData["Title"] = "Thông tin người dùng";
+}
+
+<div class="container">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <img src="~/Image/userImg.jpg" alt="avatar" class="rounded-circle mb-3" width="150" />
+                    <h5>@Model.CurrentUser.firstName @Model.CurrentUser.lastName</h5>
+                    <p class="text-muted">@Model.CurrentUser.email</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item @(Model.ActiveSection == "info" ? "active" : "")">
+                        <a asp-page="/UserInfo" asp-route-section="info" class="text-decoration-none d-block @(Model.ActiveSection == "info" ? "text-white" : "text-dark")">
+                            <i class="fas fa-user-circle me-2"></i>Thông tin cá nhân
+                        </a>
+                    </li>
+                    <li class="list-group-item @(Model.ActiveSection == "borrow-history" ? "active" : "")">
+                        <a asp-page="/UserInfo" asp-route-section="borrow-history" class="text-decoration-none d-block @(Model.ActiveSection == "borrow-history" ? "text-white" : "text-dark")">
+                            <i class="fas fa-exchange-alt me-2"></i>Lịch sử mượn trả
+                        </a>
+                    </li>
+                    <li class="list-group-item @(Model.ActiveSection == "reservation-history" ? "active" : "")">
+                        <a asp-page="/UserInfo" asp-route-section="reservation-history" class="text-decoration-none d-block @(Model.ActiveSection == "reservation-history" ? "text-white" : "text-dark")">
+                            <i class="far fa-calendar-check me-2"></i>Lịch sử đặt chỗ
+                        </a>
+                    </li>
+                    <li class="list-group-item @(Model.ActiveSection == "violations" ? "active" : "")">
+                        <a asp-page="/UserInfo" asp-route-section="violations" class="text-decoration-none d-block @(Model.ActiveSection == "violations" ? "text-white" : "text-dark")">
+                            <i class="fas fa-exclamation-triangle me-2"></i>Vi phạm
+                        </a>
+                    </li>
+                   
+                    <li class="list-group-item">
+                        <form method="post" asp-page="/Logout" class="d-block">
+                            <button type="submit" class="btn btn-link text-decoration-none text-dark w-100 text-start ps-3">
+                                <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-9">
+            @if (Model.ActiveSection == "info")
+            {
+                <div class="card shadow-sm">
+                    <div class="card-header  text-white">
+                        <h4 class="mb-0"><i class="fas fa-user-edit me-2"></i>Thông tin cá nhân</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" asp-page-handler="UpdateInfo">
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Tên đăng nhập</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="@Model.CurrentUser.email" readonly>
+                                        <span class="input-group-text bg-white">
+                                            <i class="fas fa-user text-muted"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Họ</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input asp-for="Input.LastName" class="form-control">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="enableEdit(this)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                    <span asp-validation-for="Input.LastName" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Tên</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input asp-for="Input.FirstName" class="form-control">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="enableEdit(this)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                    <span asp-validation-for="Input.FirstName" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Email</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input asp-for="Input.Email" class="form-control">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="enableEdit(this)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </div>
+                                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label fw-bold">Mật khẩu</label>
+                                <div class="col-sm-9">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                        <i class="fas fa-key me-2"></i>Đổi mật khẩu
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-9 offset-sm-3">
+                                    <button type="submit" class="btn btn-success px-4">
+                                        <i class="fas fa-save me-2"></i>Lưu thay đổi
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+            else if (Model.ActiveSection == "borrow-history")
+            {
+                <div class="card shadow-sm">
+                    <div class="card-header text-white">
+                        <h4 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>Lịch sử mượn trả thiết bị</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.BorrowHistory?.Any() == true)
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Thiết bị</th>
+                                            <th>Ngày mượn</th>
+                                            <th>Hạn trả</th>
+                                            <th>Ngày trả</th>
+                                            <th class="text-center">Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var record in Model.BorrowHistory)
+                                        {
+                                            <tr>
+                                                <td>
+                                                     <div class="d-flex align-items-center"> 
+                                                        <img src="@record.Device.ImagePath" alt="@record.Device.Name" class="rounded me-2" width="40"> 
+                                                        <span>@record.Device.Name</span> 
+                                                     </div> 
+                                                </td>
+                                                <td>@record.BorrowedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@record.DueAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@(record.ReturnedAt?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                                                <td class="text-center">
+                                                    @switch (record.Status)
+                                                    {
+                                                        case "borrowed":
+                                                            <span class="badge bg-warning rounded-pill px-3 py-2">
+                                                                <i class="fas fa-clock me-1"></i> Đang mượn
+                                                            </span>
+                                                            break;
+                                                        case "returned":
+                                                            <span class="badge bg-success rounded-pill px-3 py-2">
+                                                                <i class="fas fa-check-circle me-1"></i> Đã trả
+                                                            </span>
+                                                            break;
+                                                        case "over_due":
+                                                            <span class="badge bg-danger rounded-pill px-3 py-2">
+                                                                <i class="fas fa-exclamation-circle me-1"></i> Quá hạn
+                                                            </span>
+                                                            break;
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else if (Model.ActiveSection == "violations")
+                        {
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-primary text-white">
+                                    <h4 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Lịch sử vi phạm</h4>
+                                </div>
+                                <div class="card-body">
+                                    @if (Model.Violations?.Any() == true)
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-hover align-middle">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Nội quy vi phạm</th>
+                                                        <th>Thời gian vi phạm</th>
+                                                        <th>Thời hạn cấm</th>
+                                                        <th>Bồi thường</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Ghi chú</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var violation in Model.Violations)
+                                                    {
+                                                        <tr>
+                                                            <td>@violation.Rule?.rule_name</td>
+                                                            <td>@violation.violated_at.ToString("dd/MM/yyyy HH:mm")</td>
+                                                            <td>@(violation.unban_at?.ToString("dd/MM/yyyy HH:mm") ?? "Không")</td>
+                                                            <td>@(violation.compensation_paid?.ToString("N2") ?? "0") đ</td>
+                                                            <td>
+                                                                @if (violation.status == "active")
+                                                                {
+                                                                    <span class="badge bg-danger rounded-pill px-3 py-2">
+                                                                        <i class="fas fa-ban me-1"></i> Đang bị cấm
+                                                                    </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="badge bg-success rounded-pill px-3 py-2">
+                                                                        <i class="fas fa-check-circle me-1"></i> Đã giải quyết
+                                                                    </span>
+                                                                }
+                                                            </td>
+                                                            <td>@violation.notes</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-info d-flex align-items-center">
+                                            <i class="fas fa-info-circle me-2 fs-4"></i>
+                                            <div>Bạn không có lịch sử vi phạm nào</div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info d-flex align-items-center">
+                                <i class="fas fa-info-circle me-2 fs-4"></i>
+                                <div>Bạn chưa có lịch sử mượn trả thiết bị nào</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else if (Model.ActiveSection == "reservation-history")
+            {
+                <div class="card shadow-sm">
+                    <div class="card-header  text-white">
+                        <h4 class="mb-0"><i class="far fa-calendar-check me-2"></i>Lịch sử đặt chỗ thiết bị</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.ReservationHistory?.Any() == true)
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Thiết bị</th>
+                                            <th>Ngày đặt</th>
+                                            <th>Dự kiến mượn</th>
+                                            <th>Dự kiến trả</th>
+                                            <th class="text-center">Trạng thái</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var reservation in Model.ReservationHistory)
+                                        {
+                                            <tr>
+                                                <td>
+                                                     <div class="d-flex align-items-center"> 
+                                                        <img src="@reservation.Device.ImagePath" alt="@reservation.Device.Name" class="rounded me-2" width="40"> 
+                                                        <span>@reservation.Device.Name</span> 
+                                                     </div> 
+                                                </td>
+                                                <td>@reservation.ReservationAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@reservation.ExpectBorrowAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@reservation.ExpectReturnAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td class="text-center">
+                                                    @switch (reservation.Status)
+                                                    {
+                                                        case "pending":
+                                                            <span class="badge bg-secondary rounded-pill px-3 py-2">
+                                                                <i class="fas fa-hourglass-half me-1"></i> Chờ xác nhận
+                                                            </span>
+                                                            break;
+                                                        case "confirmed":
+                                                            <span class="badge bg-success rounded-pill px-3 py-2">
+                                                                <i class="fas fa-check-circle me-1"></i> Đã xác nhận
+                                                            </span>
+                                                            break;
+                                                        case "canceled":
+                                                            <span class="badge bg-danger rounded-pill px-3 py-2">
+                                                                <i class="fas fa-times-circle me-1"></i> Đã hủy
+                                                            </span>
+                                                            break;
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-info d-flex align-items-center">
+                                <i class="fas fa-info-circle me-2 fs-4"></i>
+                                <div>Bạn chưa có lịch sử đặt chỗ thiết bị nào</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header  text-white">
+                <h5 class="modal-title" id="changePasswordModalLabel">
+                    <i class="fas fa-key me-2"></i>Đổi mật khẩu
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-page-handler="ChangePassword">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label asp-for="PasswordInput.OldPassword" class="form-label fw-bold">
+                            <i class="fas fa-lock me-2"></i>Mật khẩu cũ
+                        </label>
+                        <div class="input-group">
+                            <input asp-for="PasswordInput.OldPassword" type="password" class="form-control" id="oldPassword">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="oldPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="PasswordInput.OldPassword" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PasswordInput.NewPassword" class="form-label fw-bold">
+                            <i class="fas fa-key me-2"></i>Mật khẩu mới
+                        </label>
+                        <div class="input-group">
+                            <input asp-for="PasswordInput.NewPassword" type="password" class="form-control" id="newPassword">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="newPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="PasswordInput.NewPassword" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="PasswordInput.ConfirmPassword" class="form-label fw-bold">
+                            <i class="fas fa-check-circle me-2"></i>Xác nhận mật khẩu
+                        </label>
+                        <div class="input-group">
+                            <input asp-for="PasswordInput.ConfirmPassword" type="password" class="form-control" id="confirmPassword">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="confirmPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="PasswordInput.ConfirmPassword" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Hủy
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Lưu thay đổi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function enableEdit(button) {
+            const input = button.previousElementSibling;
+            input.removeAttribute('readonly');
+            input.focus();
+        }
+
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                const icon = this.querySelector('i');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Auto close success alert after 5 seconds
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-success');
+            if (alert) {
+                const bootstrapAlert = new bootstrap.Alert(alert);
+                bootstrapAlert.close();
+            }
+        }, 5000);
+    </script>
+
+    <style>
+        /* Màu chính - tím (#7B76F1) */
+        .btn-primary {
+            background-color: #7B76F1;
+            border-color: #7B76F1;
+        }
+
+            .btn-primary:hover {
+                background-color: #6a65d9;
+                border-color: #6a65d9;
+            }
+
+     
+
+       
+        .card-header {
+            background-color: #7B76F1;
+            color: white;
+        }
+
+       
+        .list-group-item.active {
+            background-color: #7B76F1;
+            border-color: #7B76F1;
+        }
+
+        .badge.bg-primary {
+            background-color: #7B76F1 !important;
+        }
+
+       
+        .modal-header.bg-primary {
+            background-color: #7B76F1 !important;
+        }
+
+      
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        
+        .card.shadow-sm {
+            border: none;
+            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+        }
+
+
+    </style>
+}

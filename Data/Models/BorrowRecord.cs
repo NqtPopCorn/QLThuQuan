@@ -45,7 +45,8 @@ namespace QLThuQuan.Data.Models
 
         [Column("status")]
         public string Status { get; set; } // borrowed, returned, over_due
-
+        [ForeignKey("DeviceId")]
+        public virtual Device Device { get; set; }
 
     }
 }

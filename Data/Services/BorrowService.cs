@@ -8,7 +8,7 @@ using QLThuQuan.Data.Models;
 
 namespace QLThuQuan.Data.Services
 {
-    public class BorrowService: IBorrowService
+    public class BorrowService : IBorrowService
     {
         private readonly AppDbContext _context;
         public BorrowService(AppDbContext context)
@@ -59,6 +59,15 @@ namespace QLThuQuan.Data.Services
         {
             return await _context.BorrowRecords
                 .Where(br => br.DeviceId == deviceId)
+                .ToListAsync();
+        }
+       
+        public async Task<List<BorrowRecord>> GetUserBorrowRecordsAsync(int userId)
+        {
+            return await _context.BorrowRecords
+                .Where(br => br.UserId == userId)
+                .Include(br => br.Device) // Sửa từ DeviceId thành Device
+                .OrderByDescending(br => br.BorrowedAt)
                 .ToListAsync();
         }
     }

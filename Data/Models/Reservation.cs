@@ -46,5 +46,7 @@ namespace QLThuQuan.Data.Models
 
         [Column("status")]
         public string Status { get; set; } // pending, confirmed, canceled
+        [ForeignKey("DeviceId")]
+        public virtual Device Device { get; set; }
     }
 }

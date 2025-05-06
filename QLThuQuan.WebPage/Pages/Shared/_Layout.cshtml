@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,43 +8,120 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QLThuQuan.WebPage.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">QLThuQuan.WebPage</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container d-flex align-items-center justify-content-between">
+                <!-- Logo -->
+                <a class="navbar-brand p-0 me-3" asp-area="" asp-page="/Index">
+                    <img src="~/Image/logo.jpg" alt="Logo" style="height: 80px;" />
+                </a>
+                <form class="d-flex align-items-center me-auto" method="get" asp-page="/Index">
+                    <div class="input-group" style="max-width: 400px;min-width:300px">
+                        <input class="form-control" type="search" placeholder="Tìm kiếm" name="keyword" />
+                        <button class="btn btn-danger" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+
+                <!-- Menu -->
+                <ul class="navbar-nav flex-row align-items-center">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-dark text-nowrap" asp-page="/Index">Danh sách thiết bị</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-dark text-nowrap" asp-page="/BookDevice">Đặt chỗ thiết bị</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-dark text-nowrap" asp-page="/ReturnDevice">Trả thiết bị</a>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item mx-2">
+                            <a class="btn " style="color:#7B76F1; border-color:#7B76F1" asp-page="/UserInfo">
+                                <i class="fas fa-user me-2"></i>
+                                @{
+                                    // Lấy tên từ database thay vì từ Identity
+                                    var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                                    var userService = Context.RequestServices.GetRequiredService<IAccountService>();
+                                    var currentUser = await userService.GetByIdAsync(userId);
+                                    @($"{currentUser.firstName} {currentUser.lastName}")
+                                }
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                    }
+                    else
+                    {
+                        <li class="nav-item mx-2">
+                            <a class="btn btn-primary" style="background-color: #7a5ef8; border: none;" asp-page="/Login">Đăng nhập</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Devices">Thiet bi</a>
-                        </li>
-                    </ul>
-                </div>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-custom  pt-5 pb-4">
         <div class="container">
-            &copy; 2025 - QLThuQuan.WebPage - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <div class="row">
+                <!-- Cột 1: Logo + địa chỉ + mạng xã hội -->
+                <div class="col-md-4 mb-4">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="~/Image/logo.jpg" alt="Logo" style="height: 50px;" class="me-2" />
+                        <span class="fw-bold">Quản lí thư quán</span>
+                    </div>
+                    <p>Đường An Dương Vương, Quận 5, Thành phố Hồ Chí Minh, Việt Nam</p>
+                    <div class="social-icons text-muted">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Cột 2: Dịch vụ -->
+                <div class="col-md-2 mb-3">
+                    <h6 class="fw-bold">Dịch vụ</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Điều khoản sử dụng</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Về chúng tôi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3: Hỗ trợ -->
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Hỗ trợ</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Chính sách vận chuyển</a></li>
+                        <li><a href="#">Chính sách khách sỉ</a></li>
+                        <li><a href="#">Chính sách phạt</a></li>
+                    </ul>
+                </div>
+
+                <!-- Cột 4: Liên hệ -->
+                <div class="col-md-3 mb-3">
+                    <h6 class="fw-bold">Liên hệ</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> 1900638467</li>
+                        <li><i class="fas fa-envelope me-2"></i> qltq@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </footer>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
