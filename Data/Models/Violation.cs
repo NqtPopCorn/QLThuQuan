@@ -1,0 +1,40 @@
+﻿﻿﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace QLThuQuan.Data.Models
+{
+    [Serializable]
+    [Table("violations")]
+    public class Violation
+    {
+        [Key]
+        [Column("violation_id")]
+        public int Id { get; set; }
+
+        [Column("user_id")]
+        public int UserId { get; set; }
+
+        [Column("rule_id")]
+        public int RuleId { get; set; }
+
+        [Column("description")]
+        public string Description { get; set; }
+
+        [Column("violation_date")]
+        public DateTime ViolationDate { get; set; } = DateTime.Now;
+
+        [Column("status")]
+        public string Status { get; set; } = "pending"; // pending, resolved
+
+        [ForeignKey("UserId")]
+        public User User { get; set; }
+
+        [ForeignKey("RuleId")]
+        public Rule Rule { get; set; }
+    }
+}

@@ -14,7 +14,7 @@ namespace QLThuQuan.Winforms
         private UCThongKe ucThongKe;
         private QLMuonTra ucMuonTra;
         private UCUser ucUser;
-        private UCViPham UCViPham;
+        private UCViPham ucViPham;
 
         public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, UCQuyTac uCQuyTac, UCThongKe ucThongKe, QLMuonTra ucMuonTra, UCUser ucUser, UCViPham uCViPham)
         {
@@ -24,7 +24,7 @@ namespace QLThuQuan.Winforms
             this.ucThongKe = ucThongKe;
             this.ucMuonTra = ucMuonTra;
             this.ucUser = ucUser;
-            this.UCViPham = uCViPham;
+            this.ucViPham = uCViPham;
 
             InitializeComponent();
 
@@ -52,6 +52,8 @@ namespace QLThuQuan.Winforms
                 { btnQLMuonTra, ucMuonTra },
                 { btnTK, ucThongKe },
                 { btnUser, ucUser },
+                { btnQuyTac, ucQuyTac },
+                { btnViPham, ucViPham }
             };
 
             foreach (var entry in navMap)
