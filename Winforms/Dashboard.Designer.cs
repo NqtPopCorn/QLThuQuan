@@ -37,7 +37,6 @@ namespace QLThuQuan.Winforms
             btnQLDatMuon = new Button();
             btnUser = new Button();
             btnQLMuonTra = new Button();
-            button5 = new Button();
             btnDangXuat = new Button();
             btnTK = new Button();
             pictureBox1 = new PictureBox();
@@ -50,36 +49,35 @@ namespace QLThuQuan.Winforms
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(btnThietBi, 0, 2);
-            tableLayoutPanel1.Controls.Add(btnQLDatMuon, 0, 3);
-            tableLayoutPanel1.Controls.Add(btnUser, 0, 2);
-            tableLayoutPanel1.Controls.Add(btnQLMuonTra, 0, 4);
-            tableLayoutPanel1.Controls.Add(button5, 0, 1);
-            tableLayoutPanel1.Controls.Add(btnDangXuat, 0, 7);
-            tableLayoutPanel1.Controls.Add(btnTK, 0, 5);
+            tableLayoutPanel1.Controls.Add(btnThietBi, 0, 1);
+            tableLayoutPanel1.Controls.Add(btnQLDatMuon, 0, 2);
+            tableLayoutPanel1.Controls.Add(btnUser, 0, 1);
+            tableLayoutPanel1.Controls.Add(btnQLMuonTra, 0, 3);
+            tableLayoutPanel1.Controls.Add(btnDangXuat, 0, 6);
+            tableLayoutPanel1.Controls.Add(btnTK, 0, 4);
             tableLayoutPanel1.Controls.Add(pictureBox1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Left;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 8;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Size = new Size(281, 840);
+            tableLayoutPanel1.RowCount = 7;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111107F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(250, 800);
             tableLayoutPanel1.TabIndex = 0;
             tableLayoutPanel1.Paint += tableLayoutPanel1_Paint;
             // 
             // btnThietBi
             // 
             btnThietBi.Dock = DockStyle.Fill;
-            btnThietBi.Location = new Point(3, 339);
+            btnThietBi.Location = new Point(3, 269);
             btnThietBi.Name = "btnThietBi";
-            btnThietBi.Size = new Size(275, 78);
+            btnThietBi.Size = new Size(244, 82);
             btnThietBi.TabIndex = 0;
             btnThietBi.Text = "Thiết bị";
             btnThietBi.UseVisualStyleBackColor = true;
@@ -87,9 +85,9 @@ namespace QLThuQuan.Winforms
             // btnQLDatMuon
             // 
             btnQLDatMuon.Dock = DockStyle.Fill;
-            btnQLDatMuon.Location = new Point(3, 507);
+            btnQLDatMuon.Location = new Point(3, 445);
             btnQLDatMuon.Name = "btnQLDatMuon";
-            btnQLDatMuon.Size = new Size(275, 78);
+            btnQLDatMuon.Size = new Size(244, 82);
             btnQLDatMuon.TabIndex = 1;
             btnQLDatMuon.Text = "Đặt mượn";
             btnQLDatMuon.UseVisualStyleBackColor = true;
@@ -97,9 +95,9 @@ namespace QLThuQuan.Winforms
             // btnUser
             // 
             btnUser.Dock = DockStyle.Fill;
-            btnUser.Location = new Point(3, 423);
+            btnUser.Location = new Point(3, 357);
             btnUser.Name = "btnUser";
-            btnUser.Size = new Size(275, 78);
+            btnUser.Size = new Size(244, 82);
             btnUser.TabIndex = 0;
             btnUser.Text = "User";
             btnUser.UseVisualStyleBackColor = true;
@@ -108,30 +106,19 @@ namespace QLThuQuan.Winforms
             // btnQLMuonTra
             // 
             btnQLMuonTra.Dock = DockStyle.Fill;
-            btnQLMuonTra.Location = new Point(3, 591);
+            btnQLMuonTra.Location = new Point(3, 533);
             btnQLMuonTra.Name = "btnQLMuonTra";
-            btnQLMuonTra.Size = new Size(275, 78);
+            btnQLMuonTra.Size = new Size(244, 82);
             btnQLMuonTra.TabIndex = 2;
             btnQLMuonTra.Text = "Mượn trả";
             btnQLMuonTra.UseVisualStyleBackColor = true;
             // 
-            // button5
-            // 
-            button5.Dock = DockStyle.Fill;
-            button5.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button5.Location = new Point(3, 255);
-            button5.Name = "button5";
-            button5.Size = new Size(275, 78);
-            button5.TabIndex = 4;
-            button5.Text = "Info";
-            button5.UseVisualStyleBackColor = true;
-            // 
             // btnDangXuat
             // 
             btnDangXuat.Dock = DockStyle.Fill;
-            btnDangXuat.Location = new Point(3, 759);
+            btnDangXuat.Location = new Point(3, 709);
             btnDangXuat.Name = "btnDangXuat";
-            btnDangXuat.Size = new Size(275, 78);
+            btnDangXuat.Size = new Size(244, 88);
             btnDangXuat.TabIndex = 3;
             btnDangXuat.Text = "Đăng Xuất";
             btnDangXuat.UseVisualStyleBackColor = true;
@@ -140,9 +127,9 @@ namespace QLThuQuan.Winforms
             // btnTK
             // 
             btnTK.Dock = DockStyle.Fill;
-            btnTK.Location = new Point(3, 675);
+            btnTK.Location = new Point(3, 621);
             btnTK.Name = "btnTK";
-            btnTK.Size = new Size(275, 78);
+            btnTK.Size = new Size(244, 82);
             btnTK.TabIndex = 5;
             btnTK.Text = "Thống Kê";
             btnTK.UseVisualStyleBackColor = true;
@@ -153,7 +140,7 @@ namespace QLThuQuan.Winforms
             pictureBox1.Image = Properties.Resources.anhtrangchieuroiconduonglacloi;
             pictureBox1.Location = new Point(3, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(275, 246);
+            pictureBox1.Size = new Size(244, 260);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 6;
             pictureBox1.TabStop = false;
@@ -162,16 +149,16 @@ namespace QLThuQuan.Winforms
             // 
             cardPanel.BorderStyle = BorderStyle.Fixed3D;
             cardPanel.Dock = DockStyle.Fill;
-            cardPanel.Location = new Point(281, 0);
+            cardPanel.Location = new Point(250, 0);
             cardPanel.Name = "cardPanel";
-            cardPanel.Size = new Size(1238, 840);
+            cardPanel.Size = new Size(1100, 800);
             cardPanel.TabIndex = 1;
             // 
             // Dashboard
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1519, 840);
+            ClientSize = new Size(1350, 800);
             Controls.Add(cardPanel);
             Controls.Add(tableLayoutPanel1);
             Name = "Dashboard";

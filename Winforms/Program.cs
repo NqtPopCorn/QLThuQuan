@@ -47,6 +47,9 @@ namespace QLThuQuan.Winforms
                     services.AddScoped<QLMuonTra>();
                     services.AddScoped<UCThongKe>();
                     services.AddScoped<UCUser>();
+                    services.AddScoped<UCViPham>();
+                    services.AddScoped<UCQuyTac>();
+
                     services.AddScoped<CreateUser>();
                     services.AddScoped<UpdateUser>();
                     services.AddScoped<CheckInForm>();
