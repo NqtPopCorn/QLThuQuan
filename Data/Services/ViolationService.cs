@@ -28,7 +28,6 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi lấy danh sách vi phạm: {ex.Message}", ex);
             }
         }
@@ -44,7 +43,6 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi lấy vi phạm theo ID: {ex.Message}", ex);
             }
         }
@@ -57,7 +55,6 @@ namespace QLThuQuan.Data.Services
                 _context.Violations.Add(violation);
                 await _context.SaveChangesAsync();
 
-                // Tải lại đối tượng đã thêm với các quan hệ
                 var addedViolation = await _context.Violations
                     .Include(v => v.User)
                     .Include(v => v.Rule)
@@ -67,29 +64,23 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi thêm vi phạm: {ex.Message}", ex);
             }
         }
-
         public async Task<Violation> UpdateAsync(Violation violation)
         {
             try
             {
-                // Tìm vi phạm hiện có trong cơ sở dữ liệu
                 var existingViolation = await _context.Violations.FindAsync(violation.Id);
                 if (existingViolation == null)
                     throw new InvalidOperationException($"Không tìm thấy vi phạm với ID {violation.Id}");
 
-                // Tách đối tượng khỏi context để tránh lỗi tracking
                 _context.Entry(existingViolation).State = EntityState.Detached;
 
-                // Cập nhật trực tiếp đối tượng vi phạm
-                violation.ViolationDate = existingViolation.ViolationDate; // Giữ nguyên ngày vi phạm gốc
+                violation.ViolationDate = existingViolation.ViolationDate;
                 _context.Violations.Update(violation);
                 await _context.SaveChangesAsync();
 
-                // Tải lại đối tượng đã cập nhật với các quan hệ
                 var updatedViolation = await _context.Violations
                     .Include(v => v.User)
                     .Include(v => v.Rule)
@@ -99,12 +90,10 @@ namespace QLThuQuan.Data.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Xử lý lỗi đồng thời
                 throw;
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi cập nhật vi phạm: {ex.Message}", ex);
             }
         }
@@ -113,18 +102,12 @@ namespace QLThuQuan.Data.Services
         {
             try
             {
-                // Tìm vi phạm hiện có trong cơ sở dữ liệu
                 var violation = await _context.Violations.FindAsync(id);
                 if (violation == null)
                     return false;
 
-                // Đánh dấu thực thể để xóa
                 _context.Violations.Remove(violation);
-
-                // Lưu thay đổi và kiểm tra số hàng bị ảnh hưởng
                 int rowsAffected = await _context.SaveChangesAsync();
-
-                // Nếu không có hàng nào bị ảnh hưởng, ném ngoại lệ
                 if (rowsAffected == 0)
                     throw new DbUpdateConcurrencyException("Không thể xóa vi phạm. Dữ liệu có thể đã bị thay đổi.");
 
@@ -132,16 +115,13 @@ namespace QLThuQuan.Data.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                // Xử lý lỗi đồng thời
                 throw;
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi xóa vi phạm: {ex.Message}", ex);
             }
         }
-
         public async Task<List<Violation>> GetByUserIdAsync(int userId)
         {
             try
@@ -154,7 +134,6 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi lấy vi phạm theo người dùng: {ex.Message}", ex);
             }
         }
@@ -171,7 +150,6 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi lấy vi phạm theo quy tắc: {ex.Message}", ex);
             }
         }
@@ -188,7 +166,6 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi lấy vi phạm theo trạng thái: {ex.Message}", ex);
             }
         }
@@ -211,7 +188,6 @@ namespace QLThuQuan.Data.Services
             }
             catch (Exception ex)
             {
-                // Ghi lại lỗi chi tiết và ném lại ngoại lệ
                 throw new InvalidOperationException($"Lỗi khi tìm kiếm vi phạm: {ex.Message}", ex);
             }
         }

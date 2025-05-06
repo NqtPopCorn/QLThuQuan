@@ -8,7 +8,6 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -23,8 +22,7 @@
         #region Component Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+
         /// </summary>
         private void InitializeComponent()
         {
@@ -47,10 +45,7 @@
             panelContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvRules).BeginInit();
             SuspendLayout();
-            //
-            // panelHeader
-            //
-            panelHeader.BackColor = System.Drawing.Color.FromArgb(240, 240, 240); // Màu xám nhạt
+            panelHeader.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
             panelHeader.Controls.Add(lblTitle);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
@@ -58,18 +53,16 @@
             panelHeader.Size = new Size(1100, 60);
             panelHeader.TabIndex = 0;
             //
-            // lblTitle
             //
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTitle.ForeColor = Color.Black; // Đổi màu chữ thành đen
+            lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(20, 12);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(242, 37);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Quản lý Quy Tắc";
             //
-            // panelSearch
             //
             panelSearch.BackColor = Color.White;
             panelSearch.Controls.Add(btnSearch);
@@ -81,13 +74,12 @@
             panelSearch.Size = new Size(1100, 70);
             panelSearch.TabIndex = 1;
             //
-            // btnSearch
             //
-            btnSearch.BackColor = Color.FromArgb(240, 240, 240); // Màu xám nhạt
+            btnSearch.BackColor = Color.FromArgb(240, 240, 240);
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnSearch.ForeColor = Color.Black; // Đổi màu chữ thành đen
+            btnSearch.ForeColor = Color.Black;
             btnSearch.Location = new Point(500, 20);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(94, 29);
@@ -95,7 +87,6 @@
             btnSearch.Text = "Tìm kiếm";
             btnSearch.UseVisualStyleBackColor = false;
             //
-            // txtSearch
             //
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
             txtSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -103,8 +94,6 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(330, 30);
             txtSearch.TabIndex = 1;
-            //
-            // lblSearch
             //
             lblSearch.AutoSize = true;
             lblSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -114,7 +103,6 @@
             lblSearch.TabIndex = 0;
             lblSearch.Text = "Tìm kiếm:";
             //
-            // panelContent
             //
             panelContent.Controls.Add(btnAddRule);
             panelContent.Controls.Add(dgvRules);
@@ -125,7 +113,6 @@
             panelContent.Size = new Size(1100, 670);
             panelContent.TabIndex = 2;
             //
-            // btnAddRule
             //
             btnAddRule.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnAddRule.BackColor = Color.FromArgb(40, 167, 69);
@@ -140,7 +127,6 @@
             btnAddRule.Text = "Thêm quy tắc mới";
             btnAddRule.UseVisualStyleBackColor = false;
             //
-            // dgvRules
             //
             dgvRules.AllowUserToAddRows = false;
             dgvRules.AllowUserToDeleteRows = false;
@@ -160,7 +146,6 @@
             dgvRules.Size = new Size(1060, 580);
             dgvRules.TabIndex = 0;
             //
-            // colId
             //
             colId.FillWeight = 50F;
             colId.HeaderText = "ID";
@@ -168,7 +153,6 @@
             colId.Name = "colId";
             colId.ReadOnly = true;
             //
-            // colName
             //
             colName.FillWeight = 150F;
             colName.HeaderText = "Tên quy tắc";
@@ -176,7 +160,6 @@
             colName.Name = "colName";
             colName.ReadOnly = true;
             //
-            // colDescription
             //
             colDescription.FillWeight = 250F;
             colDescription.HeaderText = "Mô tả";
@@ -184,7 +167,6 @@
             colDescription.Name = "colDescription";
             colDescription.ReadOnly = true;
             //
-            // colCreatedAt
             //
             colCreatedAt.FillWeight = 120F;
             colCreatedAt.HeaderText = "Ngày tạo";
@@ -192,7 +174,6 @@
             colCreatedAt.Name = "colCreatedAt";
             colCreatedAt.ReadOnly = true;
             //
-            // colActions
             //
             colActions.FillWeight = 100F;
             colActions.HeaderText = "Thao tác";

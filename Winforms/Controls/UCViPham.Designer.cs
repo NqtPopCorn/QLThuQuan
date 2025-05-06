@@ -8,7 +8,6 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -50,9 +49,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvViolations).BeginInit();
             SuspendLayout();
             //
-            // panelHeader
             //
-            panelHeader.BackColor = System.Drawing.Color.FromArgb(240, 240, 240); // Màu xám nhạt
+            panelHeader.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
             panelHeader.Controls.Add(lblTitle);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
@@ -60,18 +58,16 @@
             panelHeader.Size = new Size(1100, 60);
             panelHeader.TabIndex = 0;
             //
-            // lblTitle
             //
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTitle.ForeColor = Color.Black; // Đổi màu chữ thành đen
+            lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(20, 12);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(242, 37);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "Quản lý Vi Phạm";
             //
-            // panelSearch
             //
             panelSearch.BackColor = Color.White;
             panelSearch.Controls.Add(btnSearch);
@@ -83,13 +79,12 @@
             panelSearch.Size = new Size(1100, 70);
             panelSearch.TabIndex = 1;
             //
-            // btnSearch
             //
-            btnSearch.BackColor = System.Drawing.Color.FromArgb(240, 240, 240); // Màu xám nhạt
+            btnSearch.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
             btnSearch.FlatAppearance.BorderSize = 0;
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
-            btnSearch.ForeColor = Color.Black; // Đổi màu chữ thành đen
+            btnSearch.ForeColor = Color.Black;
             btnSearch.Location = new Point(500, 20);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(100, 30);
@@ -98,7 +93,6 @@
             btnSearch.UseVisualStyleBackColor = false;
             btnSearch.Click += button11_Click;
             //
-            // txtSearch
             //
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
             txtSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -107,7 +101,6 @@
             txtSearch.Size = new Size(330, 30);
             txtSearch.TabIndex = 1;
             //
-            // lblSearch
             //
             lblSearch.AutoSize = true;
             lblSearch.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -117,7 +110,6 @@
             lblSearch.TabIndex = 0;
             lblSearch.Text = "Tìm kiếm:";
             //
-            // panelContent
             //
             panelContent.Controls.Add(btnAddViolation);
             panelContent.Controls.Add(dgvViolations);
@@ -128,10 +120,9 @@
             panelContent.Size = new Size(1100, 670);
             panelContent.TabIndex = 2;
             //
-            // btnAddViolation
             //
             btnAddViolation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAddViolation.BackColor = System.Drawing.Color.FromArgb(0, 122, 204); // Giữ màu xanh cho nút thêm
+            btnAddViolation.BackColor = System.Drawing.Color.FromArgb(0, 122, 204);
             btnAddViolation.FlatAppearance.BorderSize = 0;
             btnAddViolation.FlatStyle = FlatStyle.Flat;
             btnAddViolation.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
@@ -144,7 +135,6 @@
             btnAddViolation.UseVisualStyleBackColor = false;
             btnAddViolation.Click += button1_Click;
             //
-            // dgvViolations
             //
             dgvViolations.AllowUserToAddRows = false;
             dgvViolations.AllowUserToDeleteRows = false;
@@ -157,56 +147,49 @@
             dgvViolations.Location = new Point(20, 70);
             dgvViolations.Name = "dgvViolations";
             dgvViolations.ReadOnly = true;
-            dgvViolations.RowHeadersVisible = false; // Ẩn cột header dư thừa
+            dgvViolations.RowHeadersVisible = false;
             dgvViolations.RowHeadersWidth = 51;
             dgvViolations.RowTemplate.Height = 29;
-            dgvViolations.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Chọn cả dòng
+            dgvViolations.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvViolations.Size = new Size(1060, 580);
             dgvViolations.TabIndex = 0;
             //
-            // colId
             //
             colId.HeaderText = "ID";
             colId.MinimumWidth = 6;
             colId.Name = "colId";
             colId.ReadOnly = true;
             //
-            // colUser
             //
             colUser.HeaderText = "Người dùng";
             colUser.MinimumWidth = 6;
             colUser.Name = "colUser";
             colUser.ReadOnly = true;
             //
-            // colRule
             //
             colRule.HeaderText = "Quy tắc";
             colRule.MinimumWidth = 6;
             colRule.Name = "colRule";
             colRule.ReadOnly = true;
             //
-            // colDescription
             //
             colDescription.HeaderText = "Mô tả";
             colDescription.MinimumWidth = 6;
             colDescription.Name = "colDescription";
             colDescription.ReadOnly = true;
             //
-            // colViolationDate
             //
             colViolationDate.HeaderText = "Ngày vi phạm";
             colViolationDate.MinimumWidth = 6;
             colViolationDate.Name = "colViolationDate";
             colViolationDate.ReadOnly = true;
             //
-            // colStatus
             //
             colStatus.HeaderText = "Trạng thái";
             colStatus.MinimumWidth = 6;
             colStatus.Name = "colStatus";
             colStatus.ReadOnly = true;
             //
-            // colActions
             //
             colActions.HeaderText = "Thao tác";
             colActions.MinimumWidth = 6;
@@ -214,7 +197,6 @@
             colActions.ReadOnly = true;
             colActions.UseColumnTextForButtonValue = false;
             //
-            // UCViPham
             //
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;

@@ -22,7 +22,6 @@ namespace QLThuQuan.Winforms.Controls
             _ruleService = ruleService;
             this.Load += UCQuyTac_Load;
 
-            // Wire up event handlers
             btnSearch.Click += btnSearch_Click;
             btnAddRule.Click += btnAddRule_Click;
             dgvRules.CellClick += dgvRules_CellClick;
@@ -31,12 +30,10 @@ namespace QLThuQuan.Winforms.Controls
 
         private void dgvRules_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            // Only paint custom buttons for the actions column and not the header
             if (e.RowIndex >= 0 && e.ColumnIndex == colActions.Index)
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 
-                // Calculate button rectangles (divide cell in half)
                 Rectangle editButtonRect = new Rectangle(
                     e.CellBounds.X,
                     e.CellBounds.Y,
@@ -49,22 +46,18 @@ namespace QLThuQuan.Winforms.Controls
                     e.CellBounds.Width / 2,
                     e.CellBounds.Height);
 
-                // Draw edit button (brighter blue)
                 using (SolidBrush editBrush = new SolidBrush(Color.FromArgb(0, 149, 255)))
                 {
                     e.Graphics.FillRectangle(editBrush, editButtonRect);
                 }
 
-                // Draw delete button (red)
                 using (SolidBrush deleteBrush = new SolidBrush(Color.FromArgb(220, 53, 69)))
                 {
                     e.Graphics.FillRectangle(deleteBrush, deleteButtonRect);
                 }
 
-                // Draw button text
                 using (Font buttonFont = new Font("Segoe UI", 9F, FontStyle.Bold))
                 {
-                    // Draw "Sửa" text
                     TextRenderer.DrawText(
                         e.Graphics,
                         "Sửa",
@@ -72,8 +65,6 @@ namespace QLThuQuan.Winforms.Controls
                         editButtonRect,
                         Color.White,
                         TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-
-                    // Draw "Xóa" text
                     TextRenderer.DrawText(
                         e.Graphics,
                         "Xóa",
@@ -89,19 +80,13 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void UCQuyTac_Load(object sender, EventArgs e)
         {
-            // Show loading state
             ShowLoadingUI();
-
-            // Load data
             await LoadRulesAsync();
         }
 
         private void ShowLoadingUI()
         {
-            // Clear existing rows
             dgvRules.Rows.Clear();
-
-            // Add a loading row
             dgvRules.Rows.Add("", "Đang tải dữ liệu...", "", "");
         }
 
@@ -120,10 +105,7 @@ namespace QLThuQuan.Winforms.Controls
 
         private void DisplayRules(List<QLThuQuan.Data.Models.Rule> rules)
         {
-            // Clear existing rows
             dgvRules.Rows.Clear();
-
-            // Add data rows
             foreach (var rule in rules)
             {
                 dgvRules.Rows.Add(
@@ -133,8 +115,6 @@ namespace QLThuQuan.Winforms.Controls
                     rule.CreatedAt.ToString("dd/MM/yyyy HH:mm")
                 );
             }
-
-            // If no rules found
             if (rules.Count == 0)
             {
                 dgvRules.Rows.Add("", "Không tìm thấy kết quả trùng khớp", "", "");
@@ -143,26 +123,17 @@ namespace QLThuQuan.Winforms.Controls
 
         private void dgvRules_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Check if it's the actions column and not the header row
             if (e.RowIndex >= 0 && e.ColumnIndex == colActions.Index)
             {
-                // Get the rule ID from the selected row
                 if (dgvRules.Rows[e.RowIndex].Cells[colId.Index].Value != null)
                 {
                     int ruleId = Convert.ToInt32(dgvRules.Rows[e.RowIndex].Cells[colId.Index].Value);
-
-                    // Get the cell bounds
                     Rectangle cellBounds = dgvRules.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-
-                    // Determine which half of the cell was clicked
                     Point clickPoint = dgvRules.PointToClient(Cursor.Position);
-
-                    // If click is in the left half (Edit button)
                     if (clickPoint.X < cellBounds.X + cellBounds.Width / 2)
                     {
                         _ = EditRuleById(ruleId);
                     }
-                    // If click is in the right half (Delete button)
                     else
                     {
                         _ = DeleteRuleById(ruleId);
@@ -186,7 +157,6 @@ namespace QLThuQuan.Winforms.Controls
                 MessageBox.Show($"Lỗi khi lấy thông tin quy tắc: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private async Task DeleteRuleById(int ruleId)
         {
             try
@@ -205,7 +175,6 @@ namespace QLThuQuan.Winforms.Controls
 
         private async Task EditRule(QLThuQuan.Data.Models.Rule rule)
         {
-            // Create form to edit rule
             var form = new Form();
             form.Text = "Sửa quy tắc";
             form.Size = new Size(500, 350);
@@ -213,8 +182,6 @@ namespace QLThuQuan.Winforms.Controls
             form.FormBorderStyle = FormBorderStyle.FixedDialog;
             form.MaximizeBox = false;
             form.MinimizeBox = false;
-
-            // Create a table layout for better organization
             TableLayoutPanel panel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -229,14 +196,11 @@ namespace QLThuQuan.Winforms.Controls
             panel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
 
-            // Create controls
             var lblName = new Label { Text = "Tên quy tắc:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
             var txtName = new TextBox { Text = rule.Name, Dock = DockStyle.Fill, Font = new Font("Segoe UI", 10F) };
-
             var lblDesc = new Label { Text = "Mô tả:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
             var txtDesc = new TextBox { Text = rule.Description, Dock = DockStyle.Fill, Multiline = true, Font = new Font("Segoe UI", 10F) };
 
-            // Create button panel
             FlowLayoutPanel buttonPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -263,7 +227,6 @@ namespace QLThuQuan.Winforms.Controls
                 DialogResult = DialogResult.Cancel
             };
 
-            // Add controls to panel
             panel.Controls.Add(lblName, 0, 0);
             panel.Controls.Add(txtName, 1, 0);
             panel.Controls.Add(lblDesc, 0, 1);
@@ -304,7 +267,6 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnAddRule_Click(object sender, EventArgs e)
         {
-            // Create form to add new rule
             var form = new Form();
             form.Text = "Thêm quy tắc mới";
             form.Size = new Size(500, 350);
@@ -313,7 +275,6 @@ namespace QLThuQuan.Winforms.Controls
             form.MaximizeBox = false;
             form.MinimizeBox = false;
 
-            // Create a table layout for better organization
             TableLayoutPanel panel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -328,14 +289,11 @@ namespace QLThuQuan.Winforms.Controls
             panel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             panel.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
 
-            // Create controls
             var lblName = new Label { Text = "Tên quy tắc:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
             var txtName = new TextBox { Dock = DockStyle.Fill, Font = new Font("Segoe UI", 10F) };
-
             var lblDesc = new Label { Text = "Mô tả:", Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft };
             var txtDesc = new TextBox { Dock = DockStyle.Fill, Multiline = true, Font = new Font("Segoe UI", 10F) };
 
-            // Create button panel
             FlowLayoutPanel buttonPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -362,7 +320,6 @@ namespace QLThuQuan.Winforms.Controls
                 DialogResult = DialogResult.Cancel
             };
 
-            // Add controls to panel
             panel.Controls.Add(lblName, 0, 0);
             panel.Controls.Add(txtName, 1, 0);
             panel.Controls.Add(lblDesc, 0, 1);
@@ -403,10 +360,7 @@ namespace QLThuQuan.Winforms.Controls
                 await LoadRulesAsync();
                 return;
             }
-
-            // Show loading UI
             ShowLoadingUI();
-
             try
             {
                 var rules = await _ruleService.FindByKeywordAsync(keyword);
