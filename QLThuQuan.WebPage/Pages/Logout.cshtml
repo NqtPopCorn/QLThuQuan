@@ -1,0 +1,18 @@
+﻿@page
+@model QLThuQuan.WebPage.Pages.LogoutModel
+@{
+    ViewData["Title"] = "Đăng xuất";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h2>Bạn có chắc muốn đăng xuất?</h2>
+            <form method="post">
+                <button type="submit" class="btn btn-danger mt-3">Đăng xuất</button>
+                <a asp-page="/Index" class="btn btn-secondary mt-3 ms-2">Hủy</a>
+            </form>
+        </div>
+    </div>
+</div>

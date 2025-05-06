@@ -68,5 +68,14 @@ namespace QLThuQuan.Data.Services
                 .Where(r => r.Status == status)
                 .ToListAsync();
         }
+      
+        public async Task<List<Reservation>> GetUserReservationsAsync(int userId)
+        {
+            return await _context.Reservations
+                .Where(r => r.UserId == userId)
+                .Include(r => r.Device) // Sửa từ DeviceId thành Device
+                .OrderByDescending(r => r.ReservationAt)
+                .ToListAsync();
+        }
     }
 }

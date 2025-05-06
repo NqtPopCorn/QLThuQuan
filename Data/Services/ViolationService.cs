@@ -1,4 +1,4 @@
-﻿﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -190,6 +190,14 @@ namespace QLThuQuan.Data.Services
             {
                 throw new InvalidOperationException($"Lỗi khi tìm kiếm vi phạm: {ex.Message}", ex);
             }
+        }
+        public async Task<List<Violation>> GetUserViolationsAsync(int userId)
+        {
+            return await _context.Violations
+                .Include(v => v.Rule)
+                .Where(v => v.UserId == userId)
+                .OrderByDescending(v => v.ViolationDate)
+                .ToListAsync();
         }
     }
 }
