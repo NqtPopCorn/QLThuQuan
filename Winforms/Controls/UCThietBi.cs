@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using QLThuQuan.Data.Models;
 using QLThuQuan.Data.Services;
 using QLThuQuan.Winforms.Components.ThietBi;
+using QLThuQuan.Winforms.Helpers;
 
 namespace QLThuQuan.Winforms.Controls
 {
@@ -65,6 +66,39 @@ namespace QLThuQuan.Winforms.Controls
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             loadTableDevice();
+        }
+
+        private async void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            using(OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Excel Files|*.xlsx";
+                openFileDialog.Title = "Export Devices to Excel";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    // Call your export method here
+                    List<Device> devices= ExcelService.ImportDevicesFromExcel(filePath);
+                    if(devices != null && devices.Count > 0)
+                    {
+                        foreach (var device in devices)
+                        {
+                            //check not exist by id then add, otherwise skip
+                            Device existingDevice = await _deviceService.GetByIdAsync(device.Id);
+                            if (existingDevice == null)
+                            {
+                                // Add new device
+                                await _deviceService.AddAsync(device);
+                            }
+                        }
+                        loadTableDevice();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No devices found in the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 }

@@ -30,7 +30,11 @@ namespace QLThuQuan.Winforms.Component.ThietBi
             _imagePath = device.ImagePath;
             if( !string.IsNullOrEmpty(_imagePath) )
             {
-                picBoxImage.Image = Image.FromFile(_imagePath);
+                //neu ton tao file thi gan vao picBoxImage, khong thi bo qua
+                if(File.Exists(_imagePath))
+                {
+                    picBoxImage.Image = Image.FromFile(_imagePath);
+                }
             }
 
             lblImagePath.Text = _imagePath;

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using QLThuQuan.Data.Models;
 using QLThuQuan.Data.Services;
 using QLThuQuan.Winforms.Component.User;
+using QLThuQuan.Winforms.Helpers;
 
 namespace QLThuQuan.Winforms.Controls
 {
@@ -188,6 +189,39 @@ namespace QLThuQuan.Winforms.Controls
                 // Hoặc có thể hiển thị thông báo cho người dùng
                 MessageBox.Show("Không tìm thấy người dùng phù hợp.", "Thông báo",
                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                openFileDialog.DefaultExt = "xlsx";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    var users = ExcelService.ImportUsersFromExcel(openFileDialog.FileName);
+                    if (users.Count > 0)
+                    {
+                        foreach (var user in users)
+                        {
+                            // Kiểm tra email trùng trước khi thêm
+                            var existingUserByEmail = await _userService.GetUserByEmailAsync(user.Email);
+                            var extstingUserById = await _userService.GetUserByIdAsync(user.Id);
+                            if (existingUserByEmail == null && extstingUserById == null)
+                            {
+                                await _userService.AddUserAsync(user);
+                            }
+                        }
+                        // Cập nhật giao diện (giả sử có DataGridView tên gridViewUsers)
+                        FetchAndShowUsersAsync();
+                        MessageBox.Show("Nhập file Excel thành công!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không có dữ liệu hoặc lỗi khi đọc file Excel!");
+                    }
+                }
             }
         }
     }

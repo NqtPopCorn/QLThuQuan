@@ -70,12 +70,9 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void pnlMuon_HandleCreated(object sender, EventArgs e)
         {
-            // Load data from the reservation service
-            var reservations = await _reservationService.GetByStatusAsync("confirmed");
-            RenderTableDatMuon(reservations);
             // Load data from the device service
-            //var devices = await _deviceService.GetAllByStatusAsync("available");
-            //RenderTableThietBiMuon(devices);
+            var devices = await _deviceService.GetAllByStatusAsync("available");
+            RenderTableThietBiMuon(devices);
 
             gridViewThietBiMuon.ClearSelection();
             gridViewDatChoMuon.ClearSelection();
