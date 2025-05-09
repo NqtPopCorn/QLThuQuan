@@ -371,5 +371,19 @@ namespace QLThuQuan.Winforms.Controls
                 MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private async void btnReload_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowLoadingUI();
+                txtSearch.Clear();
+                await LoadRulesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải lại dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

@@ -87,6 +87,10 @@ namespace QLThuQuan.Winforms.Controls
 
         private void DisplayViolations(List<Violation> violations)
         {
+            // Tạm thời gỡ bỏ sự kiện để tránh kích hoạt trong quá trình cập nhật dữ liệu
+            dgvViolations.CellPainting -= DgvViolations_CellPainting;
+            dgvViolations.CellClick -= DgvViolations_CellClick;
+
             dgvViolations.Columns[0].HeaderText = "ID";
             dgvViolations.Columns[1].HeaderText = "Người dùng";
             dgvViolations.Columns[2].HeaderText = "Quy tắc";
@@ -100,6 +104,9 @@ namespace QLThuQuan.Winforms.Controls
             if (violations == null)
             {
                 MessageBox.Show("Không có dữ liệu vi phạm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Đăng ký lại sự kiện sau khi cập nhật
+                dgvViolations.CellPainting += DgvViolations_CellPainting;
+                dgvViolations.CellClick += DgvViolations_CellClick;
                 return;
             }
 
@@ -120,6 +127,7 @@ namespace QLThuQuan.Winforms.Controls
                 dgvViolations.Rows[rowIndex].Tag = violation;
             }
 
+            // Đăng ký lại sự kiện sau khi cập nhật
             dgvViolations.CellPainting += DgvViolations_CellPainting;
             dgvViolations.CellClick += DgvViolations_CellClick;
         }
@@ -175,134 +183,147 @@ namespace QLThuQuan.Winforms.Controls
             }
         }
 
+        // Cờ để chặn việc kích hoạt nhiều lần
+        private bool _isProcessingCellClick = false;
+
         private async void DgvViolations_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == dgvViolations.Columns["colActions"].Index)
-            {
-                if (dgvViolations.Rows[e.RowIndex].Tag == null)
-                {
-                    MessageBox.Show("Không tìm thấy thông tin vi phạm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+            // Nếu đang xử lý một sự kiện click, bỏ qua các click tiếp theo
+            if (_isProcessingCellClick)
+                return;
 
-                var violation = (Violation)dgvViolations.Rows[e.RowIndex].Tag;
-                Rectangle cellBounds = dgvViolations.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-                Point clickPoint = dgvViolations.PointToClient(Cursor.Position);
-                if (clickPoint.X < cellBounds.X + cellBounds.Width / 2)
+            try
+            {
+                // Đánh dấu đang xử lý
+                _isProcessingCellClick = true;
+
+                if (e.RowIndex >= 0 && e.ColumnIndex == dgvViolations.Columns["colActions"].Index)
                 {
-                    await EditViolation(violation);
+                    if (dgvViolations.Rows[e.RowIndex].Tag == null)
+                    {
+                        MessageBox.Show("Không tìm thấy thông tin vi phạm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var violation = (Violation)dgvViolations.Rows[e.RowIndex].Tag;
+                    Rectangle cellBounds = dgvViolations.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                    Point clickPoint = dgvViolations.PointToClient(Cursor.Position);
+                    if (clickPoint.X < cellBounds.X + cellBounds.Width / 2)
+                    {
+                        await EditViolation(violation);
+                    }
+                    else
+                    {
+                        await DeleteViolation(violation);
+                    }
                 }
-                else
-                {
-                    await DeleteViolation(violation);
-                }
+            }
+            finally
+            {
+                // Đảm bảo luôn reset cờ khi hoàn thành
+                _isProcessingCellClick = false;
             }
         }
 
         private async Task EditViolation(Violation violation)
         {
-            var form = new Form();
-            form.Text = "Sửa vi phạm";
-            form.Size = new Size(500, 400);
-            form.StartPosition = FormStartPosition.CenterParent;
-
-            var lblUser = new Label { Text = "Người dùng:", Location = new Point(20, 20) };
-            var cboUser = new ComboBox { Location = new Point(120, 20), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
-
-            try
+            if (violation == null || violation.Id <= 0)
             {
-                var users = (await _userService.GetAllUsersAsync()).ToList();
-                cboUser.DataSource = users;
-                cboUser.DisplayMember = "FirstName";
-                cboUser.ValueMember = "Id";
-                cboUser.SelectedValue = violation.UserId;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải danh sách người dùng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không tìm thấy thông tin vi phạm hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var lblRule = new Label { Text = "Quy tắc:", Location = new Point(20, 60) };
-            var cboRule = new ComboBox { Location = new Point(120, 60), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
-            try
+            // Tạo một form mới để sửa vi phạm
+            using (var editForm = new Form())
             {
-                var rules = await _ruleService.GetAllAsync();
-                cboRule.DataSource = rules;
-                cboRule.DisplayMember = "Name";
-                cboRule.ValueMember = "Id";
-                cboRule.SelectedValue = violation.RuleId;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải danh sách quy tắc: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                editForm.Text = $"Sửa vi phạm ID: {violation.Id}";
+                editForm.Size = new Size(500, 400);
+                editForm.StartPosition = FormStartPosition.CenterParent;
 
-            var lblDesc = new Label { Text = "Mô tả:", Location = new Point(20, 100) };
-            var txtDesc = new TextBox { Text = violation.Description, Location = new Point(120, 100), Width = 250, Multiline = true, Height = 100 };
-
-            var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 220) };
-            var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
-            cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
-            cboStatus.SelectedItem = violation.Status;
-            //moi them 
-            var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
-            var dtpUnban = new DateTimePicker
-            {
-                Location = new Point(120, 260),
-                Width = 250,
-                Format = DateTimePickerFormat.Custom,
-                CustomFormat = "dd/MM/yyyy HH:mm",
-                ShowUpDown = true // Để dễ chọn giờ phút
-            };
-
-
-            var btnSave = new Button { Text = "Lưu", Location = new Point(200, 300), DialogResult = DialogResult.OK };
-            var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 300), DialogResult = DialogResult.Cancel };
-
-            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblStatus, cboStatus, lblUnban, dtpUnban, btnSave, btnCancel });
-            form.AcceptButton = btnSave;
-            form.CancelButton = btnCancel;
-
-            var result = form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                if (cboUser.SelectedValue == null || cboRule.SelectedValue == null)
+                // Tạo các control chỉ đọc cho thông tin người dùng
+                var lblUser = new Label { Text = "Người dùng:", Location = new Point(20, 20) };
+                var txtUser = new TextBox
                 {
-                    MessageBox.Show("Vui lòng chọn người dùng và quy tắc!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    Text = $"{violation.User?.FirstName} {violation.User?.LastName}",
+                    Location = new Point(120, 20),
+                    Width = 250,
+                    ReadOnly = true
+                };
 
-                try
+                // Tạo các control chỉ đọc cho thông tin quy tắc
+                var lblRule = new Label { Text = "Quy tắc:", Location = new Point(20, 60) };
+                var txtRule = new TextBox
                 {
-                    var updatedViolation = new Violation
+                    Text = violation.Rule?.Name,
+                    Location = new Point(120, 60),
+                    Width = 250,
+                    ReadOnly = true
+                };
+
+                // Các control khác
+                var lblDesc = new Label { Text = "Mô tả:", Location = new Point(20, 100) };
+                var txtDesc = new TextBox { Text = violation.Description, Location = new Point(120, 100), Width = 250, Multiline = true, Height = 100 };
+
+                var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 220) };
+                var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
+                cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
+                cboStatus.SelectedItem = violation.Status;
+
+                var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
+                var dtpUnban = new DateTimePicker
+                {
+                    Location = new Point(120, 260),
+                    Width = 250,
+                    Format = DateTimePickerFormat.Custom,
+                    CustomFormat = "dd/MM/yyyy HH:mm",
+                    ShowUpDown = true,
+                    Value = violation.UnbanAt ?? DateTime.Now.AddDays(7)
+                };
+
+                var btnSave = new Button { Text = "Lưu", Location = new Point(200, 300), DialogResult = DialogResult.OK };
+                var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 300), DialogResult = DialogResult.Cancel };
+
+                editForm.Controls.AddRange(new Control[] { lblUser, txtUser, lblRule, txtRule, lblDesc, txtDesc, lblStatus, cboStatus, lblUnban, dtpUnban, btnSave, btnCancel });
+                editForm.AcceptButton = btnSave;
+                editForm.CancelButton = btnCancel;
+
+                var result = editForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    try
                     {
-                        UserId = Convert.ToInt32(cboUser.SelectedValue),
-                        RuleId = Convert.ToInt32(cboRule.SelectedValue),
-                        Description = txtDesc.Text,
-                        Status = cboStatus.SelectedItem?.ToString() ?? "pending",
-                        ViolationDate = DateTime.Now,
-                        UnbanAt = dtpUnban.Value
-                    };
-                    await _violationService.UpdateAsync(updatedViolation);
-                    await LoadViolationsAsync();
-                    MessageBox.Show("Cập nhật vi phạm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    MessageBox.Show("Không thể cập nhật vi phạm. Dữ liệu có thể đã bị thay đổi hoặc xóa.", "Lỗi đồng thời", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    await LoadViolationsAsync();
-                }
-                catch (InvalidOperationException ex) when (ex.Message.Contains("tracked") || ex.Message.Contains("MySqlConnection"))
-                {
-                    MessageBox.Show($"Lỗi kết nối cơ sở dữ liệu: {ex.Message}", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    await LoadViolationsAsync();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Lỗi khi cập nhật vi phạm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    await LoadViolationsAsync();
+                        // Tạo một đối tượng vi phạm mới để cập nhật
+                        var updatedViolation = new Violation
+                        {
+                            Id = violation.Id,
+                            UserId = violation.UserId,  // Giữ nguyên UserId
+                            RuleId = violation.RuleId,  // Giữ nguyên RuleId
+                            Description = txtDesc.Text,
+                            Status = cboStatus.SelectedItem?.ToString() ?? "pending",
+                            ViolationDate = violation.ViolationDate,
+                            UnbanAt = dtpUnban.Value,
+                            CompensationPaid = violation.CompensationPaid
+                        };
+
+                        await _violationService.UpdateAsync(updatedViolation);
+                        await LoadViolationsAsync();
+                        MessageBox.Show("Cập nhật vi phạm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        MessageBox.Show("Không thể cập nhật vi phạm. Dữ liệu có thể đã bị thay đổi hoặc xóa.", "Lỗi đồng thời", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        await LoadViolationsAsync();
+                    }
+                    catch (InvalidOperationException ex) when (ex.Message.Contains("tracked") || ex.Message.Contains("MySqlConnection"))
+                    {
+                        MessageBox.Show($"Lỗi kết nối cơ sở dữ liệu: {ex.Message}", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        await LoadViolationsAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi cập nhật vi phạm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        await LoadViolationsAsync();
+                    }
                 }
             }
         }
@@ -358,7 +379,15 @@ namespace QLThuQuan.Winforms.Controls
 
             try
             {
-                var users = (await _userService.GetAllUsersAsync()).ToList();
+                var fetchedUsers = await _userService.GetAllUsersAsync();
+                var users = fetchedUsers.Select(u => new User
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email
+                }).ToList();
+
                 cboUser.DataSource = users;
                 cboUser.DisplayMember = "FirstName";
                 cboUser.ValueMember = "Id";
@@ -374,7 +403,15 @@ namespace QLThuQuan.Winforms.Controls
 
             try
             {
-                var rules = await _ruleService.GetAllAsync();
+                var fetchedRules = await _ruleService.GetAllAsync();
+                var rules = fetchedRules.Select(r => new QLThuQuan.Data.Models.Rule
+                {
+                    Id = r.Id,
+                    Name = r.Name,
+                    Description = r.Description,
+                    CompensationAmount = r.CompensationAmount
+                }).ToList();
+
                 cboRule.DataSource = rules;
                 cboRule.DisplayMember = "Name";
                 cboRule.ValueMember = "Id";
@@ -392,7 +429,7 @@ namespace QLThuQuan.Winforms.Controls
             var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
             cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
             cboStatus.SelectedIndex = 0;
-            //moi them 
+            //moi them
             var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
             var dtpUnban = new DateTimePicker
             {
@@ -477,6 +514,20 @@ namespace QLThuQuan.Winforms.Controls
             {
                 MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 await LoadViolationsAsync();
+            }
+        }
+
+        private async void btnReload_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ShowLoadingUI();
+                txtSearch.Clear();
+                await LoadViolationsAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải lại dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
