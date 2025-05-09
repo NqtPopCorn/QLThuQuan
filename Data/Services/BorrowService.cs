@@ -75,6 +75,7 @@ namespace QLThuQuan.Data.Services
                 .ToListAsync();
         }
 
+
         public async Task<List<BorrowRecord>> GetUserBorrowRecordsAsync(int userId)
         {
             return await _context.BorrowRecords.Include(r => r.Device).Include(r => r.User)
@@ -83,6 +84,22 @@ namespace QLThuQuan.Data.Services
                 .OrderByDescending(br => br.BorrowedAt)
                 .ToListAsync();
         }
+
+        public async Task<Dictionary<string, double>> GetDeviceBorrowStatsByDateRangeAsync(DateTime startDate, DateTime endDate)
+        {
+            var result = await (from br in _context.BorrowRecords
+                                join d in _context.Devices on br.DeviceId equals d.Id
+                                where br.BorrowedAt >= startDate && br.BorrowedAt <= endDate
+                                group d by d.Name into g
+                                select new
+                                {
+                                    DeviceName = g.Key,
+                                    BorrowCount = g.Count()
+                                })
+                                .ToDictionaryAsync(x => x.DeviceName, x => (double)x.BorrowCount);
+            return result;
+        }
+
 
         public async Task<BorrowRecord> ChoMuonThietBi(Reservation reservation)
         {
