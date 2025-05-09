@@ -14,8 +14,12 @@ namespace QLThuQuan.Data.Models
         [Column("log_id")]
         public int Id { get; set; }
 
+        [Column("user_id")]
+        public int UserId { get; set; }
+
         // Chỉ có trường điều hướng User (không có UserId)
-        public User User { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
 
         [Column("check_in")]
         public DateTime CheckIn { get; set; }

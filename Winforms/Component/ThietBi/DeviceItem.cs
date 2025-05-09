@@ -6,6 +6,7 @@ using System.Data;
 using QLThuQuan.Data.Models;
 using QLThuQuan.Data.Services;
 using QLThuQuan.Winforms.Component.ThietBi;
+using QLThuQuan.Winforms.Helpers;
 
 namespace QLThuQuan.Winforms.Components.ThietBi
 {
@@ -29,12 +30,25 @@ namespace QLThuQuan.Winforms.Components.ThietBi
 
         public DeviceItem(Device device, IDeviceService deviceService)
         {
+            _deviceService = deviceService;
             InitializeComponent();
             this.device = device;
             lblName.Text = "Tên thiết bị: " + device.Name;
             lblDeviceId.Text = "Mã thiết bị: " + device.Id.ToString();
             lblStatus.Text = "Trạng thái: " + device.Status;
-            _deviceService = deviceService;
+
+            
+            //kiem tra file voi path do co ton tai khong
+            if (!string.IsNullOrEmpty(device.ImagePath))
+            {
+                string filePath = SaveImageHelper.GetImageAbsolutePath(device.ImagePath);
+                if (File.Exists(filePath))
+                {
+                    
+                    picBoxImage.Image = Image.FromFile(filePath);
+                    picBoxImage.SizeMode = PictureBoxSizeMode.StretchImage;
+                }
+            }
 
         }
 
@@ -45,20 +59,21 @@ namespace QLThuQuan.Winforms.Components.ThietBi
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            var dialog = new EditDeviceDialog(device);
-            dialog.OnConfirm += async (updatedDevice) =>
+            using (var dialog = new EditDeviceDialog(device))
             {
-                //save device through service
-                device.Name = updatedDevice.Name;
-                device.Description = updatedDevice.Description;
-                device.Status = updatedDevice.Status;
-                device.ImagePath = updatedDevice.ImagePath;
-                await _deviceService.UpdateAsync(device);
-                MessageBox.Show("Cập nhật thiết bị thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                OnSave?.Invoke(device);
-            };
-            dialog.ShowDialog();
-
+                dialog.OnConfirm += async (updatedDevice) =>
+                {
+                    //save device through service
+                    device.Name = updatedDevice.Name;
+                    device.Description = updatedDevice.Description;
+                    device.Status = updatedDevice.Status;
+                    device.ImagePath = updatedDevice.ImagePath;
+                    await _deviceService.UpdateAsync(device);
+                    MessageBox.Show("Cập nhật thiết bị thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    OnSave?.Invoke(device);
+                };
+                dialog.ShowDialog();
+            }
         }
 
         private async void btnXoa_Click(object sender, EventArgs e)

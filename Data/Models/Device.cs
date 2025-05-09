@@ -29,5 +29,8 @@ namespace QLThuQuan.Data.Models
 
         [Column("image_path")]
         public string? ImagePath { get; set; }
+
+        [Column("is_deleted")]
+        public int IsDeleted { get; set; } = 0;
     }
 }

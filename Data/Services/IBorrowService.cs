@@ -20,5 +20,11 @@ namespace QLThuQuan.Data.Services
         Task<List<BorrowRecord>> GetUserBorrowRecordsAsync(int userId);
         Task<List<BorrowRecord>> GetByStatusAsync(string status);
 
+        Task<BorrowRecord> ChoMuonThietBi(Reservation reservation);
+
+        Task<bool> TraThietBi(BorrowRecord borrowRecord);
+
+        Task<BorrowRecord> FindBorrowedRecordAsync(int userId, int deviceId);
+
     }
 }

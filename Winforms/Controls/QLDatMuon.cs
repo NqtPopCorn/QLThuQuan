@@ -17,16 +17,19 @@ namespace QLThuQuan.Winforms.Controls
     {
         private IReservationService _reservationService;
         private IDeviceService _deviceService;
+        private IUserService _userService; 
         //Chua co
         //private IUserService _userService;
 
-        public QLDatMuon(IReservationService reservationService, IDeviceService deviceService)
+        public QLDatMuon(IReservationService reservationService, IDeviceService deviceService, IUserService userService)
         {
             _reservationService = reservationService;
             _deviceService = deviceService;
+            _userService = userService;
             InitializeComponent();
             trackBarSoNgayMuon.ValueChanged += OnTrackBarChange;
             loadData();
+            _userService = userService;
         }
 
         public void OnTrackBarChange(object sender, EventArgs e)
@@ -56,32 +59,57 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnQuetMaThietBi_Click(object sender, EventArgs e)
         {
-            ImageScanDialog dialog = new ImageScanDialog();
-            dialog.ShowDialog();
-            try
+            using (ImageScanDialog dialog = new ImageScanDialog())
             {
-                String decodedValue = dialog.GetDecodedValue();
-                String[] values = decodedValue.Split("-");
-                if (values[0].Equals("device"))
+                if(dialog.ShowDialog() == DialogResult.OK)
                 {
-                    //kiem tra ton tai
-                    Device dv = await _deviceService.GetByIdAsync(Convert.ToInt16(values[1]));
-                    if (dv == null) throw new Exception("Thiết bị không tồn tại");
+                    try
+                    {
+                        String decodedValue = dialog.DecodedValue;
+                        String[] values = decodedValue.Split("-");
+                        if (values[0].Equals("device"))
+                        {
+                            //kiem tra ton tai
+                            Device dv = await _deviceService.GetByIdAsync(Convert.ToInt16(values[1]));
+                            if (dv == null) throw new Exception("Thiết bị không tồn tại");
 
-                    txtMaThietBi.Text = values[1];
+                            txtMaThietBi.Text = values[1];
 
+                        }
+                        else throw new Exception("Mã không hợp lệ");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi quét mã: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else throw new Exception("Mã không hợp lệ");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi quét mã: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
 
         private void btnQuetMaThanhVien_Click(object sender, EventArgs e)
         {
+            ScanThanhVien(txtMaThanhVien);
+        }
 
+        private async void ScanThanhVien(TextBox output)
+        {
+            ImageScanDialog imageScanDialog = new ImageScanDialog();
+            imageScanDialog.ShowDialog();
+            if (imageScanDialog.DialogResult == DialogResult.OK)
+            {
+                String decoded = imageScanDialog.DecodedValue;
+                String email = ParseCodeHelper.ParseUserEmail(decoded);
+                User user = await _userService.GetUserByEmailAsync(email);
+                if (user == null)
+                {
+                    MessageBox.Show("Không tìm thấy thành viên nào");
+                    return;
+                }
+                MessageBox.Show("Đã quét thành công: "+email);
+                output.Text = user.Id.ToString();
+            }
+            imageScanDialog.Dispose();
         }
 
         private void btnReset_Click(object sender, EventArgs e)

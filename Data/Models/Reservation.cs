@@ -32,21 +32,26 @@ namespace QLThuQuan.Data.Models
         [Column("user_id")]
         public int UserId { get; set; }
 
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
         [Column("device_id")]
         public int DeviceId { get; set; }
 
+        [ForeignKey("DeviceId")]
+        public virtual Device Device { get; set; }
+
         [Column("expect_borrow_at")]
-        public DateTime ExpectBorrowAt { get; set; }
+        public DateTime ExpectBorrowAt { get; set; } = DateTime.Now;
 
         [Column("expect_return_at")]
-        public DateTime ExpectReturnAt { get; set; }
+        public DateTime ExpectReturnAt { get; set; } = DateTime.Now;
 
         [Column("reservation_at")]
-        public DateTime ReservationAt { get; set; }
+        public DateTime ReservationAt { get; set; } = DateTime.Now;
 
         [Column("status")]
         public string Status { get; set; } // pending, confirmed, canceled
-        [ForeignKey("DeviceId")]
-        public virtual Device Device { get; set; }
+
     }
 }

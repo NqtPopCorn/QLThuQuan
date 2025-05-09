@@ -32,6 +32,7 @@ namespace QLThuQuan.WebPage.Pages
 
         public List<Device> PaginatedDevices { get; set; } = new List<Device>();
 
+
         public async Task<IActionResult> OnGetAsync()
         {
             var allDevices = await _deviceService.GetAllAsync();

@@ -60,7 +60,12 @@ namespace QLThuQuan.Winforms.Controls
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            new Component.ThietBi.AddDeviceDialog(_deviceService).ShowDialog();
+            //tu dong dispose dialog
+            using (var dialog = new Component.ThietBi.AddDeviceDialog(_deviceService))
+            {
+                dialog.ShowDialog();
+                loadTableDevice();
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

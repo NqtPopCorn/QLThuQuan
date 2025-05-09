@@ -112,7 +112,7 @@ namespace QLThuQuan.Winforms.Controls
                     rule.Id,
                     rule.Name,
                     rule.Description,
-                    rule.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                    rule.CreatedAt?.ToString("dd/MM/yyyy HH:mm")
                 );
             }
             if (rules.Count == 0)

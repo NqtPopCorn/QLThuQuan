@@ -64,6 +64,10 @@
 
     @section Scripts {
         <script>
+            function onClickDevice(deviceId) {
+                window.location.href = "DatMuonPage/"+deviceId;
+            }
+
             document.getElementById("status").addEventListener("change", function () {
                 const form = document.getElementById("filterForm");
                 const url = new URL(window.location.href);
@@ -78,7 +82,7 @@
     <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3">
         @foreach (var device in Model.PaginatedDevices)
         {
-            <div class="col">
+            <div class="col" onclick="return onClickDevice(@device.Id)">
                 <div class="card h-100 text-center device-card">
                     <img src="@device.ImagePath" class="card-img-top img-fluid" alt="@device.Name">
                     <div class="card-body">

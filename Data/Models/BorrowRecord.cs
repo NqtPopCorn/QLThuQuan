@@ -31,8 +31,14 @@ namespace QLThuQuan.Data.Models
         [Column("user_id")]
         public int UserId { get; set; }
 
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
         [Column("device_id")]
         public int DeviceId { get; set; }
+
+        [ForeignKey("DeviceId")]
+        public virtual Device Device { get; set; }
 
         [Column("borrowed_at")]
         public DateTime BorrowedAt { get; set; }
@@ -45,8 +51,6 @@ namespace QLThuQuan.Data.Models
 
         [Column("status")]
         public string Status { get; set; } // borrowed, returned, over_due
-        [ForeignKey("DeviceId")]
-        public virtual Device Device { get; set; }
 
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLThuQuan.Data.Models;
 using QLThuQuan.Data.Services;
+using QLThuQuan.Winforms.Helpers;
 
 namespace QLThuQuan.Winforms.Controls
 {
@@ -18,12 +19,15 @@ namespace QLThuQuan.Winforms.Controls
         private IReservationService _reservationService;
         private IDeviceService _deviceService;
         private IBorrowService borrowService;
+        private IUserService _userService;
 
-        public QLMuonTra(IReservationService reservationService, IDeviceService deviceService, IBorrowService borrowService)
+        public QLMuonTra(IReservationService reservationService, IDeviceService deviceService, IBorrowService borrowService, IUserService userService)
         {
             _reservationService = reservationService;
             _deviceService = deviceService;
+            _userService = userService;
             this.borrowService = borrowService;
+
             InitializeComponent();
 
             pnlMuon.HandleCreated += pnlMuon_HandleCreated;
@@ -142,7 +146,7 @@ namespace QLThuQuan.Winforms.Controls
 
         private void btnQuetMaTVMuon_Click(object sender, EventArgs e)
         {
-
+            ScanThanhVien(txtMaTVMuon);
         }
 
         private async void btnRefreshTBMuon_Click(object sender, EventArgs e)
@@ -177,9 +181,12 @@ namespace QLThuQuan.Winforms.Controls
                 Status = "borrowed"
             };
             reservation.Status = "borrowed";
+            Device device = await _deviceService.GetByIdAsync(thietBiMuonId);
+            device.Status = "in_use";
 
             await borrowService.AddAsync(borrowRecord);
             await _reservationService.UpdateAsync(reservation);
+            await _deviceService.UpdateAsync(device);
             MessageBox.Show("Cho mượn thành công !");
         }
 
@@ -281,6 +288,25 @@ namespace QLThuQuan.Winforms.Controls
 
         private void btnQuetTVTra_Click(object sender, EventArgs e)
         {
+            ScanThanhVien(txtThanhVienTra);
+        }
+
+        private async void ScanThanhVien(TextBox output)
+        {
+            ImageScanDialog imageScanDialog = new ImageScanDialog();
+            imageScanDialog.ShowDialog();
+            if (imageScanDialog.DialogResult == DialogResult.OK)
+            {
+                String decoded = imageScanDialog.DecodedValue;
+                String email = ParseCodeHelper.ParseUserEmail(decoded);
+                User user = await _userService.GetUserByEmailAsync(email);
+                if (user == null)
+                {
+                    MessageBox.Show("Không tìm thấy thành viên nào");
+                    return;
+                }
+                output.Text = user.Id.ToString();
+            }
         }
 
         private async void btnTimPhieuMuon_Click(object sender, EventArgs e)

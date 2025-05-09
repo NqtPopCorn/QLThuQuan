@@ -1,0 +1,101 @@
+﻿@page "{deviceId:int}"
+@model QLThuQuan.Web.Pages.DatMuonPageModel
+@{
+    ViewData["Title"] = "Đặt Mượn Thiết Bị";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Đặt Mượn Thiết Bị</h2>
+
+    @if (Model.Device == null)
+    {
+        <div class="alert alert-warning" role="alert">
+            Không tìm thấy thiết bị.
+        </div>
+    }
+    else
+    {
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Chi Tiết Thiết Bị</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">ID</dt>
+                    <dd class="col-sm-9">@Model.Device.Id</dd>
+                    <dt class="col-sm-3">Tên Thiết Bị</dt>
+                    <dd class="col-sm-9">@Model.Device.Name</dd>
+                    <dt class="col-sm-3">Mô Tả</dt>
+                    <dd class="col-sm-9">@Model.Device.Description</dd>
+                    <dt class="col-sm-3">Trạng Thái</dt>
+                    <dd class="col-sm-9">
+                        @if (Model.Device.Status == "available")
+                        {
+                            <span class="badge bg-success">Có Sẵn</span>
+                        }
+                        else if (Model.Device.Status == "in_use")
+                        {
+                            <span class="badge bg-warning">Đang Sử Dụng</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Bảo Trì</span>
+                        }
+                    </dd>
+                    <dt class="col-sm-3">Hình Ảnh</dt>
+                    <dd class="col-sm-9">
+                        @if (!string.IsNullOrEmpty(Model.Device.ImagePath))
+                        {
+                            <img src="@Model.Device.ImagePath" alt="@Model.Device.Name" class="img-fluid" style="max-width: 200px;" />
+                        }
+                        else
+                        {
+                            <span>Không có hình ảnh</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        @if (Model.Device.Status == "available")
+        {
+            <h4 class="mb-3">Đặt Mượn Thiết Bị</h4>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label asp-for="Reservation.ExpectBorrowAt" class="form-label">Thời Gian Mượn</label>
+                    <input asp-for="Reservation.ExpectBorrowAt" class="form-control" type="date" required />
+                    <span asp-validation-for="Reservation.ExpectBorrowAt" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Reservation.ExpectReturnAt" class="form-label">Thời Gian Trả</label>
+                    <input asp-for="Reservation.ExpectReturnAt" class="form-control" type="date" required />
+                    <span asp-validation-for="Reservation.ExpectReturnAt" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="Reservation.DeviceId" />
+                <input type="hidden" asp-for="Reservation.UserId" />
+                <input type="hidden" asp-for="Reservation.Status" value="pending" />
+                <input type="hidden" asp-for="Reservation.ReservationAt" />
+                <button type="submit" class="btn btn-primary">Đặt Mượn</button>
+                <a asp-page="/Index" class="btn btn-secondary">Quay Lại</a>
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                Thiết bị hiện không thể đặt mượn do đang @Model.Device.Status.
+            </div>
+        }
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-@Model.MessageType mt-3" role="alert">
+            @Model.Message
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

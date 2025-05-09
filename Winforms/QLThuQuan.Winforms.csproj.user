@@ -26,6 +26,12 @@
     <Compile Update="Controls\QLMuonTra.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Controls\QLMuonTraV2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\UCDatMuonV2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\UCThietBi.cs">
       <SubType>UserControl</SubType>
     </Compile>
