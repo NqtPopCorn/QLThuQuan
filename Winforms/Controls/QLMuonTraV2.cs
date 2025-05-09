@@ -166,23 +166,18 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnKiemTraMuon_Click(object sender, EventArgs e)
         {
-            if (User == null)
+            
+            User user = await KiemTraThanhVien(txtMaThanhVien.Text, false);
+            if (user == null) return;
+            ShowUserMuon(user);
+            if (string.IsNullOrEmpty(txtMaThietBi.Text))
             {
-                User user = await KiemTraThanhVien(txtMaThanhVien.Text, false);
-                if (user == null) return;
-                ShowUserMuon(user);
+                MessageBox.Show("Vui lòng nhập mã thiết bị", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            if (Device == null)
-            {
-                if (string.IsNullOrEmpty(txtMaThietBi.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập mã thiết bị", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Device device = await KiemTraThietBi(int.Parse(txtMaThietBi.Text));
-                if (device == null) return;
-                ShowDeviceMuon(device);
-            }
+            Device device = await KiemTraThietBi(int.Parse(txtMaThietBi.Text));
+            if (device == null) return;
+            ShowDeviceMuon(device);
 
 
             try
@@ -295,23 +290,18 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnKiemTraPhieuMuon_Click(object sender, EventArgs e)
         {
-            if (UserTra == null)
+            
+            User user = await KiemTraThanhVien(txtMaThanhVienTra.Text, false);
+            if (user == null) return;
+            ShowUserTra(user);
+            if (string.IsNullOrEmpty(txtMaThietBiTra.Text))
             {
-                User user = await KiemTraThanhVien(txtMaThanhVienTra.Text, false);
-                if (user == null) return;
-                ShowUserTra(user);
+                MessageBox.Show("Vui lòng nhập mã thiết bị", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            if (DeviceTra == null)
-            {
-                if (string.IsNullOrEmpty(txtMaThietBiTra.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập mã thiết bị", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Device device = await KiemTraThietBi(int.Parse(txtMaThietBiTra.Text));
-                if (device == null) return;
-                ShowDeviceTra(device);
-            }
+            Device device = await KiemTraThietBi(int.Parse(txtMaThietBiTra.Text));
+            if (device == null) return;
+            ShowDeviceTra(device);
 
             //tim phieu muon voi userId, deviceId va status = "Đang mượn"
             BorrowRecord borrowRecord = await _borrowService.FindBorrowedRecordAsync(UserTra.Id, DeviceTra.Id);

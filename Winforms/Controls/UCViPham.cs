@@ -278,6 +278,7 @@ namespace QLThuQuan.Winforms.Controls
                 {
                     var updatedViolation = new Violation
                     {
+                        Id = violation.Id,
                         UserId = Convert.ToInt32(cboUser.SelectedValue),
                         RuleId = Convert.ToInt32(cboRule.SelectedValue),
                         Description = txtDesc.Text,

@@ -67,10 +67,10 @@ namespace QLThuQuan.Data.Services
                 .Include(r => r.Device) // Include the Device navigation property
                 .Include(r => r.User) // Include the User navigation property
                 .Where(r => r.User.FirstName.Contains(keyword)
-                    && r.User.LastName.Contains(keyword)
-                    && r.Device.Name.Contains(keyword)
-                    && ("" + r.Device.Id).Contains(keyword)
-                    && ("" + r.User.Id).Contains(keyword))
+                    || r.User.LastName.Contains(keyword)
+                    || r.Device.Name.Contains(keyword)
+                    || ("" + r.Device.Id).Contains(keyword)
+                    || ("" + r.User.Id).Contains(keyword))
                 .ToListAsync();
         }
 

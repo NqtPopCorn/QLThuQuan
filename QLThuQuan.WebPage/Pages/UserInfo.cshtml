@@ -19,6 +19,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
+
+
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-3">
@@ -237,6 +239,7 @@
                                             <th>Dự kiến mượn</th>
                                             <th>Dự kiến trả</th>
                                             <th class="text-center">Trạng thái</th>
+											<th class="text-center">Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -272,6 +275,18 @@
                                                             </span>
                                                             break;
                                                     }
+                                                </td>
+                                                @* Neu Status pending hoac confirmed thi cho phep cancel*@
+												<td class="text-center">
+													@if (reservation.Status == "pending" || reservation.Status == "confirmed")
+													{
+														<form method="post" asp-page-handler="CancelReservation"
+															  asp-route-reservationId="@reservation.Id">
+															<button type="submit" class="btn btn-danger btn-sm">
+																<i class="fas fa-times"></i> Hủy
+															</button>
+														</form>
+													}
                                                 </td>
                                             </tr>
                                         }

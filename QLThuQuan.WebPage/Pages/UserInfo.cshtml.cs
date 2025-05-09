@@ -5,6 +5,7 @@ using QLThuQuan.Data.Models;
 using QLThuQuan.Data.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using static System.Collections.Specialized.BitVector32;
 
 namespace QLThuQuan.WebPage.Pages
 {
@@ -36,6 +37,7 @@ namespace QLThuQuan.WebPage.Pages
             _reservationService = reservationService;
             _violationService = violationService;
         }
+
 
         public async Task<IActionResult> OnGetAsync(string section = "info")
         {
@@ -160,6 +162,42 @@ namespace QLThuQuan.WebPage.Pages
             await LoadCurrentUser();
             return Page(); // Không Redirect để giữ lại thông báo
         }
+
+        public async Task<IActionResult> OnPostCancelReservationAsync(int reservationId)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var reservation = await _reservationService.GetByIdAsync(reservationId);
+            if (reservation == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy phiếu đặt";
+                return RedirectToPage(new { section = "reservation-history" });
+            }
+            if (reservation.UserId != userId)
+            {
+                TempData["ErrorMessage"] = "Bạn không có quyền hủy phiếu đặt này";
+                return RedirectToPage(new { section = "reservation-history" });
+            }
+            if (reservation.Status != "pending" && reservation.Status != "confirmed")
+            {
+                TempData["ErrorMessage"] = "Phiếu đặt này không thể hủy";
+                return RedirectToPage(new { section = "reservation-history" });
+            }
+
+            reservation.Status = "canceled";
+            try
+            {
+                await _reservationService.UpdateAsync(reservation);
+                TempData["SuccessMessage"] = "Hủy phiếu đặt thành công!";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = $"Lỗi khi hủy phiếu đặt: {ex.Message}";
+                return RedirectToPage(new { section = "reservation-history" });
+            }
+
+            return RedirectToPage(new { section = "reservation-history" });
+        }
+
         public class InputModel
         {
             [Required(ErrorMessage = "Họ là bắt buộc")]
