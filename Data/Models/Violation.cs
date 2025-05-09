@@ -41,6 +41,6 @@ namespace QLThuQuan.Data.Models
         public Rule Rule { get; set; }
 
         [Column("compensation_paid")]
-        public Decimal CompensationPaid { get; set; }
+        public Decimal? CompensationPaid { get; set; }
     }
 }
