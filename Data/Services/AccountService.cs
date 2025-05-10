@@ -128,6 +128,17 @@ namespace QLThuQuan.Data.Services
             
             return user;
         }
+        public async Task<Violation> GetActiveViolationAsync(string email)
+        {
+            return await _context.Violations
+                .Include(v => v.Rule)
+                .Include(v => v.User)
+                .Where(v => v.User.Email == email &&
+                           v.Status == "active" &&
+                           (v.UnbanAt == null || v.UnbanAt > DateTime.UtcNow))
+                .OrderByDescending(v => v.ViolationDate)
+                .FirstOrDefaultAsync();
+        }
         
     }
 

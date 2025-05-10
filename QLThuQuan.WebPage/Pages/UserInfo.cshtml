@@ -33,25 +33,25 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item @(Model.ActiveSection == "info" ? "active" : "")">
                         <a asp-page="/UserInfo" asp-route-section="info"
-                            class="text-decoration-none d-block @(Model.ActiveSection == "info" ? "text-white" : "text-dark")">
+                        class="text-decoration-none d-block @(Model.ActiveSection == "info" ? "text-white" : "text-dark")">
                             <i class="fas fa-user-circle me-2"></i>Thông tin cá nhân
                         </a>
                     </li>
                     <li class="list-group-item @(Model.ActiveSection == "borrow-history" ? "active" : "")">
                         <a asp-page="/UserInfo" asp-route-section="borrow-history"
-                            class="text-decoration-none d-block @(Model.ActiveSection == "borrow-history" ? "text-white" : "text-dark")">
+                        class="text-decoration-none d-block @(Model.ActiveSection == "borrow-history" ? "text-white" : "text-dark")">
                             <i class="fas fa-exchange-alt me-2"></i>Lịch sử mượn trả
                         </a>
                     </li>
                     <li class="list-group-item @(Model.ActiveSection == "reservation-history" ? "active" : "")">
                         <a asp-page="/UserInfo" asp-route-section="reservation-history"
-                            class="text-decoration-none d-block @(Model.ActiveSection == "reservation-history" ? "text-white" : "text-dark")">
+                        class="text-decoration-none d-block @(Model.ActiveSection == "reservation-history" ? "text-white" : "text-dark")">
                             <i class="far fa-calendar-check me-2"></i>Lịch sử đặt chỗ
                         </a>
                     </li>
                     <li class="list-group-item @(Model.ActiveSection == "violations" ? "active" : "")">
                         <a asp-page="/UserInfo" asp-route-section="violations"
-                            class="text-decoration-none d-block @(Model.ActiveSection == "violations" ? "text-white" : "text-dark")">
+                        class="text-decoration-none d-block @(Model.ActiveSection == "violations" ? "text-white" : "text-dark")">
                             <i class="fas fa-exclamation-triangle me-2"></i>Vi phạm
                         </a>
                     </li>
@@ -59,7 +59,7 @@
                     <li class="list-group-item">
                         <form method="post" asp-page="/Logout" class="d-block">
                             <button type="submit"
-                                class="btn btn-link text-decoration-none text-dark w-100 text-start ps-3">
+                            class="btn btn-link text-decoration-none text-dark w-100 text-start ps-3">
                                 <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
                             </button>
                         </form>
@@ -133,7 +133,7 @@
                                 <label class="col-sm-3 col-form-label fw-bold">Mật khẩu</label>
                                 <div class="col-sm-9">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#changePasswordModal">
+                                    data-bs-target="#changePasswordModal">
                                         <i class="fas fa-key me-2"></i>Đổi mật khẩu
                                     </button>
                                 </div>
@@ -177,7 +177,7 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <img src="@record.Device.ImagePath" alt="@record.Device.Name"
-                                                            class="rounded me-2" width="40">
+                                                        class="rounded me-2" width="40">
                                                         <span>@record.Device.Name</span>
                                                     </div>
                                                 </td>
@@ -239,7 +239,7 @@
                                             <th>Dự kiến mượn</th>
                                             <th>Dự kiến trả</th>
                                             <th class="text-center">Trạng thái</th>
-											<th class="text-center">Hành động</th>
+                                            <th class="text-center">Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -249,7 +249,7 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <img src="@reservation.Device.ImagePath" alt="@reservation.Device.Name"
-                                                            class="rounded me-2" width="40">
+                                                        class="rounded me-2" width="40">
                                                         <span>@reservation.Device.Name</span>
                                                     </div>
                                                 </td>
@@ -274,19 +274,24 @@
                                                                 <i class="fas fa-times-circle me-1"></i> Đã hủy
                                                             </span>
                                                             break;
+                                                        case "borrowed":
+                                                            <span class="badge bg-primary rounded-pill px-3 py-2">
+                                                                <i class="fas fa-clock me-1"></i>  Mượn thành công
+                                                            </span>
+                                                            break;
                                                     }
                                                 </td>
                                                 @* Neu Status pending hoac confirmed thi cho phep cancel*@
-												<td class="text-center">
-													@if (reservation.Status == "pending" || reservation.Status == "confirmed")
-													{
-														<form method="post" asp-page-handler="CancelReservation"
-															  asp-route-reservationId="@reservation.Id">
-															<button type="submit" class="btn btn-danger btn-sm">
-																<i class="fas fa-times"></i> Hủy
-															</button>
-														</form>
-													}
+                                                <td class="text-center">
+                                                    @if (reservation.Status == "pending" || reservation.Status == "confirmed")
+                                                    {
+                                                        <form method="post" asp-page-handler="CancelReservation"
+                                                        asp-route-reservationId="@reservation.Id">
+                                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                                <i class="fas fa-times"></i> Hủy
+                                                            </button>
+                                                        </form>
+                                                    }
                                                 </td>
                                             </tr>
                                         }
@@ -335,6 +340,12 @@
                                                 @* <td>@(violation.?.ToString("N2") ?? "0") đ</td> *@
                                                 <td>
                                                     @if (violation.Status == "pending")
+                                                    {
+                                                        <span class="badge bg-warning rounded-pill px-3 py-2">
+                                                            <i class="fas fa-ban me-1"></i> Đang giải quyết
+                                                        </span>
+                                                    }
+                                                    else if (violation.Status == "active")
                                                     {
                                                         <span class="badge bg-danger rounded-pill px-3 py-2">
                                                             <i class="fas fa-ban me-1"></i> Đang bị cấm

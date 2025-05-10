@@ -46,6 +46,15 @@ namespace QLThuQuan.WebPage.Pages
                 return Page();
             }
 
+            // Kiểm tra xem người dùng có đang bị cấm không
+            var activeViolation = await _accountService.GetActiveViolationAsync(Input.Email);
+            if (activeViolation != null)
+            {
+                ErrorMessage = $"Tài khoản của bạn đang bị cấm do vi phạm: {activeViolation.Rule.Name}. " +
+                              $"Thời gian cấm đến: {activeViolation.UnbanAt?.ToString("dd/MM/yyyy HH:mm")}";
+                return Page();
+            }
+
             var user = await _accountService.AuthenticateAsync(Input.Email, Input.Password);
 
             if (user == null)
@@ -56,12 +65,12 @@ namespace QLThuQuan.WebPage.Pages
 
             // Tạo claims identity
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                new Claim("IsAdmin", user.IsAdmin.ToString())
-            };
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+        new Claim("IsAdmin", user.IsAdmin.ToString())
+    };
 
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);

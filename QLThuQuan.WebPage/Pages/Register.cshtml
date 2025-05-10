@@ -19,21 +19,22 @@
         <div class="image-section"></div>
         <div class="form-section">
             <div class="register-container">
-                @* @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-                {
-                    <div class="alert alert-danger">
-                        @Html.Raw(Model.ErrorMessage)
-                    </div>
-                }
+                 @if (!string.IsNullOrEmpty(Model.ErrorMessage)) 
+                 { 
+                    <div class="alert alert-danger"> 
+                         @Html.Raw(Model.ErrorMessage) 
+                    </div> 
+                 }
 
-                @if (TempData["SuccessMessage"] != null)
-                {
-                    <div class="alert alert-success">
-                        @TempData["SuccessMessage"]
-                    </div>
-                } *@
+                @* @if (TempData["SuccessMessage"] != null) *@
+                @* { *@
+                @*     <div class="alert alert-success"> *@
+                @*         @TempData["SuccessMessage"] *@
+                @*     </div> *@
+                @* }  *@
 
                 <form method="post">
+                   
                     <div class="mb-3">
                         <label asp-for="User.LastName" class="form-label">Họ</label>
                         <input asp-for="User.LastName" class="form-control" />
