@@ -8,7 +8,7 @@ namespace QLThuQuan.WebPage.Pages
     public class DeviceListModel : PageModel
     {
         private readonly IDeviceService _deviceService;
-        private const int PageSize = 12;
+        private const int PageSize = 4;
 
         public DeviceListModel(IDeviceService deviceService)
         {

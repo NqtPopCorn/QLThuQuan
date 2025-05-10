@@ -64,6 +64,7 @@ namespace QLThuQuan.Data.Services
         public async Task<bool> ChangePasswordAsync(int userId, string oldPassword, string newPassword)
         {
             var user = await _context.Users.FindAsync(userId);
+            
             if (user == null) return false;
 
             if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.Password))
