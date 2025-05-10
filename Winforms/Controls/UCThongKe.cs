@@ -8,6 +8,7 @@ using ScottPlot.WinForms;
 using ScottPlot.Colormaps;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using QLThuQuan.Data.Services;
+using System.Diagnostics;
 
 namespace QLThuQuan.Winforms.Controls
 {
@@ -147,6 +148,8 @@ namespace QLThuQuan.Winforms.Controls
                     foreach (var stat in viPhamStats.Where(stat => stat.Key != null))
                     {
                         data[stat.Key] = stat.Value;
+                        Debug.WriteLine($"data[stat.Key] '{stat.Key}'");
+                        Debug.WriteLine($"stat.Value'{stat.Value}'");
                     }
                 }
             }
@@ -213,6 +216,20 @@ namespace QLThuQuan.Winforms.Controls
             plt.Plot.Grid.MajorLineWidth = 1;
             plt.Plot.Grid.MajorLineColor = Colors.LightGray;
 
+            // Hiển thị giá trị trên từng cột
+            for (int i = 0; i < values.Length; i++)
+            {
+                string labelText = values[i].ToString("N0");
+                double x = positions[i];
+                double y = values[i] + (values.Max() * 0.02); // đẩy text lên trên cột
+
+                var txt = plt.Plot.Add.Text(labelText, x, y);
+                txt.Alignment = Alignment.MiddleCenter;
+                txt.FontSize = 12;
+                txt.Color = Colors.Black;
+            }
+
+
             // Thêm vào TableLayoutPanel
             tbLayoutChartTK.Controls.Add(plt, 0, 0);
 
@@ -225,11 +242,6 @@ namespace QLThuQuan.Winforms.Controls
         private void label4_Click(object sender, EventArgs e) { }
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e) { }
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e) { }
-
-        private void cbLuaChon_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private async void btnTaoThongKe_Click(object sender, EventArgs e)
         {
@@ -273,6 +285,16 @@ namespace QLThuQuan.Winforms.Controls
                 btnTaoThongKe.BackColor = System.Drawing.Color.BlueViolet;
                 Cursor = Cursors.Default;
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint_1(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

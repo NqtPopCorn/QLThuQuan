@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using QLThuQuan.Data.Models;
+using System.Diagnostics;
 
 namespace QLThuQuan.Data.Services
 {
@@ -38,6 +39,15 @@ namespace QLThuQuan.Data.Services
             }
 
             return checkInRecord; // có thể là null nếu không tìm thấy
+        }
+
+        public async Task<bool> checkViolationOfUserIsActive(string email)
+        {
+            var hasActiveViolation = await _context.Violations
+                .Where(v => v.Status == "active" && v.Type == "ban" && v.User.Email == email)
+                .AnyAsync();
+
+            return hasActiveViolation;
         }
 
         public async Task<IEnumerable<CheckIns>> GetAllCheckInsAsync()
@@ -75,8 +85,15 @@ namespace QLThuQuan.Data.Services
                 .Where(v => v.ViolationDate >= startDate && v.ViolationDate <= endDate)
                 .ToListAsync();
 
-            int unresolvedCount = violations.Count(v => v.Status == "active");
-            int resolvedCount = violations.Count(v => v.Status == "active" || v.Status == "canceled");
+            double unresolvedCount = violations.Count(v =>
+            {
+                var status = v.Status?.Trim().ToLower();
+                return status == "active" || status == "pending";
+            });
+            Debug.WriteLine($"-unresolvedCount '{unresolvedCount}'");
+
+            double resolvedCount = violations.Count(v => v.Status != null && v.Status.Trim().Equals("canceled", StringComparison.OrdinalIgnoreCase));
+            Debug.WriteLine($"-resolvedCount '{resolvedCount}'");
 
             // Lấy danh sách các RuleId duy nhất
             var ruleIds = violations.Select(v => v.RuleId).Distinct().ToList();
@@ -90,7 +107,8 @@ namespace QLThuQuan.Data.Services
             double totalCompensation = violations
                 .Sum(v => rulesDict.TryGetValue(v.RuleId, out var amount) ? (double)amount : 0);
 
-            double totalPaid = violations.Sum(v => (double)v.CompensationPaid);
+            // Tổng tiền đã trả
+            double totalPaid = violations.Sum(v => (double)(v.CompensationPaid ?? 0));
 
             return new Dictionary<string, double>
             {

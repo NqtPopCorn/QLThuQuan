@@ -87,18 +87,30 @@ namespace QLThuQuan.Data.Services
 
         public async Task<Dictionary<string, double>> GetDeviceBorrowStatsByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
-            var result = await (from br in _context.BorrowRecords
-                                join d in _context.Devices on br.DeviceId equals d.Id
-                                where br.BorrowedAt >= startDate && br.BorrowedAt <= endDate
-                                group d by d.Name into g
-                                select new
-                                {
-                                    DeviceName = g.Key,
-                                    BorrowCount = g.Count()
-                                })
-                                .ToDictionaryAsync(x => x.DeviceName, x => (double)x.BorrowCount);
-            return result;
+            // Thống kê số lượt mượn theo tên thiết bị trong khoảng thời gian
+            var borrowStats = await (
+                from br in _context.BorrowRecords
+                join d in _context.Devices on br.DeviceId equals d.Id
+                where br.BorrowedAt >= startDate && br.BorrowedAt <= endDate
+                group d by d.Name into g
+                select new
+                {
+                    DeviceName = g.Key,
+                    BorrowCount = g.Count()
+                }
+            ).ToDictionaryAsync(x => x.DeviceName, x => (double)x.BorrowCount);
+
+            // Đếm số lượng thiết bị đang được mượn (status = "borrowed")
+            double currentlyBorrowedCount = await _context.BorrowRecords
+                .Where(br => br.Status == "borrowed")
+                .CountAsync();
+
+            // Thêm vào kết quả
+            borrowStats["Thiết bị đang được mượn"] = currentlyBorrowedCount;
+
+            return borrowStats;
         }
+
 
 
         public async Task<BorrowRecord> ChoMuonThietBi(Reservation reservation)

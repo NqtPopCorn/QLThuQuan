@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            label1 = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             tableLayoutPanel3 = new TableLayoutPanel();
             label2 = new Label();
@@ -42,11 +41,14 @@
             label4 = new Label();
             mcEndDate = new MonthCalendar();
             tbLayoutChartTK = new TableLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            label1 = new Label();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel5.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -54,48 +56,37 @@
             tableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
             tableLayoutPanel1.Controls.Add(tbLayoutChartTK, 0, 2);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 63F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 315F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel1.Size = new Size(1238, 840);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(4, 1);
-            label1.Name = "label1";
-            label1.Size = new Size(164, 45);
-            label1.TabIndex = 0;
-            label1.Text = "Thống Kê";
-            // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnCount = 4;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
             tableLayoutPanel2.Controls.Add(tableLayoutPanel3, 0, 0);
             tableLayoutPanel2.Controls.Add(tableLayoutPanel4, 1, 0);
             tableLayoutPanel2.Controls.Add(tableLayoutPanel5, 2, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(4, 68);
+            tableLayoutPanel2.Location = new Point(4, 88);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 309F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 309F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 309F));
-            tableLayoutPanel2.Size = new Size(1230, 309);
+            tableLayoutPanel2.Size = new Size(1230, 244);
             tableLayoutPanel2.TabIndex = 1;
+            tableLayoutPanel2.Paint += tableLayoutPanel2_Paint_1;
             // 
             // tableLayoutPanel3
             // 
@@ -111,7 +102,7 @@
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel3.Size = new Size(240, 303);
+            tableLayoutPanel3.Size = new Size(240, 238);
             tableLayoutPanel3.TabIndex = 0;
             // 
             // label2
@@ -123,16 +114,16 @@
             label2.Size = new Size(216, 25);
             label2.TabIndex = 0;
             label2.Text = " Chọn dữ liệu thống kê";
+            label2.Click += label2_Click;
             // 
             // cbLuaChon
             // 
             cbLuaChon.Dock = DockStyle.Top;
             cbLuaChon.FormattingEnabled = true;
-            cbLuaChon.Location = new Point(3, 63);
+            cbLuaChon.Location = new Point(3, 50);
             cbLuaChon.Name = "cbLuaChon";
             cbLuaChon.Size = new Size(234, 29);
             cbLuaChon.TabIndex = 1;
-            cbLuaChon.SelectedIndexChanged += cbLuaChon_SelectedIndexChanged;
             // 
             // btnTaoThongKe
             // 
@@ -140,9 +131,9 @@
             btnTaoThongKe.Dock = DockStyle.Fill;
             btnTaoThongKe.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnTaoThongKe.ForeColor = SystemColors.ButtonHighlight;
-            btnTaoThongKe.Location = new Point(3, 244);
+            btnTaoThongKe.Location = new Point(3, 192);
             btnTaoThongKe.Name = "btnTaoThongKe";
-            btnTaoThongKe.Size = new Size(234, 56);
+            btnTaoThongKe.Size = new Size(234, 43);
             btnTaoThongKe.TabIndex = 2;
             btnTaoThongKe.Text = "Tạo Thống Kê";
             btnTaoThongKe.UseVisualStyleBackColor = false;
@@ -161,7 +152,7 @@
             tableLayoutPanel4.RowCount = 2;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel4.Size = new Size(486, 303);
+            tableLayoutPanel4.Size = new Size(240, 238);
             tableLayoutPanel4.TabIndex = 1;
             // 
             // label3
@@ -176,9 +167,8 @@
             // 
             // mcStartDate
             // 
-            mcStartDate.CalendarDimensions = new Size(2, 1);
             mcStartDate.Dock = DockStyle.Fill;
-            mcStartDate.Location = new Point(9, 69);
+            mcStartDate.Location = new Point(9, 56);
             mcStartDate.Name = "mcStartDate";
             mcStartDate.TabIndex = 3;
             // 
@@ -190,12 +180,12 @@
             tableLayoutPanel5.Controls.Add(label4, 0, 0);
             tableLayoutPanel5.Controls.Add(mcEndDate, 0, 1);
             tableLayoutPanel5.Dock = DockStyle.Fill;
-            tableLayoutPanel5.Location = new Point(741, 3);
+            tableLayoutPanel5.Location = new Point(495, 3);
             tableLayoutPanel5.Name = "tableLayoutPanel5";
             tableLayoutPanel5.RowCount = 2;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 80F));
-            tableLayoutPanel5.Size = new Size(486, 303);
+            tableLayoutPanel5.Size = new Size(240, 238);
             tableLayoutPanel5.TabIndex = 2;
             // 
             // label4
@@ -210,9 +200,8 @@
             // 
             // mcEndDate
             // 
-            mcEndDate.CalendarDimensions = new Size(2, 1);
             mcEndDate.Dock = DockStyle.Fill;
-            mcEndDate.Location = new Point(9, 69);
+            mcEndDate.Location = new Point(9, 56);
             mcEndDate.Name = "mcEndDate";
             mcEndDate.TabIndex = 4;
             // 
@@ -222,13 +211,32 @@
             tbLayoutChartTK.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tbLayoutChartTK.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tbLayoutChartTK.Dock = DockStyle.Fill;
-            tbLayoutChartTK.Location = new Point(4, 384);
+            tbLayoutChartTK.Location = new Point(4, 339);
             tbLayoutChartTK.Name = "tbLayoutChartTK";
             tbLayoutChartTK.RowCount = 1;
             tbLayoutChartTK.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tbLayoutChartTK.RowStyles.Add(new RowStyle(SizeType.Absolute, 451F));
-            tbLayoutChartTK.Size = new Size(1230, 452);
+            tbLayoutChartTK.Size = new Size(1230, 497);
             tbLayoutChartTK.TabIndex = 2;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(label1);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(4, 4);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(1230, 77);
+            flowLayoutPanel1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(164, 45);
+            label1.TabIndex = 0;
+            label1.Text = "Thống Kê";
             // 
             // UCThongKe
             // 
@@ -238,7 +246,6 @@
             Name = "UCThongKe";
             Size = new Size(1238, 840);
             tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel3.ResumeLayout(false);
             tableLayoutPanel3.PerformLayout();
@@ -246,6 +253,8 @@
             tableLayoutPanel4.PerformLayout();
             tableLayoutPanel5.ResumeLayout(false);
             tableLayoutPanel5.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -265,5 +274,6 @@
         private ComboBox cbLuaChon;
         private TableLayoutPanel tbLayoutChartTK;
         private Button btnTaoThongKe;
+        private FlowLayoutPanel flowLayoutPanel1;
     }
 }

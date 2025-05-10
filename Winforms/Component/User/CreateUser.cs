@@ -23,6 +23,17 @@ namespace QLThuQuan.Winforms.Component.User
 
             btnSave.Click += BtnSave_Click;
             btnCancel.Click += (s, e) => this.Close();
+            this.Load += CreateUser_Load;
+        }
+
+        // Reset form khi mở lại
+        private void CreateUser_Load(object sender, EventArgs e)
+        {
+            tbEmail.Text = "";
+            tbFirstName.Text = "";
+            tbLastName.Text = "";
+            tbPassword.Text = "";
+            cbIsAdmin.Checked = false;
         }
 
         private async void BtnSave_Click(object sender, EventArgs e)
@@ -41,6 +52,14 @@ namespace QLThuQuan.Winforms.Component.User
 
             try
             {
+                // Kiểm tra email đã tồn tại chưa
+                var existingUser = await _userService.GetUserByEmailAsync(email);
+                if (existingUser != null)
+                {
+                    MessageBox.Show("Email đã tồn tại. Vui lòng chọn email khác!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 var newUser = new Data.Models.User
                 {
                     Email = email,
@@ -59,11 +78,6 @@ namespace QLThuQuan.Winforms.Component.User
                 MessageBox.Show("Lỗi khi tạo người dùng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
     }
+
 }

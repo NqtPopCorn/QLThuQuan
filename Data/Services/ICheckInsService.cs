@@ -25,5 +25,7 @@ namespace QLThuQuan.Data.Services
 
         // Thong ke vi pham
         Task<Dictionary<string, double>> GetViPhamStats(DateTime startDate, DateTime endDate);
+
+        Task<bool> checkViolationOfUserIsActive(string email);
     }
 }

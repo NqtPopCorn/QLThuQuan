@@ -160,6 +160,15 @@ namespace QLThuQuan.Winforms
                     txtFirstName.Text = userChecked.FirstName;
                     txtLastName.Text = userChecked.LastName;
 
+                    // Check violation of user have ?
+                    bool violationOfUser = await _checkInsService.checkViolationOfUserIsActive(userChecked.Email);
+
+                    if (violationOfUser)
+                    {
+                        MessageBox.Show("Người dùng hiện đang bị cấm!");
+                        return;
+                    }
+
                     CheckIns checkUserInThuQuan = await _checkInsService.CheckOut(qrText);
 
                     if (checkUserInThuQuan != null)

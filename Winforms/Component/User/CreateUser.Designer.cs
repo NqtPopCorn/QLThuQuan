@@ -133,7 +133,6 @@
             label1.TabIndex = 0;
             label1.Text = "Create New User";
             label1.TextAlign = ContentAlignment.TopCenter;
-            label1.Click += label1_Click;
             // 
             // tableLayoutPanel2
             // 
