@@ -69,32 +69,46 @@ namespace QLThuQuan.Data.Services
         }
         public async Task<Violation> UpdateAsync(Violation violation)
         {
-            try
+            using (var scope = _context.Database.BeginTransaction())
             {
-                var existingViolation = await _context.Violations.FindAsync(violation.Id);
-                if (existingViolation == null)
-                    throw new InvalidOperationException($"Không tìm thấy vi phạm với ID {violation.Id}");
+                try
+                {
+                    if (violation.Id <= 0)
+                        throw new InvalidOperationException($"ID vi phạm không hợp lệ: {violation.Id}");
 
-                _context.Entry(existingViolation).State = EntityState.Detached;
+                    var existingViolation = await _context.Violations.FindAsync(violation.Id);
+                    if (existingViolation == null)
+                        throw new InvalidOperationException($"Không tìm thấy vi phạm với ID {violation.Id}");
 
-                violation.ViolationDate = existingViolation.ViolationDate;
-                _context.Violations.Update(violation);
-                await _context.SaveChangesAsync();
+                    _context.Entry(existingViolation).State = EntityState.Detached;
 
-                var updatedViolation = await _context.Violations
-                    .Include(v => v.User)
-                    .Include(v => v.Rule)
-                    .FirstOrDefaultAsync(v => v.Id == violation.Id);
+                    violation.ViolationDate = existingViolation.ViolationDate;
+                    _context.Violations.Update(violation);
+                    await _context.SaveChangesAsync();
 
-                return updatedViolation;
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Lỗi khi cập nhật vi phạm: {ex.Message}", ex);
+                    await scope.CommitAsync();
+
+                    using (var newContext = new AppDbContext())
+                    {
+                        var updatedViolation = await newContext.Violations
+                            .AsNoTracking()
+                            .Include(v => v.User)
+                            .Include(v => v.Rule)
+                            .FirstOrDefaultAsync(v => v.Id == violation.Id);
+
+                        return updatedViolation ?? violation;
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    await scope.RollbackAsync();
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    await scope.RollbackAsync();
+                    throw new InvalidOperationException($"Lỗi khi cập nhật vi phạm: {ex.Message}", ex);
+                }
             }
         }
 
