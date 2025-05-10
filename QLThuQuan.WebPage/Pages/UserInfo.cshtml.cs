@@ -83,7 +83,7 @@ namespace QLThuQuan.WebPage.Pages
                 {
                     FirstName = CurrentUser.FirstName,
                     LastName = CurrentUser.LastName,
-                    Email = CurrentUser.Email
+                    Email =     CurrentUser.Email
                 };
             }
         }

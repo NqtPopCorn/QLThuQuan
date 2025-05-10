@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using QLThuQuan.Data.Models;
-
+using Microsoft.Extensions.Logging;
 namespace QLThuQuan.Data.Services
 {
     public class AccountService : IAccountService
@@ -139,7 +139,44 @@ namespace QLThuQuan.Data.Services
                 .OrderByDescending(v => v.ViolationDate)
                 .FirstOrDefaultAsync();
         }
-        
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            try
+            {
+                // Tìm user theo email (không phân biệt hoa thường)
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
+                return user;
+            }
+            catch (Exception)
+            {
+                throw; // Ném lại exception để xử lý ở tầng cao hơn
+            }
+        }
+
+        public async Task<bool> UpdateAsync(User user)
+        {
+            try
+            {
+                // Đánh dấu entity là đã được chỉnh sửa
+                _context.Entry(user).State = EntityState.Modified;
+
+                // Lưu thay đổi vào database
+                var result = await _context.SaveChangesAsync();
+
+                return result > 0;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new Exception("Dữ liệu đã bị thay đổi bởi người khác. Vui lòng thử lại.");
+            }
+            catch (Exception)
+            {
+                throw new Exception("Có lỗi xảy ra khi cập nhật thông tin người dùng.");
+            }
+        }
+
     }
 
 }
