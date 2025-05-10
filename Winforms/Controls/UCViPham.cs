@@ -266,7 +266,7 @@ namespace QLThuQuan.Winforms.Controls
 
                 var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 220) };
                 var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
-                cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
+                cboStatus.Items.AddRange(new object[] { "pending", "active", "resolved" });
                 cboStatus.SelectedItem = violation.Status;
 
                 var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
