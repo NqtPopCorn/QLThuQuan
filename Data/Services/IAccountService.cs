@@ -20,6 +20,7 @@ namespace QLThuQuan.Data.Services
         Task<bool> ChangePasswordAsync(int userId, string oldPassword, string newPassword);
         Task<User> GetByIdAsync(int userId);
         Task<Violation> GetActiveViolationAsync(string email);
-       
+        Task<User> GetByEmailAsync(string email);
+        Task<bool> UpdateAsync(User user);
     }
 }
