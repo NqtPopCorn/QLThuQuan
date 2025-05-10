@@ -64,6 +64,7 @@ namespace QLThuQuan.Data.Services
         public async Task<bool> ChangePasswordAsync(int userId, string oldPassword, string newPassword)
         {
             var user = await _context.Users.FindAsync(userId);
+            
             if (user == null) return false;
 
             if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.Password))
@@ -126,6 +127,17 @@ namespace QLThuQuan.Data.Services
                 return null;
             
             return user;
+        }
+        public async Task<Violation> GetActiveViolationAsync(string email)
+        {
+            return await _context.Violations
+                .Include(v => v.Rule)
+                .Include(v => v.User)
+                .Where(v => v.User.Email == email &&
+                           v.Status == "active" &&
+                           (v.UnbanAt == null || v.UnbanAt > DateTime.UtcNow))
+                .OrderByDescending(v => v.ViolationDate)
+                .FirstOrDefaultAsync();
         }
         
     }
