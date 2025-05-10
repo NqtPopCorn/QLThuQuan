@@ -10,7 +10,6 @@ namespace QLThuQuan.Data
 {
     public class AppDbContext: DbContext
     {
-
         public static string connectionString = "server=localhost;port=3306;database=thuquan;user=root;password=";
 
         public DbSet<Models.Device> Devices { get; set; }

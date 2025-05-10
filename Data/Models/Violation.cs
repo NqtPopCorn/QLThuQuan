@@ -34,10 +34,13 @@ namespace QLThuQuan.Data.Models
         [Column("status")]
         public string Status { get; set; } = "pending"; // 'active','resolved','pending'
 
-        [ForeignKey("UserId")]
+        [Column("UserId")]
         public User User { get; set; }
 
-        [ForeignKey("RuleId")]
+        [Column("RuleId")]
         public Rule Rule { get; set; }
+
+        [Column("compensation_paid")]
+        public Decimal? CompensationPaid { get; set; }
     }
 }

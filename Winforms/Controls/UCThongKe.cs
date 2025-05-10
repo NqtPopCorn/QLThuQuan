@@ -19,12 +19,15 @@ namespace QLThuQuan.Winforms.Controls
 
         private readonly IUserService _userService;
 
+        private readonly IBorrowService _borrowService;
+
         // Sửa constructor để nhận dependencies
-        public UCThongKe(ICheckInsService checkInsService, IUserService userService)
+        public UCThongKe(ICheckInsService checkInsService, IUserService userService, IBorrowService borrowService)
         {
             InitializeComponent();
             _checkInsService = checkInsService ?? throw new ArgumentNullException(nameof(checkInsService));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _borrowService = borrowService ?? throw new ArgumentNullException(nameof(borrowService));
 
             // 1. Khởi tạo FormsPlot
             plt = new FormsPlot();
@@ -34,6 +37,7 @@ namespace QLThuQuan.Winforms.Controls
 
             // Vô hiệu hóa các control lọc ban đầu
             cbLuaChon.Enabled = false;
+            cbLuaChon.DropDownStyle = ComboBoxStyle.DropDownList;
             mcStartDate.Enabled = false;
             mcEndDate.Enabled = false;
         }
@@ -86,6 +90,8 @@ namespace QLThuQuan.Winforms.Controls
             {
                 "Tổng số người dùng",
                 "Tổng số lần check-in",
+                "Tổng số các thiết bị mượn",
+                "Thống kê vi phạm",
             };
 
             cbLuaChon.DataSource = luaChon;
@@ -105,12 +111,40 @@ namespace QLThuQuan.Winforms.Controls
                     {
                         data[stat.Key] = stat.Value;
                     }
+
+                    // Điền các tháng thiếu
+                    FillMissingMonths(data, startDate, endDate);
+                    data = data.OrderBy(d => new DateTime(int.Parse(d.Key.Split('/')[1]), int.Parse(d.Key.Split('/')[0]), 1))
+                     .ToDictionary(d => d.Key, d => d.Value);
                 }
                 else if (option == "Tổng số lần check-in")
                 {
                     var checkInStats = await _checkInsService.GetMonthlyCheckInStats(startDate, endDate)
                                      ?? new Dictionary<string, double>();
                     foreach (var stat in checkInStats.Where(stat => stat.Key != null))
+                    {
+                        data[stat.Key] = stat.Value;
+                    }
+
+                    // Điền các tháng thiếu
+                    FillMissingMonths(data, startDate, endDate);
+                    data = data.OrderBy(d => new DateTime(int.Parse(d.Key.Split('/')[1]), int.Parse(d.Key.Split('/')[0]), 1))
+                     .ToDictionary(d => d.Key, d => d.Value);
+                }
+                else if (option == "Tổng số các thiết bị mượn")
+                {
+                    var borrowStats = await _borrowService.GetDeviceBorrowStatsByDateRangeAsync(startDate, endDate)
+                                     ?? new Dictionary<string, double>();
+                    foreach (var stat in borrowStats.Where(stat => stat.Key != null))
+                    {
+                        data[stat.Key] = stat.Value;
+                    }
+                }
+                else if (option == "Thống kê vi phạm")
+                {
+                    var viPhamStats = await _checkInsService.GetViPhamStats(startDate, endDate)
+                                     ?? new Dictionary<string, double>();
+                    foreach (var stat in viPhamStats.Where(stat => stat.Key != null))
                     {
                         data[stat.Key] = stat.Value;
                     }
@@ -122,11 +156,7 @@ namespace QLThuQuan.Winforms.Controls
                 throw;
             }
 
-            // Điền các tháng thiếu
-            FillMissingMonths(data, startDate, endDate);
-
-            return data.OrderBy(d => new DateTime(int.Parse(d.Key.Split('/')[1]), int.Parse(d.Key.Split('/')[0]), 1))
-                     .ToDictionary(d => d.Key, d => d.Value);
+            return data;
         }
 
         private void FillMissingMonths(Dictionary<string, double> data, DateTime startDate, DateTime endDate)
@@ -177,7 +207,7 @@ namespace QLThuQuan.Winforms.Controls
             // Tùy chỉnh giao diện
             plt.Plot.Title("Thống kê theo tháng");
             plt.Plot.Axes.Left.Label.Text = "Giá trị";
-            plt.Plot.Axes.Bottom.Label.Text = "Tháng";
+            plt.Plot.Axes.Bottom.Label.Text = "Thuộc tính";
 
             // Cấu hình lưới
             plt.Plot.Grid.MajorLineWidth = 1;

@@ -22,5 +22,8 @@ namespace QLThuQuan.Data.Services
 
         // Thống kê lượt vào theo tháng
         Task<Dictionary<string, double>> GetMonthlyCheckInStats(DateTime startDate, DateTime endDate);
+
+        // Thong ke vi pham
+        Task<Dictionary<string, double>> GetViPhamStats(DateTime startDate, DateTime endDate);
     }
 }

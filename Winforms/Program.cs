@@ -15,6 +15,7 @@ namespace QLThuQuan.Winforms
         ///  The main entry point for the application.
         /// </summary>
         ///
+        public static string wwwRoot = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\..\QLThuQuan.WebPage\wwwroot"));
         internal readonly static string connectionString = AppDbContext.connectionString;
 
         [STAThread]
@@ -53,17 +54,21 @@ namespace QLThuQuan.Winforms
                     services.AddScoped<UCUser>();
                     services.AddScoped<UCViPham>();
                     services.AddScoped<UCQuyTac>();
+                    services.AddScoped<UCDatMuonV2>();
+                    services.AddScoped<QLMuonTraV2>();
 
                     services.AddScoped<CreateUser>();
                     services.AddScoped<UpdateUser>();
                     services.AddScoped<CheckInForm>();
                     services.AddScoped<DieuHuongGiaoDien>();
+                    //services.AddScoped<ImageScanDialog>();
                 })
                 .Build();
 
             // Lấy dashboard từ container → các dependency trong dashboard sẽ được inject
             //var form = host.Services.GetRequiredService<Dashboard>();
             //var formCheckIns = host.Services.GetRequiredService<CheckInForm>();
+            //var formQuetMa = host.Services.GetRequiredService<ImageScanDialog>();
             var formDieuHuong = host.Services.GetRequiredService<DieuHuongGiaoDien>();
             Application.Run(formDieuHuong);
         }

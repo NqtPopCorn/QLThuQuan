@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QLThuQuan.Data.Models
 {
+    [Table("users")]
     public class User
     {
         // ID người dùng (khóa chính)

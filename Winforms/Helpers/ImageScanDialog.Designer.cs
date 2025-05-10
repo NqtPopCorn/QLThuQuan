@@ -33,7 +33,7 @@
             btnBrowse = new Button();
             btnStartCamera = new Button();
             btnStopCamera = new Button();
-            btnKetThuc = new Button();
+            btnCancel = new Button();
             ((System.ComponentModel.ISupportInitialize)picturePreview).BeginInit();
             SuspendLayout();
             // 
@@ -49,55 +49,64 @@
             // 
             txtDecodedValue.Location = new Point(182, 25);
             txtDecodedValue.Name = "txtDecodedValue";
-            txtDecodedValue.Size = new Size(336, 27);
+            txtDecodedValue.Size = new Size(459, 27);
             txtDecodedValue.TabIndex = 1;
+            txtDecodedValue.TextChanged += txtDecodedValue_TextChanged;
             // 
             // btnBrowse
             // 
-            btnBrowse.Location = new Point(34, 118);
+            btnBrowse.BackColor = Color.Blue;
+            btnBrowse.ForeColor = Color.White;
+            btnBrowse.Location = new Point(28, 120);
             btnBrowse.Name = "btnBrowse";
             btnBrowse.Size = new Size(117, 29);
             btnBrowse.TabIndex = 2;
             btnBrowse.Text = "Browse";
-            btnBrowse.UseVisualStyleBackColor = true;
+            btnBrowse.UseVisualStyleBackColor = false;
             btnBrowse.Click += btnBrowse_Click;
             // 
             // btnStartCamera
             // 
-            btnStartCamera.Location = new Point(34, 23);
+            btnStartCamera.BackColor = Color.ForestGreen;
+            btnStartCamera.ForeColor = Color.WhiteSmoke;
+            btnStartCamera.Location = new Point(28, 25);
             btnStartCamera.Name = "btnStartCamera";
             btnStartCamera.Size = new Size(117, 29);
             btnStartCamera.TabIndex = 3;
             btnStartCamera.Text = "Start Camera";
-            btnStartCamera.UseVisualStyleBackColor = true;
+            btnStartCamera.UseVisualStyleBackColor = false;
             btnStartCamera.Click += btnStartCamera_Click;
             // 
             // btnStopCamera
             // 
-            btnStopCamera.Location = new Point(34, 73);
+            btnStopCamera.BackColor = Color.Red;
+            btnStopCamera.ForeColor = Color.White;
+            btnStopCamera.Location = new Point(28, 73);
             btnStopCamera.Name = "btnStopCamera";
             btnStopCamera.Size = new Size(117, 29);
             btnStopCamera.TabIndex = 4;
             btnStopCamera.Text = "Stop Camera";
-            btnStopCamera.UseVisualStyleBackColor = true;
+            btnStopCamera.UseVisualStyleBackColor = false;
             btnStopCamera.Click += btnStopCamera_Click;
             // 
-            // btnKetThuc
+            // btnCancel
             // 
-            btnKetThuc.Location = new Point(547, 25);
-            btnKetThuc.Name = "btnKetThuc";
-            btnKetThuc.Size = new Size(94, 27);
-            btnKetThuc.TabIndex = 5;
-            btnKetThuc.Text = "Kết thúc";
-            btnKetThuc.UseVisualStyleBackColor = true;
-            btnKetThuc.Click += btnKetThuc_Click;
+            btnCancel.BackColor = SystemColors.ControlDark;
+            btnCancel.ForeColor = Color.White;
+            btnCancel.Location = new Point(28, 168);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(117, 29);
+            btnCancel.TabIndex = 5;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // ImageScanDialog
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(669, 450);
-            Controls.Add(btnKetThuc);
+            Controls.Add(btnCancel);
             Controls.Add(btnStopCamera);
             Controls.Add(btnStartCamera);
             Controls.Add(btnBrowse);
@@ -119,6 +128,6 @@
         private Button btnBrowse;
         private Button btnStartCamera;
         private Button btnStopCamera;
-        private Button btnKetThuc;
+        private Button btnCancel;
     }
 }

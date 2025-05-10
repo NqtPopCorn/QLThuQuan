@@ -19,7 +19,9 @@ namespace QLThuQuan.Data.Services
 
         public async Task<List<Device>> GetAllAsync()
         {
-            return await _context.Devices.ToListAsync();
+            return await _context.Devices
+                .Where(d => d.IsDeleted == 0)
+                .ToListAsync();
         }
 
         public async Task<Device> GetByIdAsync(int id)
@@ -48,7 +50,8 @@ namespace QLThuQuan.Data.Services
             {
                 return false;
             }
-            _context.Devices.Remove(device);
+            device.IsDeleted = 1;
+            _context.Devices.Update(device);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -57,14 +60,14 @@ namespace QLThuQuan.Data.Services
         {
             //use linq
             return await _context.Devices
-                .Where(d => d.Name.Contains(keyword) || d.Description.Contains(keyword))
+                .Where(d => d.IsDeleted == 0 && (d.Name.Contains(keyword) || d.Description.Contains(keyword)))
                 .ToListAsync();
         }
 
         public async Task<List<Device>> GetAllByStatusAsync(string status)
         {
             return await _context.Devices
-                .Where(d => d.Status == status)
+                .Where(d => d.IsDeleted == 0 && d.Status == status)
                 .ToListAsync();
         }
 

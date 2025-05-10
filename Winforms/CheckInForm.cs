@@ -84,11 +84,11 @@ namespace QLThuQuan.Winforms
                 return;
 
             //// Kiểm tra tần suất quét (1 giây/lần)
-            //if ((DateTime.Now - _lastScanTime).TotalMilliseconds < 1000)
-            //    return;
+            if ((DateTime.Now - _lastScanTime).TotalMilliseconds < 1000)
+                return;
 
             //// Cập nhật thời gian quét cuối
-            //_lastScanTime = DateTime.Now;
+            _lastScanTime = DateTime.Now;
 
             try
             {
@@ -218,6 +218,8 @@ namespace QLThuQuan.Winforms
                 _videoSource.SignalToStop();
                 _videoSource.WaitForStop();
             }
+            btnStartCamera.Enabled = true;
+            btnStopCamera.Enabled = false;
         }
 
         private async void btnEnter_Click(object sender, EventArgs e)

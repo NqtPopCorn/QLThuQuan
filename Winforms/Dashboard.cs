@@ -15,8 +15,12 @@ namespace QLThuQuan.Winforms
         private QLMuonTra ucMuonTra;
         private UCUser ucUser;
         private UCViPham ucViPham;
+        private UCDatMuonV2 ucDatMuonV2;
+        private QLMuonTraV2 ucMuonTraV2;
 
-        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, UCQuyTac uCQuyTac, UCThongKe ucThongKe, QLMuonTra ucMuonTra, UCUser ucUser, UCViPham uCViPham)
+        public Dashboard(UCThietBi uCThietBi, QLDatMuon ucDatMuon, UCQuyTac uCQuyTac, 
+            UCThongKe ucThongKe, QLMuonTra ucMuonTra, UCUser ucUser, UCViPham uCViPham, 
+            UCDatMuonV2 ucDatMuonV2, QLMuonTraV2 ucMuonTraV2)
         {
             this.ucThietBi = uCThietBi;
             this.ucDatMuon = ucDatMuon;
@@ -25,10 +29,14 @@ namespace QLThuQuan.Winforms
             this.ucMuonTra = ucMuonTra;
             this.ucUser = ucUser;
             this.ucViPham = uCViPham;
+            this.ucDatMuonV2 = ucDatMuonV2;
+            this.ucMuonTraV2 = ucMuonTraV2;
 
             InitializeComponent();
 
             SetUpNavigations();
+            this.ucDatMuonV2 = ucDatMuonV2;
+            this.ucMuonTraV2 = ucMuonTraV2;
         }
 
         private void ShowControl(UserControl control)
@@ -48,8 +56,8 @@ namespace QLThuQuan.Winforms
         {
             navMap = new Dictionary<Button, UserControl>() {
                 { btnThietBi, ucThietBi },
-                { btnQLDatMuon, ucDatMuon },
-                { btnQLMuonTra, ucMuonTra },
+                { btnQLDatMuon, ucDatMuonV2 },
+                { btnQLMuonTra, ucMuonTraV2 },
                 { btnTK, ucThongKe },
                 { btnUser, ucUser },
                 { btnQuyTac, ucQuyTac },
