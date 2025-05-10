@@ -334,7 +334,7 @@
                                                 <td>@(violation.UnbanAt?.ToString("dd/MM/yyyy HH:mm") ?? "Không")</td>
                                                 @* <td>@(violation.?.ToString("N2") ?? "0") đ</td> *@
                                                 <td>
-                                                    @if (violation.Status == "active")
+                                                    @if (violation.Status == "pending")
                                                     {
                                                         <span class="badge bg-danger rounded-pill px-3 py-2">
                                                             <i class="fas fa-ban me-1"></i> Đang bị cấm
