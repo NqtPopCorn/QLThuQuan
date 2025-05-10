@@ -20,12 +20,12 @@ namespace QLThuQuan.Winforms.Controls
         private IReservationService _reservationService;
         private IBorrowService _borrowService;
         //Muon
-        private Device Device;
-        private User User;
+        //private Device Device;
+        //private User User;
         private Reservation Reservation;
         //Tra
-        private Device DeviceTra;
-        private User UserTra;
+        //private Device DeviceTra;
+        //private User UserTra;
         private BorrowRecord BorrowRecordTra;
 
         public QLMuonTraV2(IUserService userService, IDeviceService deviceService, IReservationService reservationService, IBorrowService borrowService)
@@ -64,7 +64,6 @@ namespace QLThuQuan.Winforms.Controls
         private void ShowUserMuon(User user)
         {
             if (user == null) return;
-            this.User = user;
             txtMaThanhVien.Text = user.Id + "";
             lblTenThanhVien.Text = user.FirstName + " " + user.LastName;
         }
@@ -141,7 +140,6 @@ namespace QLThuQuan.Winforms.Controls
             lblTenThietBi.Text = device.Name;
             SetImageThietBi(device.ImagePath, pbThietBi);
 
-            this.Device = device;
         }
 
         private void SetImageThietBi(string imagePath, PictureBox pbThietBi)
@@ -166,7 +164,7 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnKiemTraMuon_Click(object sender, EventArgs e)
         {
-            
+
             User user = await KiemTraThanhVien(txtMaThanhVien.Text, false);
             if (user == null) return;
             ShowUserMuon(user);
@@ -231,8 +229,6 @@ namespace QLThuQuan.Winforms.Controls
             lblTenThanhVien.Text = "";
             lblTenThietBi.Text = "";
             pbThietBi.Image = null;
-            this.Device = null;
-            this.User = null;
             this.Reservation = null;
 
             txtMaDatMuon.Clear();
@@ -260,7 +256,6 @@ namespace QLThuQuan.Winforms.Controls
         private void ShowUserTra(User user)
         {
             if (user == null) return;
-            this.UserTra = user;
             txtMaThanhVienTra.Text = user.Id + "";
             lblTenThanhVienTra.Text = user.FirstName + " " + user.LastName;
         }
@@ -272,7 +267,6 @@ namespace QLThuQuan.Winforms.Controls
             txtMaThietBiTra.Text = device.Id + "";
             lblTenThietBiTra.Text = device.Name;
             SetImageThietBi(device.ImagePath, pbAnhThietBiTra);
-            this.DeviceTra = device;
         }
 
         private async void btnQuetMaThietBiTra_Click(object sender, EventArgs e)
@@ -290,7 +284,7 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnKiemTraPhieuMuon_Click(object sender, EventArgs e)
         {
-            
+
             User user = await KiemTraThanhVien(txtMaThanhVienTra.Text, false);
             if (user == null) return;
             ShowUserTra(user);
@@ -304,7 +298,7 @@ namespace QLThuQuan.Winforms.Controls
             ShowDeviceTra(device);
 
             //tim phieu muon voi userId, deviceId va status = "Đang mượn"
-            BorrowRecord borrowRecord = await _borrowService.FindBorrowedRecordAsync(UserTra.Id, DeviceTra.Id);
+            BorrowRecord borrowRecord = await _borrowService.FindBorrowedRecordAsync(user.Id, device.Id);
 
             if (borrowRecord == null)
             {
@@ -350,8 +344,6 @@ namespace QLThuQuan.Winforms.Controls
             lblTenThanhVienTra.Text = "";
             lblTenThietBiTra.Text = "";
             pbAnhThietBiTra.Image = null;
-            this.DeviceTra = null;
-            this.UserTra = null;
             this.BorrowRecordTra = null;
 
             txtMaPhieuMuon.Clear();
