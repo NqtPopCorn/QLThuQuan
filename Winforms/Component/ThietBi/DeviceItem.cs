@@ -85,7 +85,7 @@ namespace QLThuQuan.Winforms.Components.ThietBi
                 return;
             }
 
-            await _deviceService.DeleteAsync(device.Id);
+            await _deviceService.SoftDeleteAsync(device.Id);
             OnSave?.Invoke(device);
         }
     }

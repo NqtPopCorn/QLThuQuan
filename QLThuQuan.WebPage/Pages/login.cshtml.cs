@@ -51,7 +51,7 @@ namespace QLThuQuan.WebPage.Pages
             if (activeViolation != null)
             {
                 ErrorMessage = $"Tài khoản của bạn đang bị cấm do vi phạm: {activeViolation.Rule.Name}. " +
-                              $"Thời gian cấm đến: {activeViolation.UnbanAt?.ToString("dd/MM/yyyy HH:mm")}";
+                              $"Thời gian hết hạn: {activeViolation.ExpiredAt?.ToString("dd/MM/yyyy HH:mm")}";
                 return Page();
             }
 

@@ -28,11 +28,14 @@ namespace QLThuQuan.Data.Models
         [Column("violation_date")]
         public DateTime ViolationDate { get; set; } = DateTime.Now;
 
-        [Column("unban_at")]
-        public DateTime? UnbanAt { get; set; } = null;
+        [Column("type")]
+        public string Type { get; set; } = "warning"; //'warning','ban', 'compensation'
+
+        [Column("expired_at")]
+        public DateTime? ExpiredAt { get; set; } = null;
 
         [Column("status")]
-        public string Status { get; set; } = "pending"; // 'active','resolved','pending'
+        public string Status { get; set; } = "pending"; //'canceled','pending', 'active'
 
         [Column("UserId")]
         public User User { get; set; }

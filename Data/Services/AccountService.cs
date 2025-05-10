@@ -135,7 +135,7 @@ namespace QLThuQuan.Data.Services
                 .Include(v => v.User)
                 .Where(v => v.User.Email == email &&
                            v.Status == "active" &&
-                           (v.UnbanAt == null || v.UnbanAt > DateTime.UtcNow))
+                           (v.ExpiredAt == null || v.ExpiredAt > DateTime.UtcNow))
                 .OrderByDescending(v => v.ViolationDate)
                 .FirstOrDefaultAsync();
         }

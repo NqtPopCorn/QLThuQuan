@@ -39,6 +39,7 @@
             btnThem = new Button();
             btnRefresh = new Button();
             btnImportExcel = new Button();
+            btnDeleteAll = new Button();
             panel1.SuspendLayout();
             tableDevice.SuspendLayout();
             SuspendLayout();
@@ -125,9 +126,9 @@
             btnThem.BackColor = Color.DodgerBlue;
             btnThem.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnThem.ForeColor = SystemColors.ButtonFace;
-            btnThem.Location = new Point(944, 33);
+            btnThem.Location = new Point(944, 30);
             btnThem.Name = "btnThem";
-            btnThem.Size = new Size(136, 39);
+            btnThem.Size = new Size(136, 42);
             btnThem.TabIndex = 3;
             btnThem.Text = "Thêm";
             btnThem.UseVisualStyleBackColor = false;
@@ -148,18 +149,32 @@
             btnImportExcel.BackColor = Color.Fuchsia;
             btnImportExcel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnImportExcel.ForeColor = SystemColors.ButtonFace;
-            btnImportExcel.Location = new Point(791, 33);
+            btnImportExcel.Location = new Point(791, 30);
             btnImportExcel.Name = "btnImportExcel";
-            btnImportExcel.Size = new Size(136, 39);
+            btnImportExcel.Size = new Size(136, 42);
             btnImportExcel.TabIndex = 5;
             btnImportExcel.Text = "Import";
             btnImportExcel.UseVisualStyleBackColor = false;
             btnImportExcel.Click += btnImportExcel_Click;
             // 
+            // btnDeleteAll
+            // 
+            btnDeleteAll.BackColor = Color.Red;
+            btnDeleteAll.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnDeleteAll.ForeColor = SystemColors.ButtonFace;
+            btnDeleteAll.Location = new Point(636, 30);
+            btnDeleteAll.Name = "btnDeleteAll";
+            btnDeleteAll.Size = new Size(136, 42);
+            btnDeleteAll.TabIndex = 6;
+            btnDeleteAll.Text = "Xóa nhiều";
+            btnDeleteAll.UseVisualStyleBackColor = false;
+            btnDeleteAll.Click += btnDeleteAll_Click;
+            // 
             // UCThietBi
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnDeleteAll);
             Controls.Add(btnImportExcel);
             Controls.Add(btnRefresh);
             Controls.Add(btnThem);
@@ -189,5 +204,6 @@
         private Button btnThem;
         private Button btnRefresh;
         private Button btnImportExcel;
+        private Button btnDeleteAll;
     }
 }

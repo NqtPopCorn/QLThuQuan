@@ -336,27 +336,53 @@
                                             <tr>
                                                 <td>@violation.Rule?.Name</td>
                                                 <td>@violation.ViolationDate.ToString("dd/MM/yyyy HH:mm")</td>
-                                                <td>@(violation.UnbanAt?.ToString("dd/MM/yyyy HH:mm") ?? "Không")</td>
+                                                <td>@(violation.ExpiredAt?.ToString("dd/MM/yyyy HH:mm") ?? "Không")</td>
                                                 @* <td>@(violation.?.ToString("N2") ?? "0") đ</td> *@
                                                 <td>
-                                                    @if (violation.Status == "pending")
+                                                    @{
+                                                        string badgeClass = "";
+                                                        string iconClass = "";
+                                                        string text = "";
+
+                                                        if (violation.Status == "pending")
+                                                        {
+                                                            badgeClass = "bg-info";
+                                                            iconClass = "fas fa-search";
+                                                            text = "Đang giải quyết";
+                                                        }
+                                                        else if (violation.Status == "active" && violation.Type == "ban")
+                                                        {
+                                                            badgeClass = "bg-danger";
+                                                            iconClass = "fas fa-user-slash";
+                                                            text = "Đang bị cấm";
+                                                        }
+                                                        else if (violation.Status == "active" && violation.Type == "warning")
+                                                        {
+                                                            badgeClass = "bg-warning text-dark";
+                                                            iconClass = "fas fa-exclamation-triangle";
+                                                            text = "Cảnh cáo";
+                                                        }
+                                                        else if (violation.Status == "active" && violation.Type == "compensation")
+                                                        {
+                                                            badgeClass = "bg-warning text-dark";
+                                                            iconClass = "fas fa-exclamation-triangle";
+                                                            text = $"Phạt tiền: {violation.CompensationPaid ?? 0}đ";
+                                                        }
+                                                        else if (violation.Status == "canceled")
+                                                        {
+                                                            badgeClass = "bg-secondary";
+                                                            iconClass = "fas fa-times-circle";
+                                                            text = "Đã hủy bỏ";
+                                                        }
+                                                    }
+
+                                                    @if (!string.IsNullOrEmpty(text))
                                                     {
-                                                        <span class="badge bg-warning rounded-pill px-3 py-2">
-                                                            <i class="fas fa-ban me-1"></i> Đang giải quyết
+                                                        <span class="badge @badgeClass rounded-pill d-inline-flex align-items-center px-3 py-2 shadow-sm">
+                                                            <i class="@iconClass me-2"></i> @text
                                                         </span>
                                                     }
-                                                    else if (violation.Status == "active")
-                                                    {
-                                                        <span class="badge bg-danger rounded-pill px-3 py-2">
-                                                            <i class="fas fa-ban me-1"></i> Đang bị cấm
-                                                        </span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="badge bg-success rounded-pill px-3 py-2">
-                                                            <i class="fas fa-check-circle me-1"></i> Đã giải quyết
-                                                        </span>
-                                                    }
+
                                                 </td>
                                                 <td>@violation.Description</td>
                                             </tr>

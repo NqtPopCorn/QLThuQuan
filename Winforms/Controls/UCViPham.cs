@@ -96,8 +96,9 @@ namespace QLThuQuan.Winforms.Controls
             dgvViolations.Columns[2].HeaderText = "Quy tắc";
             dgvViolations.Columns[3].HeaderText = "Mô tả";
             dgvViolations.Columns[4].HeaderText = "Ngày vi phạm";
-            dgvViolations.Columns[5].HeaderText = "Trạng thái";
-            dgvViolations.Columns[6].HeaderText = "Thao tác";
+            dgvViolations.Columns[5].HeaderText = "Loại";
+            dgvViolations.Columns[6].HeaderText = "Trạng thái";
+            dgvViolations.Columns[7].HeaderText = "Thao tác";
 
             dgvViolations.Rows.Clear();
 
@@ -120,6 +121,7 @@ namespace QLThuQuan.Winforms.Controls
                     violation.Rule?.Name,
                     violation.Description ?? "",
                     violation.ViolationDate.ToString("dd/MM/yyyy"),
+                    violation.Type ?? "warning",
                     violation.Status ?? "pending",
                     "Thao tác"
                 );
@@ -233,14 +235,14 @@ namespace QLThuQuan.Winforms.Controls
                 return;
             }
 
-            // Tạo một form mới để sửa vi phạm
+            // Tạo form chỉnh sửa vi phạm
             using (var editForm = new Form())
             {
                 editForm.Text = $"Sửa vi phạm ID: {violation.Id}";
-                editForm.Size = new Size(500, 400);
+                editForm.Size = new Size(500, 500);
                 editForm.StartPosition = FormStartPosition.CenterParent;
 
-                // Tạo các control chỉ đọc cho thông tin người dùng
+                // Người dùng (chỉ đọc)
                 var lblUser = new Label { Text = "Người dùng:", Location = new Point(20, 20) };
                 var txtUser = new TextBox
                 {
@@ -250,7 +252,7 @@ namespace QLThuQuan.Winforms.Controls
                     ReadOnly = true
                 };
 
-                // Tạo các control chỉ đọc cho thông tin quy tắc
+                // Quy tắc (chỉ đọc)
                 var lblRule = new Label { Text = "Quy tắc:", Location = new Point(20, 60) };
                 var txtRule = new TextBox
                 {
@@ -260,30 +262,82 @@ namespace QLThuQuan.Winforms.Controls
                     ReadOnly = true
                 };
 
-                // Các control khác
+                // Mô tả
                 var lblDesc = new Label { Text = "Mô tả:", Location = new Point(20, 100) };
-                var txtDesc = new TextBox { Text = violation.Description, Location = new Point(120, 100), Width = 250, Multiline = true, Height = 100 };
+                var txtDesc = new TextBox
+                {
+                    Text = violation.Description,
+                    Location = new Point(120, 100),
+                    Width = 250,
+                    Multiline = true,
+                    Height = 100
+                };
 
-                var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 220) };
-                var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
-                cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
+                // Loại vi phạm
+                var lblType = new Label { Text = "Loại:", Location = new Point(20, 220) };
+                var cboType = new ComboBox
+                {
+                    Location = new Point(120, 220),
+                    Width = 250,
+                    DropDownStyle = ComboBoxStyle.DropDownList
+                };
+                cboType.Items.AddRange(new object[] { "warning", "ban", "compensation" });
+                cboType.SelectedItem = violation.Type;
+
+                // Số tiền phạt (ẩn mặc định)
+                var lblCompensation = new Label { Text = "Số tiền phạt:", Location = new Point(20, 260), Visible = violation.Type == "compensation" };
+                var txtCompensationPaid = new TextBox
+                {
+                    Text = violation.CompensationPaid?.ToString("F2") ?? "",
+                    Location = new Point(120, 260),
+                    Width = 250,
+                    Visible = violation.Type == "compensation"
+                };
+
+                // Trạng thái
+                var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 300), Visible = true };
+                var cboStatus = new ComboBox
+                {
+                    Location = new Point(120, 300),
+                    Width = 250,
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    Visible = true
+                };
+                cboStatus.Items.AddRange(new object[] { "pending", "canceled", "active" });
                 cboStatus.SelectedItem = violation.Status;
 
-                var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
-                var dtpUnban = new DateTimePicker
+                // Ngày hết hạn
+                var lblExpired = new Label { Text = "Ngày hết hạn:", Location = new Point(20, 340), Visible = true };
+                var dtpExpired = new DateTimePicker
                 {
-                    Location = new Point(120, 260),
+                    Location = new Point(120, 340),
                     Width = 250,
                     Format = DateTimePickerFormat.Custom,
                     CustomFormat = "dd/MM/yyyy HH:mm",
                     ShowUpDown = true,
-                    Value = violation.UnbanAt ?? DateTime.Now.AddDays(7)
+                    Value = violation.ExpiredAt ?? DateTime.Now.AddDays(7),
+                    Visible = true
                 };
 
-                var btnSave = new Button { Text = "Lưu", Location = new Point(200, 300), DialogResult = DialogResult.OK };
-                var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 300), DialogResult = DialogResult.Cancel };
+                // Sự kiện thay đổi Type để hiển thị/ẩn CompensationPaid
+                cboType.SelectedIndexChanged += (s, e) =>
+                {
+                    bool isCompensation = cboType.SelectedItem?.ToString() == "compensation";
+                    lblCompensation.Visible = isCompensation;
+                    txtCompensationPaid.Visible = isCompensation;
 
-                editForm.Controls.AddRange(new Control[] { lblUser, txtUser, lblRule, txtRule, lblDesc, txtDesc, lblStatus, cboStatus, lblUnban, dtpUnban, btnSave, btnCancel });
+                    // Điều chỉnh vị trí các control bên dưới
+                    lblStatus.Location = new Point(20, isCompensation ? 300 : 260);
+                    cboStatus.Location = new Point(120, isCompensation ? 300 : 260);
+                    lblExpired.Location = new Point(20, isCompensation ? 340 : 300);
+                    dtpExpired.Location = new Point(120, isCompensation ? 340 : 300);
+                };
+
+                // Nút lưu và hủy
+                var btnSave = new Button { Text = "Lưu", Location = new Point(200, 380), DialogResult = DialogResult.OK };
+                var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 380), DialogResult = DialogResult.Cancel };
+
+                editForm.Controls.AddRange(new Control[] { lblUser, txtUser, lblRule, txtRule, lblDesc, txtDesc, lblType, cboType, lblCompensation, txtCompensationPaid, lblStatus, cboStatus, lblExpired, dtpExpired, btnSave, btnCancel });
                 editForm.AcceptButton = btnSave;
                 editForm.CancelButton = btnCancel;
 
@@ -292,17 +346,30 @@ namespace QLThuQuan.Winforms.Controls
                 {
                     try
                     {
-                        // Tạo một đối tượng vi phạm mới để cập nhật
+                        // Xác thực số tiền phạt
+                        decimal? compensationPaid = null;
+                        if (cboType.SelectedItem?.ToString() == "compensation")
+                        {
+                            if (!decimal.TryParse(txtCompensationPaid.Text, out decimal parsedValue) || parsedValue < 0)
+                            {
+                                MessageBox.Show("Số tiền phạt phải là số không âm hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                            compensationPaid = parsedValue;
+                        }
+
+                        // Tạo đối tượng vi phạm mới để cập nhật
                         var updatedViolation = new Violation
                         {
                             Id = violation.Id,
-                            UserId = violation.UserId,  // Giữ nguyên UserId
-                            RuleId = violation.RuleId,  // Giữ nguyên RuleId
+                            UserId = violation.UserId,
+                            RuleId = violation.RuleId,
                             Description = txtDesc.Text,
+                            Type = cboType.SelectedItem?.ToString() ?? "warning",
                             Status = cboStatus.SelectedItem?.ToString() ?? "pending",
                             ViolationDate = violation.ViolationDate,
-                            UnbanAt = dtpUnban.Value,
-                            CompensationPaid = violation.CompensationPaid
+                            ExpiredAt = dtpExpired.Value,
+                            CompensationPaid = compensationPaid
                         };
 
                         await _violationService.UpdateAsync(updatedViolation);
@@ -367,13 +434,16 @@ namespace QLThuQuan.Winforms.Controls
                 }
             }
         }
+
+        //add vi pham 
         private async void button1_Click(object sender, EventArgs e)
         {
             var form = new Form();
             form.Text = "Thêm vi phạm mới";
-            form.Size = new Size(500, 400);
+            form.Size = new Size(500, 500);
             form.StartPosition = FormStartPosition.CenterParent;
 
+            // Người dùng
             var lblUser = new Label { Text = "Người dùng:", Location = new Point(20, 20) };
             var cboUser = new ComboBox { Location = new Point(120, 20), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
 
@@ -398,6 +468,7 @@ namespace QLThuQuan.Winforms.Controls
                 return;
             }
 
+            // Quy tắc
             var lblRule = new Label { Text = "Quy tắc:", Location = new Point(20, 60) };
             var cboRule = new ComboBox { Location = new Point(120, 60), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
 
@@ -422,35 +493,63 @@ namespace QLThuQuan.Winforms.Controls
                 return;
             }
 
+            // Mô tả
             var lblDesc = new Label { Text = "Mô tả:", Location = new Point(20, 100) };
             var txtDesc = new TextBox { Location = new Point(120, 100), Width = 250, Multiline = true, Height = 100 };
 
-            var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 220) };
-            var cboStatus = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
-            cboStatus.Items.AddRange(new object[] { "pending", "resolved" });
+            // Loại vi phạm
+            var lblType = new Label { Text = "Loại:", Location = new Point(20, 220) };
+            var cboType = new ComboBox { Location = new Point(120, 220), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
+            cboType.Items.AddRange(new object[] { "warning", "ban", "compensation" });
+            cboType.SelectedIndex = 0;
+
+            // Số tiền phạt (ẩn mặc định)
+            var lblCompensation = new Label { Text = "Số tiền phạt:", Location = new Point(20, 260), Visible = false };
+            var txtCompensationPaid = new TextBox { Location = new Point(120, 260), Width = 250, Visible = false };
+
+            // Trạng thái
+            var lblStatus = new Label { Text = "Trạng thái:", Location = new Point(20, 260) };
+            var cboStatus = new ComboBox { Location = new Point(120, 260), Width = 250, DropDownStyle = ComboBoxStyle.DropDownList };
+            cboStatus.Items.AddRange(new object[] { "pending", "canceled", "active" });
             cboStatus.SelectedIndex = 0;
-            //moi them
-            var lblUnban = new Label { Text = "Ngày unban:", Location = new Point(20, 260) };
-            var dtpUnban = new DateTimePicker
+
+            // Ngày hết hạn
+            var lblExpired = new Label { Text = "Ngày hết hạn:", Location = new Point(20, 300) };
+            var dtpExpired = new DateTimePicker
             {
-                Location = new Point(120, 260),
+                Location = new Point(120, 300),
                 Width = 250,
                 Format = DateTimePickerFormat.Custom,
                 CustomFormat = "dd/MM/yyyy HH:mm",
-                ShowUpDown = true // Để dễ chọn giờ phút
+                ShowUpDown = true,
+                Value = DateTime.Now.AddDays(7)
             };
 
-            var btnSave = new Button { Text = "Lưu", Location = new Point(200, 300), DialogResult = DialogResult.OK };
-            var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 300), DialogResult = DialogResult.Cancel };
+            // Sự kiện thay đổi Type để hiển thị/ẩn CompensationPaid
+            cboType.SelectedIndexChanged += (s, e) =>
+            {
+                bool isCompensation = cboType.SelectedItem?.ToString() == "compensation";
+                lblCompensation.Visible = isCompensation;
+                txtCompensationPaid.Visible = isCompensation;
 
-            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblStatus, cboStatus, lblUnban, dtpUnban, btnSave, btnCancel });
+                // Điều chỉnh vị trí các control bên dưới
+                lblStatus.Location = new Point(20, isCompensation ? 300 : 260);
+                cboStatus.Location = new Point(120, isCompensation ? 300 : 260);
+                lblExpired.Location = new Point(20, isCompensation ? 340 : 300);
+                dtpExpired.Location = new Point(120, isCompensation ? 340 : 300);
+            };
+
+            // Nút lưu và hủy
+            var btnSave = new Button { Text = "Lưu", Location = new Point(200, 380), DialogResult = DialogResult.OK };
+            var btnCancel = new Button { Text = "Hủy", Location = new Point(300, 380), DialogResult = DialogResult.Cancel };
+
+            form.Controls.AddRange(new Control[] { lblUser, cboUser, lblRule, cboRule, lblDesc, txtDesc, lblType, cboType, lblCompensation, txtCompensationPaid, lblStatus, cboStatus, lblExpired, dtpExpired, btnSave, btnCancel });
             form.AcceptButton = btnSave;
             form.CancelButton = btnCancel;
 
             var result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-
                 if (cboUser.SelectedValue == null || cboRule.SelectedValue == null)
                 {
                     MessageBox.Show("Vui lòng chọn người dùng và quy tắc!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -459,13 +558,28 @@ namespace QLThuQuan.Winforms.Controls
 
                 try
                 {
+                    // Xác thực số tiền phạt
+                    decimal? compensationPaid = null;
+                    if (cboType.SelectedItem?.ToString() == "compensation")
+                    {
+                        if (!decimal.TryParse(txtCompensationPaid.Text, out decimal parsedValue) || parsedValue < 0)
+                        {
+                            MessageBox.Show("Số tiền phạt phải là số không âm hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        compensationPaid = parsedValue;
+                    }
+
                     var violation = new Violation
                     {
                         UserId = Convert.ToInt32(cboUser.SelectedValue),
                         RuleId = Convert.ToInt32(cboRule.SelectedValue),
                         Description = txtDesc.Text,
+                        Type = cboType.SelectedItem?.ToString() ?? "warning",
                         Status = cboStatus.SelectedItem?.ToString() ?? "pending",
-                        ViolationDate = DateTime.Now
+                        ViolationDate = DateTime.Now,
+                        ExpiredAt = dtpExpired.Value,
+                        CompensationPaid = compensationPaid
                     };
 
                     await _violationService.AddAsync(violation);

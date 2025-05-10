@@ -8,6 +8,9 @@
     <Compile Update="Component\ThietBi\AddDeviceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Component\ThietBi\DeleteAllForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Component\ThietBi\DeviceItem.cs">
       <SubType>UserControl</SubType>
     </Compile>

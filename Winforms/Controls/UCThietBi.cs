@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using QLThuQuan.Data.Models;
 using QLThuQuan.Data.Services;
+using QLThuQuan.Winforms.Component.ThietBi;
 using QLThuQuan.Winforms.Components.ThietBi;
 using QLThuQuan.Winforms.Helpers;
 
@@ -48,7 +49,6 @@ namespace QLThuQuan.Winforms.Controls
         private void UCThietBi_Load(object sender, EventArgs e)
         {
             loadTableDevice();
-
         }
 
         private async void btnTim_Click(object sender, EventArgs e)
@@ -75,7 +75,7 @@ namespace QLThuQuan.Winforms.Controls
 
         private async void btnImportExcel_Click(object sender, EventArgs e)
         {
-            using(OpenFileDialog openFileDialog = new OpenFileDialog())
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "Excel Files|*.xlsx";
                 openFileDialog.Title = "Export Devices to Excel";
@@ -83,8 +83,8 @@ namespace QLThuQuan.Winforms.Controls
                 {
                     string filePath = openFileDialog.FileName;
                     // Call your export method here
-                    List<Device> devices= ExcelService.ImportDevicesFromExcel(filePath);
-                    if(devices != null && devices.Count > 0)
+                    List<Device> devices = ExcelService.ImportDevicesFromExcel(filePath);
+                    if (devices != null && devices.Count > 0)
                     {
                         foreach (var device in devices)
                         {
@@ -102,6 +102,19 @@ namespace QLThuQuan.Winforms.Controls
                     {
                         MessageBox.Show("No devices found in the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                }
+            }
+        }
+
+        private void btnDeleteAll_Click(object sender, EventArgs e)
+        {
+            using (DeleteAllForm form = new DeleteAllForm(_deviceService))
+            {
+                form.ShowDialog();
+                // Reload the device list after deletion - DialogReusult = OK
+                if (form.DialogResult == DialogResult.OK)
+                {
+                    loadTableDevice();
                 }
             }
         }

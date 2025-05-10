@@ -76,7 +76,7 @@ namespace QLThuQuan.Data.Services
                 .ToListAsync();
 
             int unresolvedCount = violations.Count(v => v.Status == "active");
-            int resolvedCount = violations.Count(v => v.Status == "resolved");
+            int resolvedCount = violations.Count(v => v.Status == "active" || v.Status == "canceled");
 
             // Lấy danh sách các RuleId duy nhất
             var ruleIds = violations.Select(v => v.RuleId).Distinct().ToList();

@@ -37,6 +37,8 @@ namespace QLThuQuan.Winforms
 
         private void btnWeb_Click(object sender, EventArgs e)
         {
+            //mo trinh duyet web va chay http://localhost:5101
+            System.Diagnostics.Process.Start("cmd", "/c start http://localhost:5101");
             return;
         }
 

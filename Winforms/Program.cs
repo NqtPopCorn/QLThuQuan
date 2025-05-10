@@ -6,6 +6,7 @@ using QLThuQuan.Data.Services;
 using QLThuQuan.Winforms.Controls;
 using QLThuQuan.Winforms.Helpers;
 using QLThuQuan.Winforms.Component.User;
+using QLThuQuan.Winforms.Component.ThietBi;
 
 namespace QLThuQuan.Winforms
 {
