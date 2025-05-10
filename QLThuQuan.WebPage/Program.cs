@@ -2,12 +2,14 @@ using QLThuQuan.Data;
 using Microsoft.EntityFrameworkCore;
 using QLThuQuan.Data.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using QLThuQuan.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSession();
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<EmailService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
