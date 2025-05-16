@@ -67,10 +67,10 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 63F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 105F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1238, 840);
+            tableLayoutPanel1.Size = new Size(1100, 800);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -79,7 +79,7 @@
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(216, 45);
+            label1.Size = new Size(271, 54);
             label1.TabIndex = 0;
             label1.Text = "Quản Lý User";
             // 
@@ -91,11 +91,11 @@
             tableLayoutPanel2.Controls.Add(flowLayoutPanel1, 0, 0);
             tableLayoutPanel2.Controls.Add(flowLayoutPanel2, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 66);
+            tableLayoutPanel2.Location = new Point(3, 63);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.Size = new Size(1232, 99);
+            tableLayoutPanel2.Size = new Size(1094, 94);
             tableLayoutPanel2.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -106,7 +106,7 @@
             flowLayoutPanel1.Dock = DockStyle.Fill;
             flowLayoutPanel1.Location = new Point(3, 3);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(610, 93);
+            flowLayoutPanel1.Size = new Size(541, 88);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // Search
@@ -115,16 +115,16 @@
             Search.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             Search.Location = new Point(3, 0);
             Search.Name = "Search";
-            Search.Size = new Size(70, 25);
+            Search.Size = new Size(86, 32);
             Search.TabIndex = 0;
             Search.Text = "Search";
             Search.Click += label2_Click;
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(79, 3);
+            txtSearch.Location = new Point(95, 3);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(321, 29);
+            txtSearch.Size = new Size(286, 27);
             txtSearch.TabIndex = 1;
             // 
             // btnEnter
@@ -132,9 +132,9 @@
             btnEnter.BackColor = Color.Red;
             btnEnter.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnEnter.ForeColor = SystemColors.ButtonHighlight;
-            btnEnter.Location = new Point(406, 3);
+            btnEnter.Location = new Point(387, 3);
             btnEnter.Name = "btnEnter";
-            btnEnter.Size = new Size(84, 38);
+            btnEnter.Size = new Size(126, 47);
             btnEnter.TabIndex = 2;
             btnEnter.Text = "Enter";
             btnEnter.UseVisualStyleBackColor = false;
@@ -147,9 +147,9 @@
             flowLayoutPanel2.Controls.Add(btnNew);
             flowLayoutPanel2.Dock = DockStyle.Fill;
             flowLayoutPanel2.FlowDirection = FlowDirection.RightToLeft;
-            flowLayoutPanel2.Location = new Point(619, 3);
+            flowLayoutPanel2.Location = new Point(550, 3);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(610, 93);
+            flowLayoutPanel2.Size = new Size(541, 88);
             flowLayoutPanel2.TabIndex = 1;
             // 
             // btnReset
@@ -157,9 +157,9 @@
             btnReset.BackColor = Color.FromArgb(192, 192, 0);
             btnReset.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnReset.ForeColor = SystemColors.ButtonHighlight;
-            btnReset.Location = new Point(483, 3);
+            btnReset.Location = new Point(428, 3);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(124, 49);
+            btnReset.Size = new Size(110, 47);
             btnReset.TabIndex = 0;
             btnReset.Text = "Reset";
             btnReset.UseVisualStyleBackColor = false;
@@ -170,9 +170,9 @@
             btnImportExcel.BackColor = Color.FromArgb(255, 128, 255);
             btnImportExcel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnImportExcel.ForeColor = SystemColors.ButtonHighlight;
-            btnImportExcel.Location = new Point(354, 3);
+            btnImportExcel.Location = new Point(287, 3);
             btnImportExcel.Name = "btnImportExcel";
-            btnImportExcel.Size = new Size(123, 49);
+            btnImportExcel.Size = new Size(135, 47);
             btnImportExcel.TabIndex = 2;
             btnImportExcel.Text = "Import";
             btnImportExcel.UseVisualStyleBackColor = false;
@@ -183,9 +183,9 @@
             btnNew.BackColor = Color.FromArgb(0, 192, 0);
             btnNew.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNew.ForeColor = SystemColors.ButtonHighlight;
-            btnNew.Location = new Point(239, 3);
+            btnNew.Location = new Point(184, 3);
             btnNew.Name = "btnNew";
-            btnNew.Size = new Size(109, 49);
+            btnNew.Size = new Size(97, 47);
             btnNew.TabIndex = 1;
             btnNew.Text = "New";
             btnNew.UseVisualStyleBackColor = false;
@@ -196,10 +196,10 @@
             dtgView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dtgView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8 });
             dtgView.Dock = DockStyle.Fill;
-            dtgView.Location = new Point(3, 171);
+            dtgView.Location = new Point(3, 163);
             dtgView.Name = "dtgView";
             dtgView.RowHeadersWidth = 51;
-            dtgView.Size = new Size(1232, 666);
+            dtgView.Size = new Size(1094, 634);
             dtgView.TabIndex = 2;
             // 
             // Column1
@@ -260,11 +260,11 @@
             // 
             // UCUser
             // 
-            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
             Name = "UCUser";
-            Size = new Size(1238, 840);
+            Size = new Size(1100, 800);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);

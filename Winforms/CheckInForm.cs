@@ -60,7 +60,7 @@ namespace QLThuQuan.Winforms
 
         private void btnStartCamera_Click(object sender, EventArgs e)
         {
-           StartCamera();
+            StartCamera();
         }
 
         private void StartCamera()
@@ -243,6 +243,14 @@ namespace QLThuQuan.Winforms
             try
             {
                 var userChecked = await _userService.GetUserByEmailAsync(emailEnter);
+                // Check violation of user have ?
+                bool violationOfUser = await _checkInsService.checkViolationOfUserIsActive(userChecked.Email);
+
+                if (violationOfUser)
+                {
+                    MessageBox.Show("Người dùng hiện đang bị cấm!");
+                    return;
+                }
                 if (userChecked != null)
                 {
                     txtEmail.Text = userChecked.Email;
@@ -262,6 +270,8 @@ namespace QLThuQuan.Winforms
                             User = userChecked,
                             CheckIn = DateTime.Now,
                         };
+
+
 
                         await _checkInsService.AddCheckInAsync(checkIns);
                         MessageBox.Show("Check-in thành công!");
